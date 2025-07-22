@@ -20,7 +20,7 @@ const Sidebar = () => {
                         Soon
                     </span>
                 </a>
-            </div>
+            </div> 
 
             <a href="https://linktr.ee/danielafriheart" noreferrer noopener target='_blank' className="mt-auto text-sm text-black-200 flex gap-3">
                 <img alt="Esuola Daniel" src={Esuola} className="size-10 rounded-full" />
