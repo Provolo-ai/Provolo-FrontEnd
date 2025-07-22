@@ -8,9 +8,11 @@ const TextInputField = ({
     onChange,
     onBlur,
     touched,
+    type,
     required = false
 }) => {
     const isInvalid = touched && required && !value.trim();
+    // console.log(touched)
 
     return (
         <div>
@@ -19,7 +21,7 @@ const TextInputField = ({
             </label>
             <input
                 required={required}
-                type="text"
+                type={type ?? "text"}
                 id={id}
                 className={`w-full p-3 border rounded-md transition duration-150 ease-in-out bg-gray-50 ${isInvalid
                     ? 'ring-1 ring-red-600/10 ring-inset bg-red-50 placeholder-red-700'
