@@ -1,6 +1,42 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../lib/firebase";
 
 export default function Authentication() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+
+    const signUpWithEmail = async (email, password) => {
+        try {
+            setLoading(true);
+            setError('');
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
+
+            // ✅ User signed up successfully
+            console.log("User created:", user.uid);
+
+            // You can now store additional user info in Realtime DB or Firestore
+
+        } catch (error) {
+            console.error("Signup error", error.code, error.message);
+            setError(error.message);
+            // Show error to user (e.g., email already in use, weak password)
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!email || !password) {
+            setError('Please fill in all fields');
+            return;
+        }
+        await signUpWithEmail(email, password);
+    };
     return (
         <>
             {/*
@@ -19,12 +55,17 @@ export default function Authentication() {
                         className="mx-auto h-10 w-auto"
                     />
                     <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
-                        Sign in to your account
+                        Create your account
                     </h2>
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                    <form action="#" method="POST" className="space-y-6">
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                        {error && (
+                            <div className="rounded-md bg-red-50 p-4">
+                                <div className="text-sm text-red-700">{error}</div>
+                            </div>
+                        )}
                         <div>
                             <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
                                 Email address
@@ -36,6 +77,8 @@ export default function Authentication() {
                                     type="email"
                                     required
                                     autoComplete="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                     className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                 />
                             </div>
@@ -59,6 +102,8 @@ export default function Authentication() {
                                     type="password"
                                     required
                                     autoComplete="current-password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
                                     className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
                                 />
                             </div>
@@ -67,17 +112,18 @@ export default function Authentication() {
                         <div>
                             <button
                                 type="submit"
-                                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                disabled={loading}
+                                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                Sign in
+                                {loading ? 'Signing up...' : 'Sign up'}
                             </button>
                         </div>
                     </form>
 
                     <p className="mt-10 text-center text-sm/6 text-gray-500">
-                        Not a member?{' '}
+                        Already have an account?{' '}
                         <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                            Start a 14 day free trial
+                            Sign in here
                         </a>
                     </p>
                 </div>
