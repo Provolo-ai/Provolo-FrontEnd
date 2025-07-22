@@ -125,118 +125,116 @@ ${profileDescription}
 
 
     return (
-        <div className="flex h-screen bg-gray-50 ">
+        <div className="flex-1 flex flex-col overflow-y-auto">
+            <div className="p-6 sm:p-10 max-w-4xl mx-auto w-full">
 
-            {/* Sidebar */}
-            <Sidebar />
+                <div>
+                    {/* <div>
+                        <h1 className="text-4xl sm:text-5xl font-semibold text-center mb-2 mt-10 text-">
+                            Upwork Optimizer
+                        </h1>
+                        <p className="text-center mb-10 text-gray-600">
+                            Input your portfolio details, let our AI agent provide tailored recommendations for optimization.
+                        </p>
+                    </div> */}
 
-            <div className="flex-1 flex flex-col overflow-y-auto">
-                <div className="p-6 sm:p-10 max-w-4xl mx-auto w-full">
-
-                    <div>
-                        <div>
-                            <h1 className="text-4xl sm:text-5xl font-semibold text-center mb-2 mt-10 text-">
-                                Upwork Optimizer
-                            </h1>
-                            <p className="text-center text-lg mb-10 text-gray-600">
+                    {/* Input Section ====================>>>>>>>>>>>>>>>>>>> START*/}
+                    <div className="mb-8 p-6 bg-white rounded-lg border border-gray-200">
+                        <h2 className="text-3xl font-bold mb-6">Provide Your Portfolio Data</h2>
+                        {/* <p className="mb-10 text-gray-600 text-xs">
                                 Input your portfolio details, let our AI agent provide tailored recommendations for optimization.
-                            </p>
+                            </p> */}
+
+
+                        {/* New Input Fields for NAME & PROFILE HEADER ====================>>>>>>>>>>>>>>>>>>> */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <TextInputField
+                                id="freelancerName"
+                                label="Full Name:"
+                                placeholder="John Doe"
+                                value={freelancerName}
+                                onChange={(e) => setFreelancerName(e.target.value)}
+                                onBlur={() => setTouched((prev) => ({ ...prev, name: true }))}
+                                touched={touched.name || error}
+                                required
+                            />
+                            {/* Profile Title / Header Input Fields */}
+                            <TextInputField
+                                id="profileTitle"
+                                label=" Professional Title/Headline:"
+                                placeholder="Senior Full-Stack Developer | React & Node.js Expert"
+                                value={profileTitle}
+                                onChange={(e) => setProfileTitle(e.target.value)}
+                                onBlur={() => setTouched((prev) => ({ ...prev, title: true }))}
+                                touched={touched.title || error}
+                                required
+                            />
                         </div>
 
-                        {/* Input Section ====================>>>>>>>>>>>>>>>>>>> START*/}
-                        <div className="mb-8 p-6 bg-white rounded-lg border border-gray-200">
-                            <h2 className="text-2xl font-medium mb-4 text-gray-700">Provide Your Portfolio Data</h2>
+                        {/* Profle Description Input Fields ====================>>>>>>>>>>>>>>>>>>> */}
+                        <div className="mb-4">
 
-                            {/* New Input Fields for NAME & PROFILE HEADER ====================>>>>>>>>>>>>>>>>>>> */}
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                                <TextInputField
-                                    id="freelancerName"
-                                    label="Your Name:"
-                                    placeholder="Esuola Daniel"
-                                    value={freelancerName}
-                                    onChange={(e) => setFreelancerName(e.target.value)}
-                                    onBlur={() => setTouched((prev) => ({ ...prev, name: true }))}
-                                    touched={touched.name || error}
-                                    required
-                                />
-                                {/* Profile Title / Header Input Fields */}
-                                <TextInputField
-                                    id="profileTitle"
-                                    label="Your Professional Title/Headline:"
-                                    placeholder="Senior Full-Stack Developer | React & Node.js Expert"
-                                    value={profileTitle}
-                                    onChange={(e) => setProfileTitle(e.target.value)}
-                                    onBlur={() => setTouched((prev) => ({ ...prev, title: true }))}
-                                    touched={touched.title || error}
-                                    required
-                                />
-                            </div>
+                            <label htmlFor="profileDescription" className="block text-sm font-medium text-gray-700 mb-2 bg-g">
+                                Profile Description / Overview:
+                            </label>
 
-                            {/* Profle Description Input Fields ====================>>>>>>>>>>>>>>>>>>> */}
-                            <div className="mb-4">
+                            <textarea
+                                required
+                                id="profileDescription"
+                                className={`w-full p-3 border rounded-md transition duration-150 ease-in-out bg-gray-50 ${(error || (touched.description && !profileDescription.trim()))
+                                    ? 'ring-1 ring-red-600/10 ring-inset focus:ring-red-500 bg-red-50 placeholder-red-700'
+                                    : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
+                                    }`}
+                                rows="8"
+                                placeholder="Paste your Upwork profile overview & summary of your services here..."
+                                value={profileDescription}
+                                onChange={(e) => setProfileDescription(e.target.value)}
+                                onBlur={() => setTouched(prev => ({ ...prev, description: true }))}
+                            ></textarea>
 
-                                <label htmlFor="profileDescription" className="block text-sm font-medium text-gray-700 mb-2 bg-g">
-                                    Profile Description / Overview:
-                                </label>
+                            {(error || (touched.description && !profileDescription.trim())) &&
+                                (<p className='text-xs text-red-700'>Required</p>)}
 
-                                <textarea
-                                    required
-                                    id="profileDescription"
-                                    className={`w-full p-3 border rounded-md transition duration-150 ease-in-out bg-gray-50 ${(error || (touched.description && !profileDescription.trim()))
-                                        ? 'ring-1 ring-red-600/10 ring-inset focus:ring-red-500 bg-red-50 placeholder-red-700'
-                                        : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
-                                        }`}
-                                    rows="8"
-                                    placeholder="Paste your Upwork profile overview & summary of your services here..."
-                                    value={profileDescription}
-                                    onChange={(e) => setProfileDescription(e.target.value)}
-                                    onBlur={() => setTouched(prev => ({ ...prev, description: true }))}
-                                ></textarea>
-
-                                {(error || (touched.description && !profileDescription.trim())) &&
-                                    (<p className='text-xs text-red-700'>Required</p>)}
-
-                            </div>
-
-                            <CustomButton onClick={analyzePortfolio} isLoading={isLoading} className="btn-primary" > Optimize My Portfolio </CustomButton>
-
-                            {error &&
-                                <CustomSnackbar
-                                    open={error}
-                                    close={() => setError('')}
-                                    snackbarColor={"danger"}
-                                    snackbarMessage={error}
-                                />
-                            }
                         </div>
-                        {/* Input Section ====================>>>>>>>>>>>>>>>>>>> END*/}
 
+                        <CustomButton onClick={analyzePortfolio} isLoading={isLoading} className="btn-primary" > Optimize My Portfolio </CustomButton>
 
-                        {/* Output Section ====================>>>>>>>>>>>>>>>>>>> START*/}
-                        {analysisResults &&
+                        {error &&
                             <CustomSnackbar
-                                open={analysisResults}
-                                snackbarColor={"success"}
-                                snackbarMessage={"Analysis Complete"}
+                                open={error}
+                                close={() => setError('')}
+                                snackbarColor={"danger"}
+                                snackbarMessage={error}
                             />
                         }
-
-
-                        {analysisResults && (
-                            <ResultsAccordion
-                                sections={[
-                                    { title: 'Weaknesses and Optimization Ideas', content: weaknessesSummary, },
-                                    { title: 'Optimized Profile Overview', content: optimizedOverview, },
-                                    { title: 'Suggested Project Titles and Layouts', content: projectSuggestions, },
-                                    { title: 'Recommended Visuals/Layout Hierarchies', content: visualSuggestions, },
-                                    { title: 'Before and After Comparison', content: beforeAfter, },
-                                ]}
-                            />
-                        )}
-
-                        {/* Output Section ====================>>>>>>>>>>>>>>>>>>> END*/}
-
                     </div>
+                    {/* Input Section ====================>>>>>>>>>>>>>>>>>>> END*/}
+
+
+                    {/* Output Section ====================>>>>>>>>>>>>>>>>>>> START*/}
+                    {analysisResults &&
+                        <CustomSnackbar
+                            open={analysisResults}
+                            snackbarColor={"success"}
+                            snackbarMessage={"Analysis Complete"}
+                        />
+                    }
+
+
+                    {analysisResults && (
+                        <ResultsAccordion
+                            sections={[
+                                { title: 'Weaknesses and Optimization Ideas', content: weaknessesSummary, },
+                                { title: 'Optimized Profile Overview', content: optimizedOverview, },
+                                { title: 'Suggested Project Titles and Layouts', content: projectSuggestions, },
+                                { title: 'Recommended Visuals/Layout Hierarchies', content: visualSuggestions, },
+                                { title: 'Before and After Comparison', content: beforeAfter, },
+                            ]}
+                        />
+                    )}
+
+                    {/* Output Section ====================>>>>>>>>>>>>>>>>>>> END*/}
+
                 </div>
             </div>
         </div>

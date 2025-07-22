@@ -41,6 +41,13 @@ const ResultsAccordion = ({ sections }) => {
                             >
                                 {title}
                             </p>
+                        </summary>
+
+
+                        <div className="px-5 py-4 text-sm text-gray-800 prose prose-sm max-w-none">
+                            <ReactMarkdown>{content}</ReactMarkdown>
+                        </div>
+                        <div className='w-full text-end p-5'>
                             <button
                                 onClick={(e) => {
                                     e.preventDefault();
@@ -55,9 +62,6 @@ const ResultsAccordion = ({ sections }) => {
                             >
                                 Copy
                             </button>
-                        </summary>
-                        <div className="px-5 py-4 text-sm text-gray-800 prose prose-sm max-w-none">
-                            <ReactMarkdown>{content}</ReactMarkdown>
                         </div>
                     </details>
                 );

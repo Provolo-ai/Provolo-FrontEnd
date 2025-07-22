@@ -23,6 +23,7 @@ import {
 } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from '@heroicons/react/20/solid'
 import Logo from './Logo'
+import { Link } from '@tanstack/react-router'
 
 const products = [
     { name: 'Analytics', description: 'Get a better understanding of your traffic', href: '#', icon: ChartPieIcon },
@@ -113,9 +114,7 @@ export default function Header() {
                 </PopoverGroup> */}
 
                 <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                    <a href="/optimiser" className="text-sm/6 font-semibold text-gray-900">
-                        Log in <span aria-hidden="true">&rarr;</span>
-                    </a>
+                    <Link to="/login">Login <span aria-hidden="true">&rarr;</span></Link>
                 </div>
             </nav>
             <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
@@ -180,12 +179,13 @@ export default function Header() {
                                 </a>
                             </div>
                             <div className="py-6">
-                                <a
+                                {/* <a
                                     href="/optimiser"
                                     className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
                                 >
                                     Log in
-                                </a>
+                                </a> */}
+                                <Link to="/login">Login</Link>
                             </div>
                         </div>
                     </div>

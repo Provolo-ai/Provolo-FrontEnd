@@ -9,7 +9,7 @@ const CustomButton = ({
     return (
         <button
             onClick={onClick}
-            className={`w-full py-3 px-6 text-white font-bold rounded-lg text-lg flex items-center justify-center space-x-2 transition duration-150 ease-in-out ${className}`}
+            className={`w-full py-3 px-6 text-white  rounded-lg flex items-center justify-center space-x-2 transition duration-150 ease-in-out ${className}`}
             disabled={isLoading}
             {...props}
         >

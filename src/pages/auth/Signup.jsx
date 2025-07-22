@@ -77,7 +77,7 @@ export default function Authentication() {
                                     value={email}
                                     autoComplete="email"
                                     label={"Email"}
-                                    placeholder={"example@@mail.com"}
+                                    placeholder={"example@mail.com"}
                                     onChange={(e) => setEmail(e.target.value)}
                                     onBlur={() => setTouched((prev) => ({ ...prev, email: true }))}
                                     touched={touched.email || error}
@@ -117,12 +117,14 @@ export default function Authentication() {
                         <Link to={
                             '/login'
                         }>
-                            Sign In
+                            <span className='underline text-gray-600 hover:text-gray-500'>
+                                Sign In
+                            </span>
                         </Link>
                     </p>
                 </div>
                 <p className="mt-10 text-center text-xs text-gray-500">
-                    By Signing Up, you agree to our Receiving Future Emails.
+                    By signing up, you consent to receive occasional emails from us. 
                 </p>
             </div>
         </>
