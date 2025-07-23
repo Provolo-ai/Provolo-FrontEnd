@@ -139,7 +139,7 @@ ${profileDescription}
                     </div> */}
 
                     {/* Input Section ====================>>>>>>>>>>>>>>>>>>> START*/}
-                    <div className="mb-8 p-6 bg-white rounded-lg border border-gray-200">
+                    <div className="mb-8 p-10 bg-white rounded-lg border border-gray-200">
                         <h2 className="text-3xl font-bold mb-6">Provide Your Portfolio Data</h2>
                         {/* <p className="mb-10 text-gray-600 text-xs">
                                 Input your portfolio details, let our AI agent provide tailored recommendations for optimization.

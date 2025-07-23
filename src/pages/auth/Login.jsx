@@ -7,6 +7,7 @@ import CustomButton from "../../Reusables/CustomButton";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { getCleanErrorMessage } from "../../utils/firebaseError.util";
 import useAuthStore from "../../stores/authStore";
+import { Key, Mail } from "lucide-react";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -66,6 +67,7 @@ const Login = () => {
                 value={email}
                 autoComplete="email"
                 label={"Email"}
+                iconStart={<Mail size={20}/>}
                 placeholder={"example@mail.com"}
                 onChange={(e) => setEmail(e.target.value)}
                 onBlur={() => setTouched((prev) => ({ ...prev, email: true }))}
@@ -85,6 +87,7 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 type={"password"}
                 label={"Password"}
+                iconStart={<Key size={20}/>}
                 placeholder={"**********"}
                 onBlur={() => setTouched((prev) => ({ ...prev, password: true }))}
                 touched={touched.password || error}
