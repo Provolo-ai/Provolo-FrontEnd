@@ -95,7 +95,7 @@ export default function Error() {
                         Page Not Found
                     </h1>
                     <p className="text-center text-gray-400 w-2/3 mx-auto">
-                        Input your portfolio details, let our AI agent provide tailored recommendations for optimization.
+                        But if you don't change your direction, and if you keep looking, you may end up where you are heading.
                     </p>
                     <div className="mt-10 flex items-center justify-center gap-x-6">
                         <a

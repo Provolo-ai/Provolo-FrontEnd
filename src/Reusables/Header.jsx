@@ -106,7 +106,7 @@ export default function Header() {
                         Features
                     </a>
                     <a href="#" className="text-sm/6 font-semibold text-gray-900">
-                        Marketplace
+                        Marketplacecss
                     </a>
                     <a href="#" className="text-sm/6 font-semibold text-gray-900">
                         Company
