@@ -1,5 +1,4 @@
 import React from 'react'
-import CustomButton from '../Reusables/CustomButton'
 
 export default function Error() {
     return (
