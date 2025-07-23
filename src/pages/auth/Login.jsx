@@ -4,10 +4,15 @@ import { auth } from "../../lib/firebase";
 import Logo from "../../Reusables/Logo";
 import TextInputField from "../../Reusables/TextInputField";
 import CustomButton from "../../Reusables/CustomButton";
-import { Link } from "@tanstack/react-router";
+import { Link, useNavigate } from "@tanstack/react-router";
 import { getCleanErrorMessage } from "../../utils/firebaseError.util";
+import useAuthStore from "../../stores/authStore";
 
 const Login = () => {
+  const navigate = useNavigate();
+  // Zustand auth store
+  const setUser = useAuthStore((state) => state.setUser);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -21,10 +26,9 @@ const Login = () => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      // ✅ User signed in successfully
-      console.log("User signed in:", user);
+      setUser(user);
+      navigate({ to: "/optimizer", replace: true });
     } catch (error) {
-      console.log("Signin error", error);
       setError(getCleanErrorMessage(error));
     } finally {
       setLoading(false);
