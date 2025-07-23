@@ -9,12 +9,25 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ErrorRouteImport } from './routes/error'
+import { Route as SidebarlayoutRouteImport } from './routes/_sidebarlayout'
 import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as LayoutIndexRouteImport } from './routes/_layout.index'
-import { Route as ProtectedOptimizerRouteImport } from './routes/_protected/optimizer'
 import { Route as AuthSignupRouteImport } from './routes/_auth/signup'
 import { Route as AuthLoginRouteImport } from './routes/_auth/login'
+import { Route as SidebarlayoutProtectedProposalRouteImport } from './routes/_sidebarlayout._protected/proposal'
+import { Route as SidebarlayoutProtectedOptimizerRouteImport } from './routes/_sidebarlayout._protected/optimizer'
+import { Route as SidebarlayoutProtectedExampleRouteImport } from './routes/_sidebarlayout._protected/example'
 
+const ErrorRoute = ErrorRouteImport.update({
+  id: '/error',
+  path: '/error',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SidebarlayoutRoute = SidebarlayoutRouteImport.update({
+  id: '/_sidebarlayout',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LayoutRoute = LayoutRouteImport.update({
   id: '/_layout',
   getParentRoute: () => rootRouteImport,
@@ -23,11 +36,6 @@ const LayoutIndexRoute = LayoutIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => LayoutRoute,
-} as any)
-const ProtectedOptimizerRoute = ProtectedOptimizerRouteImport.update({
-  id: '/_protected/optimizer',
-  path: '/optimizer',
-  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthSignupRoute = AuthSignupRouteImport.update({
   id: '/_auth/signup',
@@ -39,50 +47,111 @@ const AuthLoginRoute = AuthLoginRouteImport.update({
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SidebarlayoutProtectedProposalRoute =
+  SidebarlayoutProtectedProposalRouteImport.update({
+    id: '/_protected/proposal',
+    path: '/proposal',
+    getParentRoute: () => SidebarlayoutRoute,
+  } as any)
+const SidebarlayoutProtectedOptimizerRoute =
+  SidebarlayoutProtectedOptimizerRouteImport.update({
+    id: '/_protected/optimizer',
+    path: '/optimizer',
+    getParentRoute: () => SidebarlayoutRoute,
+  } as any)
+const SidebarlayoutProtectedExampleRoute =
+  SidebarlayoutProtectedExampleRouteImport.update({
+    id: '/_protected/example',
+    path: '/example',
+    getParentRoute: () => SidebarlayoutRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
+  '/error': typeof ErrorRoute
   '/login': typeof AuthLoginRoute
   '/signup': typeof AuthSignupRoute
-  '/optimizer': typeof ProtectedOptimizerRoute
   '/': typeof LayoutIndexRoute
+  '/example': typeof SidebarlayoutProtectedExampleRoute
+  '/optimizer': typeof SidebarlayoutProtectedOptimizerRoute
+  '/proposal': typeof SidebarlayoutProtectedProposalRoute
 }
 export interface FileRoutesByTo {
+  '/error': typeof ErrorRoute
   '/login': typeof AuthLoginRoute
   '/signup': typeof AuthSignupRoute
-  '/optimizer': typeof ProtectedOptimizerRoute
   '/': typeof LayoutIndexRoute
+  '/example': typeof SidebarlayoutProtectedExampleRoute
+  '/optimizer': typeof SidebarlayoutProtectedOptimizerRoute
+  '/proposal': typeof SidebarlayoutProtectedProposalRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_layout': typeof LayoutRouteWithChildren
+  '/_sidebarlayout': typeof SidebarlayoutRouteWithChildren
+  '/error': typeof ErrorRoute
   '/_auth/login': typeof AuthLoginRoute
   '/_auth/signup': typeof AuthSignupRoute
-  '/_protected/optimizer': typeof ProtectedOptimizerRoute
   '/_layout/': typeof LayoutIndexRoute
+  '/_sidebarlayout/_protected/example': typeof SidebarlayoutProtectedExampleRoute
+  '/_sidebarlayout/_protected/optimizer': typeof SidebarlayoutProtectedOptimizerRoute
+  '/_sidebarlayout/_protected/proposal': typeof SidebarlayoutProtectedProposalRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/login' | '/signup' | '/optimizer' | '/'
+  fullPaths:
+    | '/error'
+    | '/login'
+    | '/signup'
+    | '/'
+    | '/example'
+    | '/optimizer'
+    | '/proposal'
   fileRoutesByTo: FileRoutesByTo
-  to: '/login' | '/signup' | '/optimizer' | '/'
+  to:
+    | '/error'
+    | '/login'
+    | '/signup'
+    | '/'
+    | '/example'
+    | '/optimizer'
+    | '/proposal'
   id:
     | '__root__'
     | '/_layout'
+    | '/_sidebarlayout'
+    | '/error'
     | '/_auth/login'
     | '/_auth/signup'
-    | '/_protected/optimizer'
     | '/_layout/'
+    | '/_sidebarlayout/_protected/example'
+    | '/_sidebarlayout/_protected/optimizer'
+    | '/_sidebarlayout/_protected/proposal'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   LayoutRoute: typeof LayoutRouteWithChildren
+  SidebarlayoutRoute: typeof SidebarlayoutRouteWithChildren
+  ErrorRoute: typeof ErrorRoute
   AuthLoginRoute: typeof AuthLoginRoute
   AuthSignupRoute: typeof AuthSignupRoute
-  ProtectedOptimizerRoute: typeof ProtectedOptimizerRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/error': {
+      id: '/error'
+      path: '/error'
+      fullPath: '/error'
+      preLoaderRoute: typeof ErrorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_sidebarlayout': {
+      id: '/_sidebarlayout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof SidebarlayoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_layout': {
       id: '/_layout'
       path: ''
@@ -96,13 +165,6 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof LayoutIndexRouteImport
       parentRoute: typeof LayoutRoute
-    }
-    '/_protected/optimizer': {
-      id: '/_protected/optimizer'
-      path: '/optimizer'
-      fullPath: '/optimizer'
-      preLoaderRoute: typeof ProtectedOptimizerRouteImport
-      parentRoute: typeof rootRouteImport
     }
     '/_auth/signup': {
       id: '/_auth/signup'
@@ -118,6 +180,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_sidebarlayout/_protected/proposal': {
+      id: '/_sidebarlayout/_protected/proposal'
+      path: '/proposal'
+      fullPath: '/proposal'
+      preLoaderRoute: typeof SidebarlayoutProtectedProposalRouteImport
+      parentRoute: typeof SidebarlayoutRoute
+    }
+    '/_sidebarlayout/_protected/optimizer': {
+      id: '/_sidebarlayout/_protected/optimizer'
+      path: '/optimizer'
+      fullPath: '/optimizer'
+      preLoaderRoute: typeof SidebarlayoutProtectedOptimizerRouteImport
+      parentRoute: typeof SidebarlayoutRoute
+    }
+    '/_sidebarlayout/_protected/example': {
+      id: '/_sidebarlayout/_protected/example'
+      path: '/example'
+      fullPath: '/example'
+      preLoaderRoute: typeof SidebarlayoutProtectedExampleRouteImport
+      parentRoute: typeof SidebarlayoutRoute
+    }
   }
 }
 
@@ -132,11 +215,28 @@ const LayoutRouteChildren: LayoutRouteChildren = {
 const LayoutRouteWithChildren =
   LayoutRoute._addFileChildren(LayoutRouteChildren)
 
+interface SidebarlayoutRouteChildren {
+  SidebarlayoutProtectedExampleRoute: typeof SidebarlayoutProtectedExampleRoute
+  SidebarlayoutProtectedOptimizerRoute: typeof SidebarlayoutProtectedOptimizerRoute
+  SidebarlayoutProtectedProposalRoute: typeof SidebarlayoutProtectedProposalRoute
+}
+
+const SidebarlayoutRouteChildren: SidebarlayoutRouteChildren = {
+  SidebarlayoutProtectedExampleRoute: SidebarlayoutProtectedExampleRoute,
+  SidebarlayoutProtectedOptimizerRoute: SidebarlayoutProtectedOptimizerRoute,
+  SidebarlayoutProtectedProposalRoute: SidebarlayoutProtectedProposalRoute,
+}
+
+const SidebarlayoutRouteWithChildren = SidebarlayoutRoute._addFileChildren(
+  SidebarlayoutRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   LayoutRoute: LayoutRouteWithChildren,
+  SidebarlayoutRoute: SidebarlayoutRouteWithChildren,
+  ErrorRoute: ErrorRoute,
   AuthLoginRoute: AuthLoginRoute,
   AuthSignupRoute: AuthSignupRoute,
-  ProtectedOptimizerRoute: ProtectedOptimizerRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -49,7 +49,7 @@ const Login = () => {
             <div className="sm:mx-auto sm:w-full sm:max-w-lg bg-white p-10 mt-10 rounded-md border ">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <h2 className="text-center text-2xl/9 font-bold tracking-tight text-gray-900">
-                        Login
+                        Welcome to Provolo
                     </h2>
                 </div>
                 <form onSubmit={handleSubmit} className="space-y-6">
@@ -68,7 +68,7 @@ const Login = () => {
                                 value={email}
                                 autoComplete="email"
                                 label={"Email"}
-                                placeholder={"example@@mail.com"}
+                                placeholder={"example@mail.com"}
                                 onChange={(e) => setEmail(e.target.value)}
                                 onBlur={() => setTouched((prev) => ({ ...prev, email: true }))}
                                 touched={touched.email || error}
@@ -98,23 +98,25 @@ const Login = () => {
                         <CustomButton
                             type="submit"
                             disabled={loading}
-                            className="btn-primary" >  {loading ? 'Signing up...' : 'Sign up'}
+                            className="btn-primary" >  {loading ? 'Logging in...' : 'Login'}
                         </CustomButton>
                     </div>
                 </form>
 
                 <p className="mt-5 text-center text-xs text-gray-500">
-                    Already have an account?{' '}
+                    Don't have an account?{' '}
                     <Link to={
-                        '/login'
+                        '/signup'
                     }>
-                        Sign In
+                        <span className='underline text-gray-600 hover:text-gray-500'>
+                            Sign Up
+                        </span>
                     </Link>
                 </p>
             </div>
-            <p className="mt-10 text-center text-xs text-gray-500">
+            {/* <p className="mt-10 text-center text-xs text-gray-500">
                 By Signing Up, you agree to our Receiving Future Emails.
-            </p>
+            </p> */}
         </div>
     )
 }
