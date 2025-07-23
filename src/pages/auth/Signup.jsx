@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { z } from "zod";
 import { Check, X } from "lucide-react";
@@ -9,6 +9,7 @@ import Logo from "../../Reusables/Logo";
 import TextInputField from "../../Reusables/TextInputField";
 import CustomButton from "../../Reusables/CustomButton";
 import { Link, useNavigate } from "@tanstack/react-router";
+import useAuthStore from "../../stores/authStore";
 
 // Zod schema for signup form
 const signupSchema = z.object({
@@ -23,6 +24,9 @@ const signupSchema = z.object({
 
 export default function Authentication() {
   const navigate = useNavigate();
+  // Zustand auth store
+  const setUser = useAuthStore((state) => state.setUser);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -57,9 +61,11 @@ export default function Authentication() {
       }
     } catch (error) {
       if (error instanceof z.ZodError) {
+        // Safely access the first error message
+        const errorMessage = error.errors?.[0]?.message || "Invalid input";
         setValidationErrors((prev) => ({
           ...prev,
-          [name]: error.errors[0]?.message || "",
+          [name]: errorMessage,
         }));
       }
     }
@@ -69,18 +75,27 @@ export default function Authentication() {
     try {
       setLoading(true);
       setError("");
+
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
-      console.log("User created:", user);
+      const userData = {
+        uid: user.uid,
+        email: user.email,
+        emailVerified: user.emailVerified,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        createdAt: user.metadata.creationTime,
+        lastLoginAt: user.metadata.lastSignInTime,
+      };
+
+      setUser(userData);
 
       // Save email to newsletter subscription with retry
       await saveNewsletterSubscription(db, email, user.uid, true);
-      navigate({ to: "/" });
+      navigate({ to: "/optimizer", replace: true });
     } catch (error) {
-      console.log("Signup error", error);
       setError(getCleanErrorMessage(error));
-      throw error;
     } finally {
       setLoading(false);
     }
@@ -94,8 +109,10 @@ export default function Authentication() {
 
     if (!validationResult.success) {
       const newErrors = {};
-      validationResult.error.errors.forEach((error) => {
-        newErrors[error.path[0]] = error.message;
+      validationResult.error.errors?.forEach((error) => {
+        if (error.path?.[0]) {
+          newErrors[error.path[0]] = error.message || "Invalid input";
+        }
       });
       setValidationErrors(newErrors);
       setError("Please fix the errors below");

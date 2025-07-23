@@ -13,11 +13,12 @@ import { Route as ErrorRouteImport } from './routes/error'
 import { Route as SidebarlayoutRouteImport } from './routes/_sidebarlayout'
 import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as LayoutIndexRouteImport } from './routes/_layout.index'
-import { Route as AuthSignupRouteImport } from './routes/_auth/signup'
-import { Route as AuthLoginRouteImport } from './routes/_auth/login'
+import { Route as AuthProtectRouteImport } from './routes/_auth/_protect'
 import { Route as SidebarlayoutProtectedProposalRouteImport } from './routes/_sidebarlayout._protected/proposal'
 import { Route as SidebarlayoutProtectedOptimizerRouteImport } from './routes/_sidebarlayout._protected/optimizer'
 import { Route as SidebarlayoutProtectedExampleRouteImport } from './routes/_sidebarlayout._protected/example'
+import { Route as AuthProtectSignupRouteImport } from './routes/_auth/_protect.signup'
+import { Route as AuthProtectLoginRouteImport } from './routes/_auth/_protect.login'
 
 const ErrorRoute = ErrorRouteImport.update({
   id: '/error',
@@ -37,14 +38,8 @@ const LayoutIndexRoute = LayoutIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LayoutRoute,
 } as any)
-const AuthSignupRoute = AuthSignupRouteImport.update({
-  id: '/_auth/signup',
-  path: '/signup',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthLoginRoute = AuthLoginRouteImport.update({
-  id: '/_auth/login',
-  path: '/login',
+const AuthProtectRoute = AuthProtectRouteImport.update({
+  id: '/_auth/_protect',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SidebarlayoutProtectedProposalRoute =
@@ -65,21 +60,31 @@ const SidebarlayoutProtectedExampleRoute =
     path: '/example',
     getParentRoute: () => SidebarlayoutRoute,
   } as any)
+const AuthProtectSignupRoute = AuthProtectSignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => AuthProtectRoute,
+} as any)
+const AuthProtectLoginRoute = AuthProtectLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => AuthProtectRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/error': typeof ErrorRoute
-  '/login': typeof AuthLoginRoute
-  '/signup': typeof AuthSignupRoute
   '/': typeof LayoutIndexRoute
+  '/login': typeof AuthProtectLoginRoute
+  '/signup': typeof AuthProtectSignupRoute
   '/example': typeof SidebarlayoutProtectedExampleRoute
   '/optimizer': typeof SidebarlayoutProtectedOptimizerRoute
   '/proposal': typeof SidebarlayoutProtectedProposalRoute
 }
 export interface FileRoutesByTo {
   '/error': typeof ErrorRoute
-  '/login': typeof AuthLoginRoute
-  '/signup': typeof AuthSignupRoute
   '/': typeof LayoutIndexRoute
+  '/login': typeof AuthProtectLoginRoute
+  '/signup': typeof AuthProtectSignupRoute
   '/example': typeof SidebarlayoutProtectedExampleRoute
   '/optimizer': typeof SidebarlayoutProtectedOptimizerRoute
   '/proposal': typeof SidebarlayoutProtectedProposalRoute
@@ -89,9 +94,10 @@ export interface FileRoutesById {
   '/_layout': typeof LayoutRouteWithChildren
   '/_sidebarlayout': typeof SidebarlayoutRouteWithChildren
   '/error': typeof ErrorRoute
-  '/_auth/login': typeof AuthLoginRoute
-  '/_auth/signup': typeof AuthSignupRoute
+  '/_auth/_protect': typeof AuthProtectRouteWithChildren
   '/_layout/': typeof LayoutIndexRoute
+  '/_auth/_protect/login': typeof AuthProtectLoginRoute
+  '/_auth/_protect/signup': typeof AuthProtectSignupRoute
   '/_sidebarlayout/_protected/example': typeof SidebarlayoutProtectedExampleRoute
   '/_sidebarlayout/_protected/optimizer': typeof SidebarlayoutProtectedOptimizerRoute
   '/_sidebarlayout/_protected/proposal': typeof SidebarlayoutProtectedProposalRoute
@@ -100,18 +106,18 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/error'
+    | '/'
     | '/login'
     | '/signup'
-    | '/'
     | '/example'
     | '/optimizer'
     | '/proposal'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/error'
+    | '/'
     | '/login'
     | '/signup'
-    | '/'
     | '/example'
     | '/optimizer'
     | '/proposal'
@@ -120,9 +126,10 @@ export interface FileRouteTypes {
     | '/_layout'
     | '/_sidebarlayout'
     | '/error'
-    | '/_auth/login'
-    | '/_auth/signup'
+    | '/_auth/_protect'
     | '/_layout/'
+    | '/_auth/_protect/login'
+    | '/_auth/_protect/signup'
     | '/_sidebarlayout/_protected/example'
     | '/_sidebarlayout/_protected/optimizer'
     | '/_sidebarlayout/_protected/proposal'
@@ -132,8 +139,7 @@ export interface RootRouteChildren {
   LayoutRoute: typeof LayoutRouteWithChildren
   SidebarlayoutRoute: typeof SidebarlayoutRouteWithChildren
   ErrorRoute: typeof ErrorRoute
-  AuthLoginRoute: typeof AuthLoginRoute
-  AuthSignupRoute: typeof AuthSignupRoute
+  AuthProtectRoute: typeof AuthProtectRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -166,18 +172,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutIndexRouteImport
       parentRoute: typeof LayoutRoute
     }
-    '/_auth/signup': {
-      id: '/_auth/signup'
-      path: '/signup'
-      fullPath: '/signup'
-      preLoaderRoute: typeof AuthSignupRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_auth/login': {
-      id: '/_auth/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof AuthLoginRouteImport
+    '/_auth/_protect': {
+      id: '/_auth/_protect'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthProtectRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_sidebarlayout/_protected/proposal': {
@@ -200,6 +199,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/example'
       preLoaderRoute: typeof SidebarlayoutProtectedExampleRouteImport
       parentRoute: typeof SidebarlayoutRoute
+    }
+    '/_auth/_protect/signup': {
+      id: '/_auth/_protect/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof AuthProtectSignupRouteImport
+      parentRoute: typeof AuthProtectRoute
+    }
+    '/_auth/_protect/login': {
+      id: '/_auth/_protect/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof AuthProtectLoginRouteImport
+      parentRoute: typeof AuthProtectRoute
     }
   }
 }
@@ -231,12 +244,25 @@ const SidebarlayoutRouteWithChildren = SidebarlayoutRoute._addFileChildren(
   SidebarlayoutRouteChildren,
 )
 
+interface AuthProtectRouteChildren {
+  AuthProtectLoginRoute: typeof AuthProtectLoginRoute
+  AuthProtectSignupRoute: typeof AuthProtectSignupRoute
+}
+
+const AuthProtectRouteChildren: AuthProtectRouteChildren = {
+  AuthProtectLoginRoute: AuthProtectLoginRoute,
+  AuthProtectSignupRoute: AuthProtectSignupRoute,
+}
+
+const AuthProtectRouteWithChildren = AuthProtectRoute._addFileChildren(
+  AuthProtectRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   LayoutRoute: LayoutRouteWithChildren,
   SidebarlayoutRoute: SidebarlayoutRouteWithChildren,
   ErrorRoute: ErrorRoute,
-  AuthLoginRoute: AuthLoginRoute,
-  AuthSignupRoute: AuthSignupRoute,
+  AuthProtectRoute: AuthProtectRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
