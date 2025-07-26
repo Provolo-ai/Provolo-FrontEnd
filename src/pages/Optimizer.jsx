@@ -3,8 +3,8 @@ import PortfolioPrompt from '../PortfolioPrompt';
 import ResultsAccordion from '../Reusables/ResultsAccordion';
 import TextInputField from '../Reusables/TextInputField';
 import CustomButton from '../Reusables/CustomButton';
-import Sidebar from '../Reusables/Sidebar';
 import CustomSnackbar from '../Reusables/CustomSnackbar';
+import { BriefcaseBusiness, User } from 'lucide-react';
 
 const PortfolioOptimizer = () => {
 
@@ -153,6 +153,7 @@ ${profileDescription}
                                 label="Full Name:"
                                 placeholder="John Doe"
                                 value={freelancerName}
+                                iconStart={<User size={20} />}
                                 onChange={(e) => setFreelancerName(e.target.value)}
                                 onBlur={() => setTouched((prev) => ({ ...prev, name: true }))}
                                 touched={touched.name || error}
@@ -164,6 +165,7 @@ ${profileDescription}
                                 label=" Professional Title/Headline:"
                                 placeholder="Senior Full-Stack Developer | React & Node.js Expert"
                                 value={profileTitle}
+                                iconStart={<BriefcaseBusiness size={20} />}
                                 onChange={(e) => setProfileTitle(e.target.value)}
                                 onBlur={() => setTouched((prev) => ({ ...prev, title: true }))}
                                 touched={touched.title || error}

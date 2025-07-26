@@ -61,6 +61,7 @@ const ResultsAccordion = ({ sections }) => {
                                 className={`text-xs border text-${color} px-2 py-1 rounded transition`}
                             >
                                 Copy
+                                {/* <Copy size={20}/> */}
                             </button>
                         </div>
                     </details>
