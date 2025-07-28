@@ -1,9 +1,14 @@
-import React, { useState } from 'react'
-import PortfolioPrompt from '../PortfolioPrompt';
-import ResultsAccordion from '../Reusables/ResultsAccordion';
-import TextInputField from '../Reusables/TextInputField';
-import CustomButton from '../Reusables/CustomButton';
-import CustomSnackbar from '../Reusables/CustomSnackbar';
+import React, { useState } from "react";
+import PortfolioPrompt from "../PortfolioPrompt";
+import ResultsAccordion from "../Reusables/ResultsAccordion";
+import TextInputField from "../Reusables/TextInputField";
+import CustomButton from "../Reusables/CustomButton";
+import Sidebar from "../Reusables/Sidebar";
+import CustomSnackbar from "../Reusables/CustomSnackbar";
+import { validatePortfolioInput, validatePortfolioResponse } from "../schemas/portfolioSchema";
+import { db } from "../lib/firebase";
+import { checkAndUpdateUserPromptLimit } from "../utils/firebase.util";
+import useAuthStore from "../stores/authStore";
 import { BriefcaseBusiness, User } from 'lucide-react';
 
 const PortfolioOptimizer = () => {
@@ -60,14 +65,32 @@ const PortfolioOptimizer = () => {
         return;
       }
 
+      // Get current userId from Zustand auth store
+      const user = useAuthStore.getState().user;
+      const userId = user?.uid;
+      if (!userId) {
+        setError("User not authenticated. Please log in again.");
+        setIsLoading(false);
+        return;
+      }
+
+      // Check and update prompt limit before Gemini AI call
+      const promptLimit = parseInt(import.meta.env.VITE_MAX_PROMPT_LIMIT);
+      const limitResult = await checkAndUpdateUserPromptLimit(db, userId, promptLimit);
+      if (!limitResult.allowed) {
+        setError(`You have reached your daily prompt limit (${limitResult.limit}).`);
+        setIsLoading(false);
+        return;
+      }
+
       // Construct the input content from validated data
       const inputContent = `
-Freelancer Name: ${inputValidation.data.freelancerName}
-Title: ${inputValidation.data.profileTitle}
+        Freelancer Name: ${inputValidation.data.freelancerName}
+        Title: ${inputValidation.data.profileTitle}
 
-Profile Description:
-${inputValidation.data.profileDescription}
-            `.trim();
+        Profile Description:
+        ${inputValidation.data.profileDescription}
+      `.trim();
 
       // 🔮 Generate prompt using your custom logic ====================>>>>>>>>>>>>>>>>>>>
       const prompt = PortfolioPrompt(inputContent);

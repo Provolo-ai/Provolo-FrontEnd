@@ -16,6 +16,7 @@ const ResultsAccordion = ({ sections }) => {
 
       {sections.map(({ title, content }, idx) => {
         const color = colorMap[title] || "gray";
+        const contentRef = React.createRef();
 
         return (
           <details
@@ -43,14 +44,19 @@ const ResultsAccordion = ({ sections }) => {
               </p>
             </summary>
 
-            <div className="px-7 py-6 text-base text-gray-800 prose prose-sm max-w-none leading-relaxed space-y-4">
+            <div ref={contentRef} className="px-7 py-6 text-base text-gray-800 prose prose-sm max-w-none leading-relaxed space-y-4">
               <ReactMarkdown>{content}</ReactMarkdown>
             </div>
             <div className="w-full text-end p-6">
               <button
                 onClick={(e) => {
                   e.preventDefault();
-                  navigator.clipboard.writeText(content);
+                  if (contentRef.current) {
+                    const text = contentRef.current.textContent;
+                    navigator.clipboard.writeText(text);
+                  } else {
+                    navigator.clipboard.writeText(content);
+                  }
                   const original = e.target.innerText;
                   e.target.innerText = "Copied!";
                   setTimeout(() => {
