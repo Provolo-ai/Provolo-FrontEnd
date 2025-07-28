@@ -1,6 +1,9 @@
 import { createFileRoute, Outlet, redirect } from "@tanstack/react-router";
 import Sidebar from "../Reusables/Sidebar";
 import useAuthStore from "../stores/authStore";
+import { MobilePageModal } from "../pages/MobilePageModal";
+import { detectSystem } from "../utils/detectSystem.util";
+import { useEffect, useState } from "react";
 
 const isAuthenticated = () => {
   // Get auth state from Zustand store
@@ -25,6 +28,19 @@ export const Route = createFileRoute("/_sidebarlayout")({
 });
 
 function RouteComponent() {
+  const [operatingSystem, setOperatingSystem] = useState(null);
+  
+  useEffect(() => {
+    const os = detectSystem();
+    setOperatingSystem(os);
+  }, []);
+  
+  const isMobile = operatingSystem === "android" || operatingSystem === "ios";
+  
+  if (isMobile) {
+    return <MobilePageModal operatingSystem={operatingSystem} />;
+  }
+
   return (
     <>
       <div className="flex h-screen bg-gray-50 ">
