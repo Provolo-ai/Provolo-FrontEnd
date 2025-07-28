@@ -1,4 +1,5 @@
 import { collection, addDoc, query, where, getDocs, updateDoc, doc } from "firebase/firestore";
+import { isSameDay, parseFirestoreTimestamp } from "./helper.util";
 
 // Retry function for Firestore operations with exponential backoff
 export const retryFirestoreOperation = async (operation, maxRetries = 3, delay = 1000) => {
@@ -18,6 +19,61 @@ export const retryFirestoreOperation = async (operation, maxRetries = 3, delay =
       await new Promise((resolve) => setTimeout(resolve, delay * attempt));
     }
   }
+};
+
+/**
+ * Checks and updates the user's prompt usage in Firestore.
+ * Returns { allowed: boolean, count: number, limit: number }
+ */
+export const checkAndUpdateUserPromptLimit = async (db, userId, limit = 3) => {
+  const now = new Date();
+  let result = { allowed: false, count: 0, limit };
+
+  await retryFirestoreOperation(async () => {
+    const promptLimitsRef = collection(db, "user_prompt_limits");
+    const q = query(promptLimitsRef, where("userId", "==", userId));
+    const snapshot = await getDocs(q);
+
+    if (snapshot.empty) {
+      // Create new document for user with count 1 (first prompt)
+      await addDoc(promptLimitsRef, {
+        userId,
+        promptCount: 1,
+        lastPromptAt: now,
+      });
+      result = { allowed: true, count: 1, limit };
+      return;
+    }
+
+    const existingDoc = snapshot.docs[0];
+    const data = existingDoc.data();
+    const docRef = doc(db, "user_prompt_limits", existingDoc.id);
+    const lastPromptAt = parseFirestoreTimestamp(data.lastPromptAt);
+    const currentCount = data.promptCount || 0;
+
+    if (isSameDay(lastPromptAt, now)) {
+      if (currentCount >= limit) {
+        result = { allowed: false, count: currentCount, limit };
+        return;
+      }
+      await updateDoc(docRef, {
+        promptCount: currentCount + 1,
+        lastPromptAt: now,
+      });
+      result = { allowed: true, count: currentCount + 1, limit };
+      return;
+    }
+
+    // Reset for new day
+    await updateDoc(docRef, {
+      promptCount: 1,
+      lastPromptAt: now,
+    });
+    result = { allowed: true, count: 1, limit };
+    return;
+  });
+
+  return result;
 };
 
 /**
@@ -56,13 +112,5 @@ export const saveNewsletterSubscription = async (db, email, userId, subscribed =
     }
   };
 
-  const success = await retryFirestoreOperation(firestoreOperation);
-
-  if (success) {
-    console.log("Newsletter subscription saved/updated successfully");
-  } else {
-    console.warn("Failed to save/update newsletter subscription after all retries");
-  }
-
-  return success;
+  return await retryFirestoreOperation(firestoreOperation);
 };
