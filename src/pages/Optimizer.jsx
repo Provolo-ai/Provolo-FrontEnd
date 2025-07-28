@@ -9,6 +9,7 @@ import { validatePortfolioInput, validatePortfolioResponse } from "../schemas/po
 import { db } from "../lib/firebase";
 import { checkAndUpdateUserPromptLimit } from "../utils/firebase.util";
 import useAuthStore from "../stores/authStore";
+import { BriefcaseBusiness, User } from 'lucide-react';
 
 const PortfolioOptimizer = () => {
   // State variables for input data ==========>>>>>>>>>>
