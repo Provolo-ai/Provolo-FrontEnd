@@ -8,7 +8,7 @@
     margin: 0;
     box-sizing: border-box;
 
-    /* outline: 1px dashed blue; */
+    /* outline: 1px dashed silver; */
 }
 
 body,
@@ -43,6 +43,12 @@ h1{
     width: 24px;
     height: 24px;
     animation: spin 1s linear infinite;
+}
+.homeBg{
+    background-image: url(../src/assets/hero.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
 }
 
 @keyframes spin {

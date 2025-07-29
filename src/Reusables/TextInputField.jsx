@@ -1,6 +1,6 @@
 import { Eye, EyeClosed } from 'lucide-react';
 import React, { useState } from 'react';
-import { FiEye, FiEyeOff } from 'react-icons/fi';
+
 
 const TextInputField = ({
     id,
@@ -26,7 +26,7 @@ const TextInputField = ({
 
     return (
         <div>
-            <label htmlFor={id} className="block text-sm font-medium text-gray-700 mb-2">
+            <label htmlFor={id} className="block text-sm mb-2">
                 {label}
             </label>
             <div className="relative">
@@ -39,7 +39,7 @@ const TextInputField = ({
                     required={required}
                     type={currentType ?? "text"}
                     id={id}
-                    className={`w-full p-3 border rounded-md transition duration-150 ease-in-out bg-gray-50 ${
+                    className={`w-full p-3 border border-gray-200 rounded-md transition duration-150 ease-in-out bg-gray-50 placeholder:text-sm ${
                         isInvalid
                             ? 'ring-1 ring-red-600/10 ring-inset bg-red-50 placeholder-red-700'
                             : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'

@@ -50,7 +50,7 @@ const Proposal = () => {
                         Ai Proposals
                     </h1>
                     <p className="text-center text-gray-400 w-2/3 mx-auto">
-                        Input your portfolio details, let our AI agent provide tailored recommendations for optimization.
+                        Coming Soon: Streamline your workflow with intelligent proposal writing.
                     </p>
                 </div>
 

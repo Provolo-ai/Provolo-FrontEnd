@@ -8,6 +8,8 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import { getCleanErrorMessage } from "../../utils/firebaseError.util";
 import useAuthStore from "../../stores/authStore";
 import { Key, Mail } from "lucide-react";
+import CustomSnackbar from "../../Reusables/CustomSnackbar";
+
 
 const Login = () => {
   const navigate = useNavigate();
@@ -49,14 +51,9 @@ const Login = () => {
       <Logo />
       <div className="sm:mx-auto sm:w-full sm:max-w-lg bg-white p-10 mt-10 rounded-md border ">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="text-center text-2xl/9 font-bold tracking-tight text-gray-900">Welcome to Provolo</h2>
+          <h2 className="text-center text-2xl/9 font-medium tracking-tight text-gray-900">Welcome to Provolo</h2>
         </div>
         <form onSubmit={handleSubmit} className="space-y-6">
-          {error && (
-            <div className="rounded-md bg-red-50 p-4">
-              <div className="text-sm text-red-700">{error}</div>
-            </div>
-          )}
           <div>
             <div className="mt-2">
               <TextInputField
@@ -67,7 +64,7 @@ const Login = () => {
                 value={email}
                 autoComplete="email"
                 label={"Email"}
-                iconStart={<Mail size={20}/>}
+                iconStart={<Mail size={20} />}
                 placeholder={"example@mail.com"}
                 onChange={(e) => setEmail(e.target.value)}
                 onBlur={() => setTouched((prev) => ({ ...prev, email: true }))}
@@ -87,12 +84,17 @@ const Login = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 type={"password"}
                 label={"Password"}
-                iconStart={<Key size={20}/>}
+                iconStart={<Key size={20} />}
                 placeholder={"**********"}
                 onBlur={() => setTouched((prev) => ({ ...prev, password: true }))}
                 touched={touched.password || error}
               />
             </div>
+          </div>
+          <div className="flex justify-end">
+            <Link to={"/forgotpassword"} className="underline text-gray-600 hover:text-gray-500 text-xs text-right">
+              Forgot Password?
+            </Link>
           </div>
 
           <div>
@@ -110,9 +112,14 @@ const Login = () => {
           </Link>
         </p>
       </div>
-      {/* <p className="mt-10 text-center text-xs text-gray-500">
-                By Signing Up, you agree to our Receiving Future Emails.
-            </p> */}
+      {error && (
+        <>
+          {/* <div className="rounded-md bg-red-50 p-4">
+                <div className="text-sm text-red-700">{error}</div>
+              </div> */}
+          <CustomSnackbar open={error} snackbarColor={"danger"} snackbarMessage={error} />
+        </>
+      )}
     </div>
   );
 };
