@@ -226,6 +226,10 @@ const PortfolioOptimizer = () => {
 
             {error && <CustomSnackbar open={error} close={() => setError("")} snackbarColor={"danger"} snackbarMessage={error} />}
           </div>
+          {!analysisResults &&
+            <p className="text-center text-xs text-gray-300">Provolo.ai</p>
+          }
+
           {/* Input Section ====================>>>>>>>>>>>>>>>>>>> END*/}
 
           {/* Output Section ====================>>>>>>>>>>>>>>>>>>> START*/}

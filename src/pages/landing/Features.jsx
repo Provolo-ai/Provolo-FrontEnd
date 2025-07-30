@@ -3,7 +3,7 @@ import React from 'react'
 const Features = () => {
     return (
         <div className="pb-10 bg-white">
-            <div className="mx-auto max-w-2xl px-6 lg:max-w-7xl lg:px-0">
+            <div className="mx-auto max-w-2xl p-6 lg:max-w-7xl lg:px-0">
                 {/* <h2 className="text-center text-base/7 text-indigo-600">Deploy faster</h2>
                 <p className="mx-auto mt-2 max-w-lg text-center text-4xl tracking-tight text-balance text-gray-950 sm:text-5xl">
                     Everything you need to deploy your app
@@ -15,12 +15,14 @@ const Features = () => {
                         <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] lg:rounded-l-[calc(2rem+1px)]">
                             <div className="px-8 pt-8 pb-3 sm:px-10 sm:pt-10 sm:pb-0">
                                 <p className="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">
-                                    Mobile friendly
+                                    Instant Improvements
                                 </p>
                                 <p className="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">
-                                    Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo.
+                                    No need to guess what works — our tool applies proven copywriting strategies to improve your profile.
                                 </p>
                             </div>
+
+
                             <div className="@container relative min-h-120 w-full grow max-lg:mx-auto max-lg:max-w-sm">
                                 <div className="absolute inset-x-10 top-10 bottom-0 overflow-hidden rounded-t-[12cqw] border-x-[3cqw] border-t-[3cqw] border-gray-700 bg-gray-900 shadow-2xl">
                                     <img
@@ -37,9 +39,10 @@ const Features = () => {
                         <div className="absolute inset-px rounded-lg bg-white max-lg:rounded-t-4xl" />
                         <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] max-lg:rounded-t-[calc(2rem+1px)]">
                             <div className="px-8 pt-8 sm:px-10 sm:pt-10">
-                                <p className="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">Performance</p>
+                                <p className="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">Win More Clients
+                                </p>
                                 <p className="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">
-                                    Lorem ipsum, dolor sit amet consectetur adipisicing elit maiores impedit.
+                                    Stand out in search results and boost conversions with polished, client-focused writing.
                                 </p>
                             </div>
                             <div className="flex flex-1 items-center justify-center px-8 max-lg:pt-10 max-lg:pb-12 sm:px-10 lg:pb-2">
@@ -56,9 +59,9 @@ const Features = () => {
                         <div className="absolute inset-px rounded-lg bg-white" />
                         <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)]">
                             <div className="px-8 pt-8 sm:px-10 sm:pt-10">
-                                <p className="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">Security</p>
+                                <p className="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">Works for Any Freelancer</p>
                                 <p className="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">
-                                    Morbi viverra dui mi arcu sed. Tellus semper adipiscing suspendisse semper morbi.
+                                    Whether you're a designer, developer, writer, or marketer — the tool adapts to your niche.
                                 </p>
                             </div>
                             <div className="@container flex flex-1 items-center max-lg:py-6 lg:pb-2">
@@ -76,10 +79,10 @@ const Features = () => {
                         <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] max-lg:rounded-b-[calc(2rem+1px)] lg:rounded-r-[calc(2rem+1px)]">
                             <div className="px-8 pt-8 pb-3 sm:px-10 sm:pt-10 sm:pb-0">
                                 <p className="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">
-                                    Powerful APIs
+                                    Increase Visibility
                                 </p>
                                 <p className="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">
-                                    Sit quis amet rutrum tellus ullamcorper ultricies libero dolor eget sem sodales gravida.
+                                    Get a headline and overview that perform better in Upwork’s search algorithm.
                                 </p>
                             </div>
                             <div className="relative min-h-120 w-full grow">

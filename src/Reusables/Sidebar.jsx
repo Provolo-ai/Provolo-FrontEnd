@@ -4,6 +4,7 @@ import Logo from "./Logo";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import useAuthStore from "../stores/authStore";
 import { Book, Feather, LogOut, Sparkles } from "lucide-react";
+import Feedback from "./Feedback";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -36,7 +37,7 @@ const Sidebar = () => {
     <div className="w-full sm:w-72 bg-white text-black h-screen flex flex-col p-6 border border-r-gray-200 text-sm">
       <div className="flex items-center gap-3 mb-10 px-3 w-fit text-gray-500">
         <Logo />
-        Provolo.ai  
+        Provolo.ai
       </div>
 
       <div className="flex flex-col gap-4 text-black text-start h-full">
@@ -62,7 +63,12 @@ const Sidebar = () => {
           Documentation
         </Link>
 
-        <span className="border mt-auto" />
+
+        <span className="border mt-auto border-gray-100" />
+
+        <Feedback />
+
+        <span className="border border-gray-100" />
 
         <button
           onClick={handleSignOut}

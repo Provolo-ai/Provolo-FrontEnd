@@ -109,20 +109,20 @@ export default function Example() {
 
                         <Link
                             to=""
-                            className="p-3 flex align-middle gap-3 rounded text-gray-500 hover:bg-gray-50 hover:text-gray-950 transition-all duration-300"
+                            className="p-3 flex align-middle gap-3 rounded text-gray-500 hover:text-gray-950 transition-all duration-300" text-sm
                         >
                             Features
                         </Link>
                         <Link
                             target="_blank"
                             to="https://buildsbyesuoladaniel.hashnode.space/provolo/provoloai-project-documentation"
-                            className="p-3 flex align-middle gap-3 rounded text-gray-500 hover:bg-gray-50 hover:text-gray-950 transition-all duration-300"
+                            className="p-3 flex align-middle gap-3 rounded text-gray-500 hover:text-gray-950 transition-all duration-300 text-sm"
                         >
                             Documentation
                         </Link>
                     </PopoverGroup>
                     <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-                        <Link to="/login" className=" text-gray-900 flex gap-3">Log In <MoveRight size={20} /></Link>
+                        <Link to="/login" className=" text-gray-900 flex gap-3 text-sm">Log In <MoveRight size={20} /></Link>
                     </div>
                 </nav>
                 <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
