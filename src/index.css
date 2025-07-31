@@ -8,7 +8,7 @@
     margin: 0;
     box-sizing: border-box;
 
-    /* outline: 1px dashed blue; */
+    /* outline: 1px dashed silver; */
 }
 
 body,
@@ -16,7 +16,7 @@ body,
     font-family: 'Inter', sans-serif;
 }
 
-h1{
+h1 {
     font-family: 'I´nter', sans-serif;
     letter-spacing: -1.92px;
     font-weight: 300;
@@ -29,7 +29,7 @@ h1{
 
 .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0, 255, 30, 0.3);
+    box-shadow: 0 4px 15px #DCD6FC;
 }
 
 .card {
@@ -43,6 +43,20 @@ h1{
     width: 24px;
     height: 24px;
     animation: spin 1s linear infinite;
+}
+
+.homeBg {
+    background-image: url(../src/assets/hero.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+}
+
+.feedback {
+    background-image: url(../src/assets/feedback.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top;
 }
 
 @keyframes spin {

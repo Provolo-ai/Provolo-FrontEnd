@@ -46,11 +46,11 @@ const Proposal = () => {
 
                     </div>
 
-                    <h1 className="text-4xl sm:text-5xl font-semibold text-center mb-2 mt-10 text-gray-400">
+                    <h1 className="text-4xl sm:text-5xl font-semibold text-center mb-2 mt-10 text-gray-300">
                         Ai Proposals
                     </h1>
-                    <p className="text-center text-gray-400 w-2/3 mx-auto">
-                        Input your portfolio details, let our AI agent provide tailored recommendations for optimization.
+                    <p className="text-center text-gray-300 w-2/3 mx-auto">
+                        Coming Soon: Streamline your workflow with intelligent proposal writing.
                     </p>
                 </div>
 

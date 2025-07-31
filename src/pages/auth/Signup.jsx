@@ -10,7 +10,8 @@ import TextInputField from "../../Reusables/TextInputField";
 import CustomButton from "../../Reusables/CustomButton";
 import { Link, useNavigate } from "@tanstack/react-router";
 import useAuthStore from "../../stores/authStore";
-import CustomModal from "../../Reusables/CustomModal";
+import UserName from "./UserName";
+import CustomSnackbar from "../../Reusables/CustomSnackbar";
 
 // Zod schema for signup form
 const signupSchema = z.object({
@@ -136,14 +137,14 @@ export default function Authentication() {
                 <Logo />
                 <div className="sm:mx-auto sm:w-full sm:max-w-lg bg-white p-10 mt-10 rounded-md border ">
                     <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                        <h2 className="text-center text-2xl/9 font-bold tracking-tight text-gray-900">Create your account</h2>
+                        <h2 className="text-center text-2xl/9 font-medium tracking-tight text-gray-900">Create your account</h2>
                     </div>
                     <form onSubmit={handleSubmit} className="space-y-6">
-                        {error && (
+                        {/* {error && (
                             <div className="rounded-md bg-red-50 p-4">
                                 <div className="text-sm text-red-700">{error}</div>
                             </div>
-                        )}
+                        )} */}
 
                         {/* Email Field */}
                         <div>
@@ -157,7 +158,7 @@ export default function Authentication() {
                                     autoComplete="email"
                                     label="Email"
                                     placeholder="example@mail.com"
-                                    iconStart={<Mail size={20}/>}
+                                    iconStart={<Mail size={20} />}
                                     onChange={(e) => {
                                         setEmail(e.target.value);
                                         validateField("email", e.target.value);
@@ -178,7 +179,7 @@ export default function Authentication() {
                                     required
                                     autoComplete="current-password"
                                     value={password}
-                                    iconStart={<Key size={20}/>}
+                                    iconStart={<Key size={20} />}
                                     onChange={(e) => {
                                         setPassword(e.target.value);
                                         validateField("password", e.target.value);
@@ -217,15 +218,23 @@ export default function Authentication() {
                         </Link>
                     </p>
                 </div>
+                {error && (
+                    <>
+                        {/* <div className="rounded-md bg-red-50 p-4">
+                <div className="text-sm text-red-700">{error}</div>
+              </div> */}
+                        <CustomSnackbar open={error} snackbarColor={"danger"} snackbarMessage={error} />
+                    </>
+                )}
                 <p className="mt-10 text-center text-xs text-gray-500">By signing up, you consent to receive occasional emails from us.</p>
             </div>
-            <CustomModal
+            <UserName
                 Title={"What Should We Call You?"}
             >
-          <div>
-            
-          </div>
-            </CustomModal>
+                <div>
+
+                </div>
+            </UserName>
         </>
     );
 }

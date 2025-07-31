@@ -1,14 +1,13 @@
 'use client'
 
-import { Children, useState } from 'react'
+import { useState } from 'react'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 import { AtSign, Sparkles } from 'lucide-react'
-import CustomButton from './CustomButton'
-import TextInputField from './TextInputField'
+import CustomButton from '../../Reusables/CustomButton'
+import TextInputField from '../../Reusables/TextInputField'
 
 
-export default function CustomModal() {
+export default function UserName() {
     const [open, setOpen] = useState(true)
     const [username, setUsername] = useState("");
     const [touched, setTouched] = useState({});
@@ -38,7 +37,7 @@ export default function CustomModal() {
                                     </div>
 
                                     <div className="text-center sm:mt-0 sm:text-left w-full">
-                                        <DialogTitle as="h3" className="text-2xl/9 font-bold tracking-tight text-gray-900 text-center mt-4">
+                                        <DialogTitle as="h3" className="text-2xl/9 font-medium tracking-tight text-gray-900 text-center mt-4">
                                             What should we call you?
                                         </DialogTitle>
 
@@ -49,7 +48,7 @@ export default function CustomModal() {
                                                 required
                                                 autoComplete="current-username"
                                                 value={username}
-                                                iconStart={<AtSign size={20}/>}
+                                                iconStart={<AtSign size={20} />}
                                                 onChange={(e) => {
                                                     setUsername(e.target.value);
                                                     validateField("username", e.target.value);
