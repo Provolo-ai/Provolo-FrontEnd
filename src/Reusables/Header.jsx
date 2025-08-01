@@ -110,13 +110,13 @@ export default function Example() {
 
                         <Link
                             to="#features"
-                            className="p-3 flex align-middle gap-3 rounded text-gray-500 hover:text-gray-950 transition-all duration-300 text-sm" 
+                            className="p-3 flex align-middle gap-3 rounded text-gray-500 hover:text-gray-950 transition-all duration-300 text-sm"
                         >
                             Features
                         </Link>
                         <Link
                             to="#testimonials"
-                            className="p-3 flex align-middle gap-3 rounded text-gray-500 hover:text-gray-950 transition-all duration-300 text-sm" 
+                            className="p-3 flex align-middle gap-3 rounded text-gray-500 hover:text-gray-950 transition-all duration-300 text-sm"
                         >
                             Testimonials
                         </Link>
@@ -156,6 +156,12 @@ export default function Example() {
                             <div className="-my-6 divide-y divide-gray-500/10 h-full flex flex-col justify-between">
 
                                 <div className="space-y-2 mb-auto py-6">
+                                    <Link
+                                        to="/login"
+                                        className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
+                                    >
+                                        Log in
+                                    </Link>
                                     <Link
                                         to="/signup"
                                         className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
