@@ -12,10 +12,10 @@ export default function Example() {
 
           <div className="mx-auto max-w-md text-center lg:mx-0 lg:flex-auto lg:py-32 lg:text-left">
             <h2 className="text-3xl tracking-tight text-balance text-white sm:text-5xl">
-              Boost your productivity. Start using our app today.
+              Built to Help You Win More Jobs
             </h2>
             <p className="mt-6 text-lg/8 text-pretty text-gray-300">
-              Ac euismod vel sit maecenas id pellentesque eu sed consectetur. Malesuada adipiscing sagittis vel nulla.
+              Provolo isn’t just productivity, it’s precision. Make every word work harder with AI-powered copywriting for freelancers who want results.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start">
               <Link
