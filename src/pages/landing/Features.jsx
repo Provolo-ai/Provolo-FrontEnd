@@ -1,75 +1,79 @@
 import React from 'react'
+import freelancerIcon from '../../assets/img/icons.png'
+import analytics from '../../assets/img/improvement.png'
+import Invite from '../../assets/img/invite.png'
+import visibility from '../../assets/img/graph.png'
 
 const Features = () => {
     return (
-        <div className="pb-10 bg-white">
-            <div className="mx-auto max-w-2xl p-6 lg:max-w-7xl lg:px-0">
-                {/* <h2 className="text-center text-base/7 text-indigo-600">Deploy faster</h2>
-                <p className="mx-auto mt-2 max-w-lg text-center text-4xl tracking-tight text-balance text-gray-950 sm:text-5xl">
-                    Everything you need to deploy your app
-                </p> */}
+        <div className="py-10 bg-white" id='features'>
+            <div className="mx-auto max-w-2xl px-6 md:px-6 lg:max-w-7xl lg:p-8">
 
-                <div className="grid gap-4 sm:mt-16 lg:grid-cols-3 lg:grid-rows-2">
+                <div className="grid gap-4 lg:grid-cols-3 lg:grid-rows-2">
                     <div className="relative lg:row-span-2">
                         <div className="absolute inset-px rounded-lg bg-white lg:rounded-l-4xl" />
                         <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] lg:rounded-l-[calc(2rem+1px)]">
                             <div className="px-8 pt-8 pb-3 sm:px-10 sm:pt-10 sm:pb-0">
-                                <p className="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">
-                                    Instant Improvements
+                                <p className="text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">
+                                    Smarter Copy. Better Results. Instantly
                                 </p>
                                 <p className="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">
-                                    No need to guess what works — our tool applies proven copywriting strategies to improve your profile.
+                                    Stop guessing what works. Provolo applies proven copywriting strategies to improve your profile and proposals automatically.
                                 </p>
                             </div>
 
 
-                            <div className="@container relative min-h-120 w-full grow max-lg:mx-auto max-lg:max-w-sm">
-                                <div className="absolute inset-x-10 top-10 bottom-0 overflow-hidden rounded-t-[12cqw] border-x-[3cqw] border-t-[3cqw] border-gray-700 bg-gray-900 shadow-2xl">
-                                    <img
-                                        alt=""
-                                        src="https://tailwindcss.com/plus-assets/img/component-images/bento-03-mobile-friendly.png"
-                                        className="size-full object-cover object-top"
-                                    />
+                            <div className="@container relative min-h-120 w-full grow max-lg:mx-auto max-lg:max-w-sm p-8">
+                                <div className="flex flex-col flex-1 items-center justify-center px-8 max-lg:pt-10 max-lg:pb-12 sm:px-10 lg:pb-10  p-8 h-full rounded-lg border border-gray-50 bg-gray-50 ">
+
+                                    <span className='flex align-middle items-center justify-between w-full'>
+                                        <p className='font-medium text-gray-500 text-md'>Proposal Performance</p>
+                                    </span>
+                                    <span className='flex align-middle items-center justify-between w-full'>
+                                        <p className='text-gray-500 text-sm'>Open Rate Boost</p>
+                                        {/* <p className='text-gray-500 text-xs py-1 px-2 rounded-md border'>+</p> */}
+                                    </span>
+                                    <span className="border border-gray-100 w-full mb-auto mt-5" />
+
+                                    <img src={analytics} alt="Upwork Icons"  />
+
                                 </div>
                             </div>
                         </div>
                         <div className="pointer-events-none absolute inset-px rounded-lg shadow-sm outline outline-black/5 lg:rounded-l-4xl" />
                     </div>
+
                     <div className="relative max-lg:row-start-1">
                         <div className="absolute inset-px rounded-lg bg-white max-lg:rounded-t-4xl" />
-                        <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] max-lg:rounded-t-[calc(2rem+1px)]">
-                            <div className="px-8 pt-8 sm:px-10 sm:pt-10">
-                                <p className="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">Win More Clients
+                        <div className="relative flex lg:h-fir h-[32vh] flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] max-lg:rounded-t-[calc(2rem+1px)]">
+                            <div className="px-8 pt-8 sm:px- sm:pt-10">
+                                <p className="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">Get More Invitations & Interviews
                                 </p>
                                 <p className="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">
-                                    Stand out in search results and boost conversions with polished, client-focused writing.
+                                    Rank higher in search results and convert more views into interviews with persuasive, client-focused copy.
                                 </p>
                             </div>
-                            <div className="flex flex-1 items-center justify-center px-8 max-lg:pt-10 max-lg:pb-12 sm:px-10 lg:pb-2">
-                                <img
-                                    alt=""
-                                    src="https://tailwindcss.com/plus-assets/img/component-images/bento-03-performance.png"
-                                    className="w-full max-lg:max-w-xs"
-                                />
+
+                            <div className="flex flex-1 items-center justify-center px-8 max-lg:pt-10 max-lg:pb-12 sm:px-8 lg:pb-2 relative">
+                                <img src={Invite} alt="Notification" className='rounded-lg absolute w-[45%] top-2  opacity-50 border-gray-100 border' />
+                                <img src={Invite} alt="Notification" className='rounded-lg absolute w-[65%] border-gray-100 border top-6  opacity-90' />
+                                <img src={Invite} alt="Notification" className='rounded-lg absolute w-[85%] shadow top-12 border-gray-100 border' />
                             </div>
                         </div>
                         <div className="pointer-events-none absolute inset-px rounded-lg shadow-sm outline outline-black/5 max-lg:rounded-t-4xl" />
                     </div>
+
                     <div className="relative max-lg:row-start-3 lg:col-start-2 lg:row-start-2">
                         <div className="absolute inset-px rounded-lg bg-white" />
                         <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)]">
                             <div className="px-8 pt-8 sm:px-10 sm:pt-10">
                                 <p className="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">Works for Any Freelancer</p>
                                 <p className="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">
-                                    Whether you're a designer, developer, writer, or marketer — the tool adapts to your niche.
+                                    Whether you're a designer, developer, writer, or marketer, Provolo adapts to your niche.
                                 </p>
                             </div>
-                            <div className="@container flex flex-1 items-center max-lg:py-6 lg:pb-2">
-                                <img
-                                    alt=""
-                                    src="https://tailwindcss.com/plus-assets/img/component-images/bento-03-security.png"
-                                    className="h-[min(152px,40cqw)] object-cover"
-                                />
+                            <div className="@container flex flex-1 items-center max-lg:py-6 lg:pb-2 px-8">
+                                <img src={freelancerIcon} alt="Upwork Icons" />
                             </div>
                         </div>
                         <div className="pointer-events-none absolute inset-px rounded-lg shadow-sm outline outline-black/5" />
@@ -79,23 +83,28 @@ const Features = () => {
                         <div className="relative flex h-full flex-col overflow-hidden rounded-[calc(var(--radius-lg)+1px)] max-lg:rounded-b-[calc(2rem+1px)] lg:rounded-r-[calc(2rem+1px)]">
                             <div className="px-8 pt-8 pb-3 sm:px-10 sm:pt-10 sm:pb-0">
                                 <p className="mt-2 text-lg font-medium tracking-tight text-gray-950 max-lg:text-center">
-                                    Increase Visibility
+                                    Optimized to Get You Seen
                                 </p>
                                 <p className="mt-2 max-w-lg text-sm/6 text-gray-600 max-lg:text-center">
-                                    Get a headline and overview that perform better in Upwork’s search algorithm.
+                                    Get a headline and overview written to boost performance in Upwork’s search algorithm, and attract more clients.
                                 </p>
                             </div>
-                            <div className="relative min-h-120 w-full grow">
-                                <div className="absolute top-10 right-0 bottom-0 left-10 overflow-hidden rounded-tl-xl bg-gray-900 shadow-2xl outline outline-white/10">
-                                    <div className="flex bg-gray-900 outline outline-white/5">
-                                        <div className="-mb-px flex text-sm/6 font-medium text-gray-400">
-                                            <div className="border-r border-b border-r-white/10 border-b-white/20 bg-white/5 px-4 py-2 text-white">
-                                                NotificationSetting.jsx
-                                            </div>
-                                            <div className="border-r border-gray-600/10 px-4 py-2">App.jsx</div>
-                                        </div>
-                                    </div>
-                                    <div className="px-6 pt-6 pb-14">{/* Your code example */}</div>
+                            <div className="@container relative min-h-120 w-full grow max-lg:mx-auto max-lg:max-w-sm p-8">
+                                <div className="flex flex-col flex-1 items-center justify-center px-8 max-lg:pt-10 max-lg:pb-12 sm:px-10 lg:pb-10 bg-gray-50 p-8 h-full rounded-lg border border-gray-100">
+
+                                    <img src={visibility} alt="Upwork Icons" />
+
+
+                                    <span className="border border-gray-100 w-full mt-auto mb-5" />
+
+                                    <span className='flex align-middle items-center justify-between w-full'>
+                                        <p className='text-gray-500 text-sm'>Profile views</p>
+                                        <p className='text-gray-500 text-xs py-1 px-2 rounded-md border border-gray-50'>Last 30 days</p>
+                                    </span>
+                                    <span className='flex align-middle items-center justify-between w-full'>
+                                        <p className='font-medium text-gray-500 text-xl'>308</p>
+                                    </span>
+
                                 </div>
                             </div>
                         </div>

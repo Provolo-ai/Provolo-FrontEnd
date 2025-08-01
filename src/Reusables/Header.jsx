@@ -26,6 +26,7 @@ import { Link } from '@tanstack/react-router'
 import { ArrowBigRight, ArrowRightIcon, MoveRight } from 'lucide-react'
 import Logo from "../Reusables/Logo";
 import Banner from '../pages/landing/Banner'
+import Feedback from './Feedback'
 
 
 const products = [
@@ -108,10 +109,16 @@ export default function Example() {
                     </Popover> */}
 
                         <Link
-                            to=""
-                            className="p-3 flex align-middle gap-3 rounded text-gray-500 hover:text-gray-950 transition-all duration-300" text-sm
+                            to="#features"
+                            className="p-3 flex align-middle gap-3 rounded text-gray-500 hover:text-gray-950 transition-all duration-300 text-sm" 
                         >
                             Features
+                        </Link>
+                        <Link
+                            to="#testimonials"
+                            className="p-3 flex align-middle gap-3 rounded text-gray-500 hover:text-gray-950 transition-all duration-300 text-sm" 
+                        >
+                            Testimonials
                         </Link>
                         <Link
                             target="_blank"
@@ -125,17 +132,15 @@ export default function Example() {
                         <Link to="/login" className=" text-gray-900 flex gap-3 text-sm">Log In <MoveRight size={20} /></Link>
                     </div>
                 </nav>
-                <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden">
+
+
+                <Dialog open={mobileMenuOpen} onClose={setMobileMenuOpen} className="lg:hidden ">
                     <div className="fixed inset-0 z-50" />
-                    <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
+                    <DialogPanel className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-white p-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10 max-h-screen ">
                         <div className="flex items-center justify-between">
                             <a href="#" className="-m-1.5 p-1.5">
                                 <span className="sr-only">Your Company</span>
-                                <img
-                                    alt=""
-                                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-                                    className="h-8 w-auto"
-                                />
+                                <Logo />
                             </a>
                             <button
                                 type="button"
@@ -146,51 +151,31 @@ export default function Example() {
                                 <XMarkIcon aria-hidden="true" className="size-6" />
                             </button>
                         </div>
-                        <div className="mt-6 flow-root">
-                            <div className="-my-6 divide-y divide-gray-500/10">
-                                <div className="space-y-2 py-6">
 
-                                    {/* <Disclosure as="div" className="-mx-3">
-                                    <DisclosureButton className="group flex w-full items-center justify-between rounded-lg py-2 pr-3.5 pl-3 text-base/7 font-semibold text-gray-900 hover:bg-gray-50">
-                                        Product
-                                        <ChevronDownIcon aria-hidden="true" className="size-5 flex-none group-data-open:rotate-180" />
-                                    </DisclosureButton>
-                                    <DisclosurePanel className="mt-2 space-y-2">
-                                        {[...products, ...callsToAction].map((item) => (
-                                            <DisclosureButton
-                                                key={item.name}
-                                                as="a"
-                                                href={item.href}
-                                                className="block rounded-lg py-2 pr-3 pl-6 text-sm/7 font-semibold text-gray-900 hover:bg-gray-50"
-                                            >
-                                                {item.name}
-                                            </DisclosureButton>
-                                        ))}
-                                    </DisclosurePanel>
-                                </Disclosure>
-                                <a
-                                    href="#"
-                                    className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
-                                >
-                                    Features
-                                </a> */}
+                        <div className="mt-6  h-full">
+                            <div className="-my-6 divide-y divide-gray-500/10 h-full flex flex-col justify-between">
 
-                                    <a
-                                        href="#"
+                                <div className="space-y-2 mb-auto py-6">
+                                    <Link
+                                        to="/signup"
                                         className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
                                     >
-                                        Marketplace
-                                    </a>
-                                    <a
-                                        href="#"
+                                        Get Started
+                                    </Link>
+                                    <Link
+                                        to="https://buildsbyesuoladaniel.hashnode.space/provolo/provoloai-project-documentation"
+                                        target='_blank'
                                         className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-gray-900 hover:bg-gray-50"
                                     >
-                                        Company
-                                    </a>
+                                        Documentation
+                                    </Link>
                                 </div>
-                                <div className="py-6">
-                                    <Link to="/login">Login</Link>
+
+                                <div className='pb-20'>
+                                    <span className="border border-gray-100" />
+                                    <Feedback />
                                 </div>
+
                             </div>
                         </div>
                     </DialogPanel>
