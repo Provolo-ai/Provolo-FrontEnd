@@ -220,9 +220,6 @@ export default function Authentication() {
                 </div>
                 {error && (
                     <>
-                        {/* <div className="rounded-md bg-red-50 p-4">
-                <div className="text-sm text-red-700">{error}</div>
-              </div> */}
                         <CustomSnackbar open={error} snackbarColor={"danger"} snackbarMessage={error} />
                     </>
                 )}

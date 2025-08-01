@@ -37,7 +37,7 @@ const Sidebar = () => {
     <div className="w-full sm:w-72 bg-white text-black h-screen flex flex-col p-6 border border-r-gray-200 text-sm">
       <div className="flex items-center gap-3 mb-10 px-3 w-fit text-gray-500">
         <Logo />
-        Provolo.ai
+        Provolo.org
       </div>
 
       <div className="flex flex-col gap-4 text-black text-start h-full">
@@ -60,7 +60,7 @@ const Sidebar = () => {
           className="p-3 flex align-middle gap-3 rounded text-gray-500 hover:bg-gray-50 hover:text-gray-950 transition-all duration-300"
         >
           <Book size={20} />
-          Documentation
+          Docs
         </Link>
 
 

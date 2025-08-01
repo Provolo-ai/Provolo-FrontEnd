@@ -1,4 +1,6 @@
 import React from 'react'
+import CustomButton from '../Reusables/CustomButton'
+import { Link } from '@tanstack/react-router'
 
 export default function Error() {
     return (
@@ -94,19 +96,13 @@ export default function Error() {
                     <h1 className="text-4xl sm:text-5xl font-semibold text-center mb-2 mt-10 text-gray-400">
                         Page Not Found
                     </h1>
-                    <p className="text-center text-gray-400 w-2/3 mx-auto">
+                    <p className="text-center text-gray-400 lg:w-2/3 mx-auto text-sm">
                         But if you don't change your direction, and if you keep looking, you may end up where you are heading.
                     </p>
-                    <div className="mt-10 flex items-center justify-center gap-x-6">
-                        <a
-                            href="#"
-                            className="rounded-md bg-black px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-black/80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                        >
-                            Go back home
-                        </a>
-                        <a href="#" className="text-sm font-semibold text-gray-900">
-                            Contact support <span aria-hidden="true">&rarr;</span>
-                        </a>
+                    <div className="mt-10 items-center justify-center gap-x-6">
+                        <Link to="/" type="submit"  className="btn-primary w-1/3 mx-auto px-6 py-4 rounded-md text-white text-sm">
+                            Get back to Provolo
+                        </Link>
                     </div>
                 </div>
 

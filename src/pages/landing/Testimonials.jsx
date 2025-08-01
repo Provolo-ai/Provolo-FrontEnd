@@ -53,7 +53,7 @@ const posts = [
   
   export default function Testimonials() {
     return (
-      <div className="py-24 sm:py-32 bg-white">
+      <div className="py-24 sm:py-32 bg-" id="testimonials">
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl lg:mx-0">
             <h2 className="text-4xl tracking-tight text-pretty text-gray-900 sm:text-5xl">Testimonials</h2>

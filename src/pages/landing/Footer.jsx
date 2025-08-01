@@ -8,7 +8,7 @@ export default function Example() {
   return (
     <div className="bg-white">
       <div className="mx-auto max-w-7xl py-24 sm:py-10">
-        <div className="relative isolate overflow-hidden bg-gray-900 px-6 pt-16 sm:rounded-3xl sm:px-16 md:pt-24 lg:flex lg:gap-x-20 lg:px-24 lg:pt-0">
+        <div className="relative isolate overflow-hidden bg-gray-900 px-6 pt-16 lg:rounded-3xl  rounded-0 sm:px-16 md:pt-24 lg:flex lg:gap-x-20 lg:px-24 lg:pt-0">
 
           <div className="mx-auto max-w-md text-center lg:mx-0 lg:flex-auto lg:py-32 lg:text-left">
             <h2 className="text-3xl tracking-tight text-balance text-white sm:text-5xl">
@@ -20,7 +20,7 @@ export default function Example() {
             <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start">
               <Link
                 to="/signup"
-                className='bg-white hover:bg-gray-100 transition-all duration-300 p-3 px-6 rounded-md flex items-center gap-3 hover:gap-5 w-fit'
+                className='bg-white hover:bg-gray-100 transition-all duration-300 p-3 px-6 rounded-md flex items-center gap-3 hover:gap-5 w-fit text-sm'
               >
                 Get Started
                 <MoveRight size={20} />
@@ -40,15 +40,14 @@ export default function Example() {
         </div>
 
 
-        <div className="flex mt-10 justify-between items-center border-t border-gray-200 pt-10">
+        <div className="lg:flex mt-10 lg:justify-between items-center border-t border-gray-200 pt-10 px-6 lg:px-8">
 
-          <div className="flex items-center gap-2 text-md">
+          <div className="flex items-center lg:gap-2 text-md justify-center">
             <Logo />
-            <Copyright size={15} />
-            <p>Provolo '25</p>
+            <p className="lg:flex hidden align-middle items-center gap-3 text-sm">            <Copyright size={15} />Provolo '25</p>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 justify-center">
             <Link
               target="_blank"
               to="https://buildsbyesuoladaniel.hashnode.space/provolo/terms-and-conditions"
