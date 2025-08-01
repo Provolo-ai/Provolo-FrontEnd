@@ -1,4 +1,29 @@
+import { LogOut } from "lucide-react";
+import React from "react";
+import { useNavigate, useRouterState } from "@tanstack/react-router";
+import useAuthStore from "../stores/authStore";
+// import { LogOut } from "lucide-react";
+
 export const MobilePageModal = ({ operatingSystem }) => {
+
+  const navigate = useNavigate();
+  const location = useRouterState({ select: (s) => s.location });
+
+  const signOut = useAuthStore((state) => state.signOut);
+  const clearAuth = useAuthStore((state) => state.clearAuth);
+
+  const handleSignOut = async () => {
+    try {
+      clearAuth();
+      await signOut();
+      navigate({ to: "/login", replace: true });
+    } catch (error) {
+      console.error("Error signing out:", error);
+      clearAuth();
+      navigate({ to: "/login", replace: true });
+    }
+  };
+
   return (
 
     <div className="flex-1 flex flex-col overflow-y-auto">
@@ -59,11 +84,21 @@ export const MobilePageModal = ({ operatingSystem }) => {
           <h1 className="text-4xl sm:text-5xl font-semibold text-center mb-2 mt-10 text-gray-400">
             Switch Devices
           </h1>
-          <p className="text-center text-gray-400 w-2/3 mx-auto">
-            It looks like you're using a mobile device ({operatingSystem}). This page is only accessible on laptops or tablets.
+          <p className="text-center text-gray-400 lg:w-2/3 mx-auto text-sm">
+            It looks like you're browsing on a mobile device ({operatingSystem}).
+            This page is best viewed on a laptop or tablet.
+            Please switch to a larger screen to continue.
           </p>
-          <p className="mt-4 font-medium">Please switch to a desktop or tablet to continue.</p>
+          {/* <p className="mt-4 text-sm text-gray-400">Please switch to a desktop or tablet to continue.</p> */}
         </div>
+
+        <button
+          onClick={handleSignOut}
+          className="text-left text-red-400 transition-all duration-300 rounded-md p-3 flex align-middle gap-3 hover:bg-red-50 mx-auto"
+        >
+          <LogOut size={20} />
+          Log Out
+        </button>
 
       </div>
     </div>

@@ -8,7 +8,7 @@ export const Hero = () => {
     return (
         <div className="bg-white">
 
-            <div className="relative isolate px-6 pt-14 lg:px-8">
+            <div className="relative isolate px-6 pt-5 lg:px-8">
                 <div className="mx-auto max-w-7xl lg:p-36 p-16 sm:py-48 lg:py-40 rounded-2xl homeBg">
                     <div className="text-center">
                         <h1 className="tracking-tight text-balance text-white lg:text-7xl md:text-7xl text-4xl font-medium">

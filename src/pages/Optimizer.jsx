@@ -166,7 +166,7 @@ const PortfolioOptimizer = () => {
     <div className="flex-1 flex flex-col overflow-y-auto">
       <div className="p-6 sm:p-10 max-w-4xl mx-auto w-full">
         <div>
-
+          <h1 className="mb-3 text-gray-300">Welcome, Danielafriheart</h1>
           {/* Input Section ====================>>>>>>>>>>>>>>>>>>> START*/}
           <div className="mb-8 p-10 bg-white rounded-lg border border-gray-200">
             <h2 className="text-3xl font-medium mb-6">Let’s Get to Know Your Portfolio</h2>
