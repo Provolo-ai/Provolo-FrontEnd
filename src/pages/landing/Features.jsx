@@ -1,8 +1,8 @@
 import React from 'react'
-import freelancerIcon from '../../assets/icons.png'
-import analytics from '../../assets/improvement.png'
-import Invite from '../../assets/invite.png'
-import visibility from '../../assets/graph.png'
+import freelancerIcon from '../../assets/img/icons.png'
+import analytics from '../../assets/img/improvement.png'
+import Invite from '../../assets/img/invite.png'
+import visibility from '../../assets/img/graph.png'
 
 const Features = () => {
     return (
@@ -33,7 +33,7 @@ const Features = () => {
                                         <p className='text-gray-500 text-sm'>Open Rate Boost</p>
                                         {/* <p className='text-gray-500 text-xs py-1 px-2 rounded-md border'>+</p> */}
                                     </span>
-                                    <span className="border border-gray-200 w-full mb-auto mt-5" />
+                                    <span className="border border-gray-100 w-full mb-auto mt-5" />
 
                                     <img src={analytics} alt="Upwork Icons"  />
 

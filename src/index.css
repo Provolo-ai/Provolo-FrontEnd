@@ -46,14 +46,14 @@ h1 {
 }
 
 .homeBg {
-    background-image: url(../src/assets/hero.jpg);
+    background-image: url(../src/assets/img/hero.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: bottom;
 }
 
 .feedback {
-    background-image: url(../src/assets/feedback.jpg);
+    background-image: url(../src/assets/img/feedback.jpg);
     background-size: cover;
     background-repeat: no-repeat;
     background-position: top;
