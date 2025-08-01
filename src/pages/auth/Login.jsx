@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../lib/firebase";
+import { auth, db } from "../../lib/firebase";
 import Logo from "../../Reusables/Logo";
 import TextInputField from "../../Reusables/TextInputField";
 import CustomButton from "../../Reusables/CustomButton";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { getCleanErrorMessage } from "../../utils/firebaseError.util";
+import { ensureUserExists } from "../../utils/firebase.util";
 import useAuthStore from "../../stores/authStore";
 import { Key, Mail } from "lucide-react";
 import CustomSnackbar from "../../Reusables/CustomSnackbar";
-
 
 const Login = () => {
   const navigate = useNavigate();
@@ -26,9 +26,13 @@ const Login = () => {
     try {
       setLoading(true);
       setError("");
+      
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
 
+      // Ensure user exists in Firestore
+      await ensureUserExists(db, user);
+      
       setUser(user);
       navigate({ to: "/optimizer", replace: true });
     } catch (error) {
@@ -46,6 +50,7 @@ const Login = () => {
     }
     await signInWithEmail(email, password);
   };
+  
   return (
     <div className="flex min-h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-gray-50">
       <Logo />
@@ -114,9 +119,6 @@ const Login = () => {
       </div>
       {error && (
         <>
-          {/* <div className="rounded-md bg-red-50 p-4">
-                <div className="text-sm text-red-700">{error}</div>
-              </div> */}
           <CustomSnackbar open={error} snackbarColor={"danger"} snackbarMessage={error} />
         </>
       )}
