@@ -1,27 +1,31 @@
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { z } from "zod";
-import { Check, Key, KeyRound, Mail, X } from "lucide-react";
+import { Check, Key, Mail, X } from "lucide-react";
 import { auth, db } from "../../lib/firebase";
-import { saveNewsletterSubscription } from "../../utils/firebase.util";
+import { ensureUserExists } from "../../utils/firebase.util";
 import { getCleanErrorMessage } from "../../utils/firebaseError.util";
 import Logo from "../../Reusables/Logo";
 import TextInputField from "../../Reusables/TextInputField";
 import CustomButton from "../../Reusables/CustomButton";
 import { Link, useNavigate } from "@tanstack/react-router";
 import useAuthStore from "../../stores/authStore";
-import UserName from "./UserName";
 import CustomSnackbar from "../../Reusables/CustomSnackbar";
+import { isDisposableEmail } from "../../utils/disposableEmails.util";
 
-// Zod schema for signup form
+// Updated Zod schema for signup form with disposable email check
 const signupSchema = z.object({
-  email: z.string().min(1, "Email is required").email("Enter a valid email address"),
+  email: z
+    .email("Enter a valid email address")
+    .refine((email) => !isDisposableEmail(email), {
+      message: "Temporary or disposable email addresses are not allowed. Please use a permanent email address."
+    }),
   password: z
     .string()
     .min(8, "Password must be at least 8 characters")
     .regex(/(?=.*[a-zA-Z])/, "Must contain at least one letter")
     .regex(/(?=.*\d)/, "Must contain at least one number")
-    .regex(/(?=.*[!@#$%^&*(),.?":{}|<>])/, "Must contain at least one special character"),
+    .regex(/(?=.*[!@#$%^&*(),.?\":{}|<>])/, "Must contain at least one special character"),
 });
 
 export default function Authentication() {
@@ -41,7 +45,7 @@ export default function Authentication() {
       minLength: password.length >= 8,
       hasLetter: /(?=.*[a-zA-Z])/.test(password),
       hasNumber: /(?=.*\d)/.test(password),
-      hasSpecial: /(?=.*[!@#$%^&*(),.?":{}|<>])/.test(password),
+      hasSpecial: /(?=.*[!@#$%^&*(),.?\":{}|<>])/.test(password),
     };
   };
 
@@ -55,16 +59,24 @@ export default function Authentication() {
   const validateField = (name, value) => {
     try {
       if (name === "email") {
-        signupSchema.shape.email.parse(value);
+        // Use the complete schema with refinements
+        signupSchema.pick({ email: true }).parse({ email: value });
         setValidationErrors((prev) => ({ ...prev, email: "" }));
       } else if (name === "password") {
-        signupSchema.shape.password.parse(value);
+        signupSchema.pick({ password: true }).parse({ password: value });
         setValidationErrors((prev) => ({ ...prev, password: "" }));
       }
     } catch (error) {
       if (error instanceof z.ZodError) {
-        // Safely access the first error message
-        const errorMessage = error.errors?.[0]?.message || "Invalid input";
+        // Safe error message extraction
+        let errorMessage = "Invalid input";
+        
+        if (error.errors && error.errors.length > 0 && error.errors[0].message) {
+          errorMessage = error.errors[0].message;
+        } else if (error.issues && error.issues.length > 0 && error.issues[0].message) {
+          errorMessage = error.issues[0].message;
+        }
+        
         setValidationErrors((prev) => ({
           ...prev,
           [name]: errorMessage,
@@ -73,16 +85,17 @@ export default function Authentication() {
     }
   };
 
-  // In the signUpWithEmail function, replace the saveNewsletterSubscription call:
-  
   const signUpWithEmail = async (email, password) => {
     try {
       setLoading(true);
       setError("");
-  
+
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-  
+
+      // Ensure user exists in Firestore
+      await ensureUserExists(db, user);
+
       const userData = {
         uid: user.uid,
         email: user.email,
@@ -103,26 +116,28 @@ export default function Authentication() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     // Run form validation
     const validationResult = signupSchema.safeParse({ email, password });
-
+  
     if (!validationResult.success) {
       const newErrors = {};
-      validationResult.error.errors?.forEach((error) => {
-        if (error.path?.[0]) {
-          newErrors[error.path[0]] = error.message || "Invalid input";
-        }
+      
+      // Handle Zod validation errors
+      validationResult.error?.errors?.forEach((error) => {
+        const field = error.path[0];
+        newErrors[field] = error.message;
       });
+      
       setValidationErrors(newErrors);
       setError("Please fix the errors below");
       return;
     }
-
+  
     // Clear any previous errors
     setValidationErrors({});
     setError("");
-
+  
     await signUpWithEmail(email, password);
   };
 
@@ -181,7 +196,6 @@ export default function Authentication() {
                   label="Password"
                   placeholder="**********"
                   touched={touched.password || validationErrors.password}
-                  error={validationErrors.password}
                 />
 
                 {/* Password Requirements */}
