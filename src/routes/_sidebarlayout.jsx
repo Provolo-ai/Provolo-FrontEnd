@@ -4,6 +4,7 @@ import useAuthStore from "../stores/authStore";
 import { MobilePageModal } from "../pages/MobilePageModal";
 import { detectSystem } from "../utils/detectSystem.util";
 import { useEffect, useState } from "react";
+import UserName from "../pages/auth/UserName";
 
 const isAuthenticated = () => {
   // Get auth state from Zustand store
@@ -29,6 +30,7 @@ export const Route = createFileRoute("/_sidebarlayout")({
 
 function RouteComponent() {
   const [operatingSystem, setOperatingSystem] = useState(null);
+  const user = useAuthStore((state) => state.user);
   
   useEffect(() => {
     const os = detectSystem();
@@ -37,8 +39,16 @@ function RouteComponent() {
   
   const isMobile = operatingSystem === "android" || operatingSystem === "ios";
   
+  // Check if user's displayName is null or empty
+  const hasDisplayName = user?.displayName && user.displayName.trim() !== "";
+  
   if (isMobile) {
     return <MobilePageModal operatingSystem={operatingSystem} />;
+  }
+
+  // Show UserName component if displayName is missing
+  if (!hasDisplayName) {
+    return <UserName />;
   }
 
   return (
