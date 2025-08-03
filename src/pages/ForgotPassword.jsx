@@ -20,6 +20,7 @@ const ForgotPassword = () => {
     const [email, setEmail] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [emailSent, setEmailSent] = useState(false);
     const [success, setSuccess] = useState("");
     const [touched, setTouched] = useState({});
     const [validationErrors, setValidationErrors] = useState({});
@@ -54,11 +55,18 @@ const ForgotPassword = () => {
         try {
             setLoading(true);
             setError("");
-            setSuccess("");
             
-            const response = await sendPasswordResetEmail(auth, email);
-            console.log(response);
-            setSuccess("Password reset email sent! Check your inbox.");
+            await sendPasswordResetEmail(auth, email);
+            
+            // Use existing success state instead of toast
+            setSuccess("Password reset email sent! Check your inbox and spam folder.");
+            setEmailSent(true);
+            
+            // Navigate to login after a short delay
+            setTimeout(() => {
+                navigate({ to: "/login" });
+            }, 15_000);
+            
         } catch (error) {
             setError(getCleanErrorMessage(error));
         } finally {
@@ -97,53 +105,78 @@ const ForgotPassword = () => {
             <Logo />
             <div className="sm:mx-auto sm:w-full sm:max-w-lg bg-white p-10 mt-10 rounded-md border">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                    <h2 className="text-center text-2xl/9 font-bold tracking-tight text-gray-900">Forgot Password?</h2>
+                    <h2 className="text-center text-2xl/9 font-bold tracking-tight text-gray-900">
+                        {emailSent ? "Email Sent!" : "Forgot Password?"}
+                    </h2>
+                    {emailSent && (
+                        <p className="mt-2 text-center text-sm text-gray-600">
+                            Redirecting you to login...
+                        </p>
+                    )}
                 </div>
-                <form onSubmit={handleSubmit} className="space-y-6">
-                    {error && (
-                        <div className="rounded-md bg-red-50 p-4">
-                            <div className="text-sm text-red-700">{error}</div>
+                
+                {!emailSent ? (
+                    <form onSubmit={handleSubmit} className="space-y-6">
+                        {error && (
+                            <div className="rounded-md bg-red-50 p-4">
+                                <div className="text-sm text-red-700">{error}</div>
+                            </div>
+                        )}
+                        
+                        <div>
+                            <div className="mt-2">
+                                <TextInputField
+                                    id="email"
+                                    name="email"
+                                    required
+                                    type="email"
+                                    value={email}
+                                    autoComplete="email"
+                                    label="Email"
+                                    iconStart={<Mail size={20} />}
+                                    placeholder="example@mail.com"
+                                    onChange={(e) => {
+                                        setEmail(e.target.value);
+                                        validateField("email", e.target.value);
+                                    }}
+                                    onBlur={() => setTouched((prev) => ({ ...prev, email: true }))}
+                                    touched={touched.email || validationErrors.email}
+                                    error={validationErrors.email}
+                                    disabled={loading}
+                                />
+                            </div>
                         </div>
-                    )}
-                    {success && (
-                        <div className="rounded-md bg-green-50 p-4">
-                            <div className="text-sm text-green-700">{success}</div>
-                        </div>
-                    )}
-                    <div>
-                        <div className="mt-2">
-                            <TextInputField
-                                id="email"
-                                name="email"
-                                required
-                                type="email"
-                                value={email}
-                                autoComplete="email"
-                                label="Email"
-                                iconStart={<Mail size={20} />}
-                                placeholder="example@mail.com"
-                                onChange={(e) => {
-                                    setEmail(e.target.value);
-                                    validateField("email", e.target.value);
-                                }}
-                                onBlur={() => setTouched((prev) => ({ ...prev, email: true }))}
-                                touched={touched.email || validationErrors.email}
-                                error={validationErrors.email}
-                                disabled={loading}
-                            />
-                        </div>
-                    </div>
 
-                    <div>
-                        <CustomButton 
-                            type="submit" 
-                            disabled={loading} 
-                            className="bg-red-600 hover:bg-red-500 transition-all duration-300"
-                        >
-                            {loading ? "Sending..." : "Send Reset Email"}
-                        </CustomButton>
+                        <div>
+                            <CustomButton 
+                                type="submit" 
+                                disabled={loading || emailSent} 
+                                className="bg-red-600 hover:bg-red-500 transition-all duration-300"
+                            >
+                                {loading ? "Sending..." : emailSent ? "Email Sent" : "Send Reset Email"}
+                            </CustomButton>
+                        </div>
+                    </form>
+                ) : (
+                    <div className="text-center py-8">
+                        <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100 mb-4">
+                            <Mail className="h-6 w-6 text-green-600" />
+                        </div>
+                        <p className="text-sm text-gray-600">
+                            Check your email for the password reset link.
+                        </p>
                     </div>
-                </form>
+                )}
+                
+                <p className="mt-5 text-center text-xs text-gray-500">
+                    Remember your password?{" "}
+                    <button 
+                        onClick={() => navigate({ to: "/login" })}
+                        className="underline text-gray-600 hover:text-gray-500"
+                    >
+                        Sign In
+                    </button>
+                </p>
             </div>
         </div>
     );
