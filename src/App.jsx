@@ -5,6 +5,7 @@ import { Route, Routes, useLocation } from 'react-router-dom';
 import Authentication from './pages/Authentication';
 import Header from './Reusables/Header';
 import Error from './pages/Error';
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 
 
@@ -13,6 +14,7 @@ const App = () => {
 
   return (
     <div>
+      <SpeedInsights/>
       {/* Show Header unless we're on /optimiser */}
       {location.pathname !== '/optimiser' && <Header />}
 
