@@ -9,11 +9,11 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ForgotpasswordRouteImport } from './routes/forgotpassword'
 import { Route as ErrorRouteImport } from './routes/error'
 import { Route as SidebarlayoutRouteImport } from './routes/_sidebarlayout'
 import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as LayoutIndexRouteImport } from './routes/_layout.index'
+import { Route as AuthForgotpasswordRouteImport } from './routes/_auth/forgotpassword'
 import { Route as AuthProtectRouteImport } from './routes/_auth/_protect'
 import { Route as SidebarlayoutProtectedProposalRouteImport } from './routes/_sidebarlayout._protected/proposal'
 import { Route as SidebarlayoutProtectedOptimizerRouteImport } from './routes/_sidebarlayout._protected/optimizer'
@@ -21,11 +21,6 @@ import { Route as SidebarlayoutProtectedExampleRouteImport } from './routes/_sid
 import { Route as AuthProtectSignupRouteImport } from './routes/_auth/_protect.signup'
 import { Route as AuthProtectLoginRouteImport } from './routes/_auth/_protect.login'
 
-const ForgotpasswordRoute = ForgotpasswordRouteImport.update({
-  id: '/forgotpassword',
-  path: '/forgotpassword',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ErrorRoute = ErrorRouteImport.update({
   id: '/error',
   path: '/error',
@@ -43,6 +38,11 @@ const LayoutIndexRoute = LayoutIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => LayoutRoute,
+} as any)
+const AuthForgotpasswordRoute = AuthForgotpasswordRouteImport.update({
+  id: '/_auth/forgotpassword',
+  path: '/forgotpassword',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const AuthProtectRoute = AuthProtectRouteImport.update({
   id: '/_auth/_protect',
@@ -79,7 +79,7 @@ const AuthProtectLoginRoute = AuthProtectLoginRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/error': typeof ErrorRoute
-  '/forgotpassword': typeof ForgotpasswordRoute
+  '/forgotpassword': typeof AuthForgotpasswordRoute
   '/': typeof LayoutIndexRoute
   '/login': typeof AuthProtectLoginRoute
   '/signup': typeof AuthProtectSignupRoute
@@ -89,7 +89,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/error': typeof ErrorRoute
-  '/forgotpassword': typeof ForgotpasswordRoute
+  '/forgotpassword': typeof AuthForgotpasswordRoute
   '/': typeof LayoutIndexRoute
   '/login': typeof AuthProtectLoginRoute
   '/signup': typeof AuthProtectSignupRoute
@@ -102,8 +102,8 @@ export interface FileRoutesById {
   '/_layout': typeof LayoutRouteWithChildren
   '/_sidebarlayout': typeof SidebarlayoutRouteWithChildren
   '/error': typeof ErrorRoute
-  '/forgotpassword': typeof ForgotpasswordRoute
   '/_auth/_protect': typeof AuthProtectRouteWithChildren
+  '/_auth/forgotpassword': typeof AuthForgotpasswordRoute
   '/_layout/': typeof LayoutIndexRoute
   '/_auth/_protect/login': typeof AuthProtectLoginRoute
   '/_auth/_protect/signup': typeof AuthProtectSignupRoute
@@ -137,8 +137,8 @@ export interface FileRouteTypes {
     | '/_layout'
     | '/_sidebarlayout'
     | '/error'
-    | '/forgotpassword'
     | '/_auth/_protect'
+    | '/_auth/forgotpassword'
     | '/_layout/'
     | '/_auth/_protect/login'
     | '/_auth/_protect/signup'
@@ -151,19 +151,12 @@ export interface RootRouteChildren {
   LayoutRoute: typeof LayoutRouteWithChildren
   SidebarlayoutRoute: typeof SidebarlayoutRouteWithChildren
   ErrorRoute: typeof ErrorRoute
-  ForgotpasswordRoute: typeof ForgotpasswordRoute
   AuthProtectRoute: typeof AuthProtectRouteWithChildren
+  AuthForgotpasswordRoute: typeof AuthForgotpasswordRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/forgotpassword': {
-      id: '/forgotpassword'
-      path: '/forgotpassword'
-      fullPath: '/forgotpassword'
-      preLoaderRoute: typeof ForgotpasswordRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/error': {
       id: '/error'
       path: '/error'
@@ -191,6 +184,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof LayoutIndexRouteImport
       parentRoute: typeof LayoutRoute
+    }
+    '/_auth/forgotpassword': {
+      id: '/_auth/forgotpassword'
+      path: '/forgotpassword'
+      fullPath: '/forgotpassword'
+      preLoaderRoute: typeof AuthForgotpasswordRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/_auth/_protect': {
       id: '/_auth/_protect'
@@ -282,8 +282,8 @@ const rootRouteChildren: RootRouteChildren = {
   LayoutRoute: LayoutRouteWithChildren,
   SidebarlayoutRoute: SidebarlayoutRouteWithChildren,
   ErrorRoute: ErrorRoute,
-  ForgotpasswordRoute: ForgotpasswordRoute,
   AuthProtectRoute: AuthProtectRouteWithChildren,
+  AuthForgotpasswordRoute: AuthForgotpasswordRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
