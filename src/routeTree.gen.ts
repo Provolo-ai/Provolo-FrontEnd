@@ -13,7 +13,8 @@ import { Route as ErrorRouteImport } from './routes/error'
 import { Route as SidebarlayoutRouteImport } from './routes/_sidebarlayout'
 import { Route as LayoutRouteImport } from './routes/_layout'
 import { Route as LayoutIndexRouteImport } from './routes/_layout.index'
-import { Route as AuthForgotpasswordRouteImport } from './routes/_auth/forgotpassword'
+import { Route as AuthResetPasswordRouteImport } from './routes/_auth/reset-password'
+import { Route as AuthForgotPasswordRouteImport } from './routes/_auth/forgot-password'
 import { Route as AuthProtectRouteImport } from './routes/_auth/_protect'
 import { Route as SidebarlayoutProtectedProposalRouteImport } from './routes/_sidebarlayout._protected/proposal'
 import { Route as SidebarlayoutProtectedOptimizerRouteImport } from './routes/_sidebarlayout._protected/optimizer'
@@ -39,9 +40,14 @@ const LayoutIndexRoute = LayoutIndexRouteImport.update({
   path: '/',
   getParentRoute: () => LayoutRoute,
 } as any)
-const AuthForgotpasswordRoute = AuthForgotpasswordRouteImport.update({
-  id: '/_auth/forgotpassword',
-  path: '/forgotpassword',
+const AuthResetPasswordRoute = AuthResetPasswordRouteImport.update({
+  id: '/_auth/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthForgotPasswordRoute = AuthForgotPasswordRouteImport.update({
+  id: '/_auth/forgot-password',
+  path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthProtectRoute = AuthProtectRouteImport.update({
@@ -79,7 +85,8 @@ const AuthProtectLoginRoute = AuthProtectLoginRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/error': typeof ErrorRoute
-  '/forgotpassword': typeof AuthForgotpasswordRoute
+  '/forgot-password': typeof AuthForgotPasswordRoute
+  '/reset-password': typeof AuthResetPasswordRoute
   '/': typeof LayoutIndexRoute
   '/login': typeof AuthProtectLoginRoute
   '/signup': typeof AuthProtectSignupRoute
@@ -89,7 +96,8 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/error': typeof ErrorRoute
-  '/forgotpassword': typeof AuthForgotpasswordRoute
+  '/forgot-password': typeof AuthForgotPasswordRoute
+  '/reset-password': typeof AuthResetPasswordRoute
   '/': typeof LayoutIndexRoute
   '/login': typeof AuthProtectLoginRoute
   '/signup': typeof AuthProtectSignupRoute
@@ -103,7 +111,8 @@ export interface FileRoutesById {
   '/_sidebarlayout': typeof SidebarlayoutRouteWithChildren
   '/error': typeof ErrorRoute
   '/_auth/_protect': typeof AuthProtectRouteWithChildren
-  '/_auth/forgotpassword': typeof AuthForgotpasswordRoute
+  '/_auth/forgot-password': typeof AuthForgotPasswordRoute
+  '/_auth/reset-password': typeof AuthResetPasswordRoute
   '/_layout/': typeof LayoutIndexRoute
   '/_auth/_protect/login': typeof AuthProtectLoginRoute
   '/_auth/_protect/signup': typeof AuthProtectSignupRoute
@@ -115,7 +124,8 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/error'
-    | '/forgotpassword'
+    | '/forgot-password'
+    | '/reset-password'
     | '/'
     | '/login'
     | '/signup'
@@ -125,7 +135,8 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/error'
-    | '/forgotpassword'
+    | '/forgot-password'
+    | '/reset-password'
     | '/'
     | '/login'
     | '/signup'
@@ -138,7 +149,8 @@ export interface FileRouteTypes {
     | '/_sidebarlayout'
     | '/error'
     | '/_auth/_protect'
-    | '/_auth/forgotpassword'
+    | '/_auth/forgot-password'
+    | '/_auth/reset-password'
     | '/_layout/'
     | '/_auth/_protect/login'
     | '/_auth/_protect/signup'
@@ -152,7 +164,8 @@ export interface RootRouteChildren {
   SidebarlayoutRoute: typeof SidebarlayoutRouteWithChildren
   ErrorRoute: typeof ErrorRoute
   AuthProtectRoute: typeof AuthProtectRouteWithChildren
-  AuthForgotpasswordRoute: typeof AuthForgotpasswordRoute
+  AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
+  AuthResetPasswordRoute: typeof AuthResetPasswordRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -185,11 +198,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutIndexRouteImport
       parentRoute: typeof LayoutRoute
     }
-    '/_auth/forgotpassword': {
-      id: '/_auth/forgotpassword'
-      path: '/forgotpassword'
-      fullPath: '/forgotpassword'
-      preLoaderRoute: typeof AuthForgotpasswordRouteImport
+    '/_auth/reset-password': {
+      id: '/_auth/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof AuthResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_auth/forgot-password': {
+      id: '/_auth/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof AuthForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_auth/_protect': {
@@ -283,7 +303,8 @@ const rootRouteChildren: RootRouteChildren = {
   SidebarlayoutRoute: SidebarlayoutRouteWithChildren,
   ErrorRoute: ErrorRoute,
   AuthProtectRoute: AuthProtectRouteWithChildren,
-  AuthForgotpasswordRoute: AuthForgotpasswordRoute,
+  AuthForgotPasswordRoute: AuthForgotPasswordRoute,
+  AuthResetPasswordRoute: AuthResetPasswordRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

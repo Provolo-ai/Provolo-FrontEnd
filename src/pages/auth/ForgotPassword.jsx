@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { z } from "zod";
-import { auth } from "../lib/firebase";
-import Logo from "../Reusables/Logo";
-import TextInputField from "../Reusables/TextInputField";
-import CustomButton from "../Reusables/CustomButton";
+import { auth } from "../../lib/firebase";
+import Logo from "../../Reusables/Logo";
+import TextInputField from "../../Reusables/TextInputField";
+import CustomButton from "../../Reusables/CustomButton";
 import { useNavigate } from "@tanstack/react-router";
-import { getCleanErrorMessage } from "../utils/firebaseError.util";
+import { getCleanErrorMessage } from "../../utils/firebaseError.util";
 import { Mail } from "lucide-react";
 
 // Zod schema for email validation
