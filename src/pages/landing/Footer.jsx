@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Copy, Copyright, MoveRight } from "lucide-react";
+import { Copyright, MoveRight } from "lucide-react";
 import Logo from "../../Reusables/Logo";
 import AppScreenshot from "../../assets/img/screenshot.png";
 

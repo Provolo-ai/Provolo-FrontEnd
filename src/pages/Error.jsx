@@ -1,5 +1,4 @@
 import React from 'react'
-import CustomButton from '../Reusables/CustomButton'
 import { Link } from '@tanstack/react-router'
 
 export default function Error() {
