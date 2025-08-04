@@ -114,12 +114,12 @@ export default function Example() {
                         >
                             Features
                         </Link>
-                        <Link
+                        {/* <Link
                             to="#testimonials"
                             className="p-3 flex align-middle gap-3 rounded text-gray-500 hover:text-gray-950 transition-all duration-300 text-sm"
                         >
                             Testimonials
-                        </Link>
+                        </Link> */}
                         <Link
                             target="_blank"
                             to="https://buildsbyesuoladaniel.hashnode.space/provolo/provoloai-project-documentation"
