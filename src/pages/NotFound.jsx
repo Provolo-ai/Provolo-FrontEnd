@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from '@tanstack/react-router'
 
-export default function Error() {
+export default function NotFound() {
     return (
 
         <div className="flex-1 flex flex-col overflow-y-auto">
