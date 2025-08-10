@@ -15,7 +15,7 @@ export default function Example() {
       <Features />
       {/* <Description /> */}
       {/* <Analytics /> */}
-      {/* <Pricing /> */}
+      <Pricing />
       {/* <Testimonials /> */}
       <Footer />
     </>

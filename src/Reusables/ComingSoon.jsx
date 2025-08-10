@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Proposal = () => {
+const ComingSoon = () => {
     return (
         <div className="flex-1 flex flex-col overflow-y-auto">
             <div className="p-6 sm:p-10 max-w-4xl mx-auto w-full my-auto">
@@ -59,4 +59,4 @@ const Proposal = () => {
     )
 }
 
-export default Proposal
+export default ComingSoon
