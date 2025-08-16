@@ -17,6 +17,7 @@
     "@mui/icons-material": "^7.2.0",
     "@mui/joy": "^5.0.0-beta.52",
     "@mui/material": "^7.2.0",
+    "@polar-sh/sdk": "^0.34.9",
     "@tanstack/react-router": "^1.129.3",
     "@tanstack/react-router-devtools": "^1.129.3",
     "@vercel/speed-insights": "^1.2.0",
