@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { useState, useRef } from "react";
+import { getIdToken, signInWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../lib/firebase";
 import Logo from "../../Reusables/Logo";
 import TextInputField from "../../Reusables/TextInputField";
@@ -10,17 +10,27 @@ import { ensureUserExists } from "../../utils/firebase.util";
 import useAuthStore from "../../stores/authStore";
 import { Key, Mail } from "lucide-react";
 import CustomSnackbar from "../../Reusables/CustomSnackbar";
+import { useEffect } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
-  // Zustand auth store
-  const setUser = useAuthStore((state) => state.setUser);
+  const hasNavigated = useRef(false);
+  
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const authLoading = useAuthStore((state) => state.loading);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [touched, setTouched] = useState({});
+
+  useEffect(() => {
+    if (isAuthenticated && !authLoading && !hasNavigated.current) {
+      hasNavigated.current = true;
+      navigate({ to: "/optimizer", replace: true });
+    }
+  }, [isAuthenticated, authLoading]);
 
   const signInWithEmail = async (email, password) => {
     try {
@@ -33,8 +43,37 @@ const Login = () => {
       // Ensure user exists in Firestore
       await ensureUserExists(db, user);
       
-      setUser(user);
-      navigate({ to: "/optimizer", replace: true });
+      // Get Firebase ID token and authenticate with server
+      const idToken = await getIdToken(user, true);
+      
+      // Send to server for cookie-based authentication
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({ idToken })
+      });
+
+      if (response.ok) {
+        // Update Zustand store with user data
+        const userData = {
+          uid: user.uid,
+          email: user.email,
+          emailVerified: user.emailVerified,
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+          createdAt: user.metadata.creationTime,
+          lastLoginAt: user.metadata.lastSignInTime,
+        };
+
+        // Update the auth store
+        useAuthStore.getState().setUser(userData);
+      } else {
+        throw new Error('Server authentication failed');
+      }
+      
     } catch (error) {
       setError(getCleanErrorMessage(error));
     } finally {

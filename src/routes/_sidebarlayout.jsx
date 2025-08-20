@@ -5,22 +5,43 @@ import { MobilePageModal } from "../pages/MobilePageModal";
 import { detectSystem } from "../utils/detectSystem.util";
 import { useEffect, useState } from "react";
 import UserName from "../pages/auth/UserName";
+import VerifyingAuth from "../Reusables/VerifyingAuth";
 
 const isAuthenticated = () => {
-  // Get auth state from Zustand store
   const authData = useAuthStore.getState();
-  const isAuth = authData.isAuthenticated;
-
-  return isAuth;
+  return authData.isAuthenticated && !authData.loading;
 };
 
 export const Route = createFileRoute("/_sidebarlayout")({
-  beforeLoad: () => {
+  beforeLoad: async ({ location }) => {
+    const authState = useAuthStore.getState();
+
+    // If still loading, wait for auth to complete
+    if (authState.loading) {
+      await new Promise((resolve) => {
+        const unsubscribe = useAuthStore.subscribe((state) => {
+          if (!state.loading) {
+            unsubscribe();
+            resolve();
+          }
+        });
+        
+        // Timeout after 5 seconds to prevent infinite waiting
+        setTimeout(() => {
+          unsubscribe();
+          resolve();
+        }, 5000);
+      });
+    }
+    
+    // Check authentication after loading is complete
     if (!isAuthenticated()) {
-      // Clear any existing auth data
       useAuthStore.getState().clearAuth();
       throw redirect({
         to: "/login",
+        search: {
+          redirect: location.href,
+        },
         replace: true,
       });
     }
@@ -31,11 +52,18 @@ export const Route = createFileRoute("/_sidebarlayout")({
 function RouteComponent() {
   const [operatingSystem, setOperatingSystem] = useState(null);
   const user = useAuthStore((state) => state.user);
-  
+  const loading = useAuthStore((state) => state.loading);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+
   useEffect(() => {
     const os = detectSystem();
     setOperatingSystem(os);
   }, []);
+  
+  // Show loading screen while authentication is being verified
+  if (loading || !isAuthenticated) {
+    return <VerifyingAuth />;
+  }
   
   const isMobile = operatingSystem === "android" || operatingSystem === "ios";
   

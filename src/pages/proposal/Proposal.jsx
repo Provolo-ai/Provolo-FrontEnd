@@ -175,7 +175,7 @@ const PortfolioOptimizer = () => {
 
     return (
         <>
-            {/* <Pricing /> */}
+            <Pricing />
             <div className="flex-1 flex flex-col overflow-y-auto relative">
                 <div className="absolute top-10 right-10 rounded-lg">
                     <AboutMe />

@@ -1,24 +1,5 @@
-import { onAuthStateChanged, getIdToken, signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../lib/firebase";
-
-/**
- * Get the current user's ID token
- * This token is automatically refreshed by Firebase
- */
-export const getCurrentUserToken = async () => {
-  const user = auth.currentUser;
-  if (user) {
-    try {
-      // Force refresh to get a fresh token
-      const token = await getIdToken(user, true);
-      return token;
-    } catch (error) {
-      console.error("Error getting ID token:", error);
-      return null;
-    }
-  }
-  return null;
-};
 
 /**
  * Listen to authentication state changes
@@ -36,9 +17,7 @@ export const onAuthChange = (callback) => {
   });
 };
 
-/**
- * Sign out user and clear tokens
- */
+// Sign out user
 export const signOutUser = async () => {
   try {
     await signOut(auth);
@@ -49,29 +28,21 @@ export const signOutUser = async () => {
   }
 };
 
-/**
- * Make authenticated API requests with automatic token handling
- */
+// Make authenticated API requests using cookies
 export const authenticatedFetch = async (url, options = {}) => {
-  const token = await getCurrentUserToken();
-
-  if (!token) {
-    throw new Error("No authentication token available");
-  }
-
   const headers = {
     "Content-Type": "application/json",
-    Authorization: `Bearer ${token}`,
     ...options.headers,
   };
 
   const response = await fetch(url, {
     ...options,
     headers,
+    credentials: 'include', // Always include cookies
   });
 
   if (response.status === 401) {
-    // Token expired or invalid - redirect to login
+    // Authentication failed - redirect to login
     window.location.href = "/login";
     throw new Error("Authentication failed");
   }
@@ -79,55 +50,20 @@ export const authenticatedFetch = async (url, options = {}) => {
   return response;
 };
 
-/**
- * Security utilities for Firebase
- */
-
-// Token validation
-export const isTokenValid = async (user) => {
-  if (!user) return false;
-
+// Verify current authentication status with server
+export const verifyAuthentication = async () => {
   try {
-    const tokenResult = await user.getIdTokenResult();
-    const now = Date.now() / 1000;
+    const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/auth/verify`, {
+      method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json',
+      }
+    });
 
-    // Check if token is expired
-    if (tokenResult.expirationTime < now) {
-      return false;
-    }
-
-    return true;
+    return response.ok;
   } catch (error) {
-    console.error("Token validation error:", error);
+    console.error('Authentication verification failed:', error);
     return false;
   }
-};
-
-// Secure local storage (avoid storing sensitive data)
-export const secureStorage = {
-  setItem: (key, value) => {
-    // Only store non-sensitive data
-    if (typeof value === "object") {
-      localStorage.setItem(key, JSON.stringify(value));
-    } else {
-      localStorage.setItem(key, value);
-    }
-  },
-
-  getItem: (key) => {
-    const item = localStorage.getItem(key);
-    try {
-      return JSON.parse(item);
-    } catch {
-      return item;
-    }
-  },
-
-  removeItem: (key) => {
-    localStorage.removeItem(key);
-  },
-
-  clear: () => {
-    localStorage.clear();
-  },
 };

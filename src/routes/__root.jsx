@@ -1,17 +1,27 @@
-import { createRootRoute, Link, Outlet } from '@tanstack/react-router'
+import { createRootRoute, Outlet } from '@tanstack/react-router'
 import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 import { Beta } from '../Reusables/Beta'
-import Error from '../pages/Error'
+import ErrorPage from '../pages/ErrorPage'
+import NotFound from '../pages/NotFound'
+import { useAuthInit } from '../hooks/useAuthInit'
 
-export const Route = createRootRoute({
-  component: () => (
+function RootComponent() {
+  // Initialize authentication when app starts
+  useAuthInit();
+  
+  return (
     <>
       <Beta />
       <Outlet />
       <TanStackRouterDevtools />
     </>
-  ),
-  notFoundComponent: () => {
-    return <Error/>
-  },
+  );
+}
+
+export const Route = createRootRoute({
+  component: RootComponent,
+  notFoundComponent: () => <NotFound/>,
+  errorComponent: ({ error, info, reset }) => (
+    <ErrorPage error={error} info={info} reset={reset} />
+  )
 })
