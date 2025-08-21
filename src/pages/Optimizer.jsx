@@ -94,7 +94,6 @@ const PortfolioOptimizer = () => {
       }
 
       const result = await response.json();
-      console.log("result", result)
       // Set the analysis results from backend response
       setAnalysisResults(result.data.fullAnalysis || "Analysis completed successfully");
       setWeaknessesSummary(result.data.weaknessesAndOptimization || "N/A");
@@ -102,11 +101,7 @@ const PortfolioOptimizer = () => {
       setProjectSuggestions(result.data.suggestedProjectTitles || "N/A");
       setVisualSuggestions(result.data.recommendedVisuals || "N/A");
       setBeforeAfter(result.data.beforeAfterComparison || "N/A");
-      // } else {
-      //   setError(result.message || "The analysis returned an empty response.");
-      // }
     } catch (err) {
-      console.error("Error during analysis:", err);
       if (err.name === 'TypeError' && err.message.includes('fetch')) {
         setError("Network error. Please check your connection and try again.");
       } else {
