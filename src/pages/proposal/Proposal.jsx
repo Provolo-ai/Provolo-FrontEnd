@@ -1,21 +1,13 @@
 import React, { useState } from "react";
-import PortfolioPrompt from "../../PortfolioPrompt";
 import ResultsAccordion from "../../Reusables/ResultsAccordion";
 import TextInputField from "../../Reusables/TextInputField";
 import CustomButton from "../../Reusables/CustomButton";
 import CustomSnackbar from "../../Reusables/CustomSnackbar";
-import { validatePortfolioInput, validatePortfolioResponse } from "../../schemas/portfolioSchema";
-import { db } from "../../lib/firebase";
-import { checkAndUpdateUserPromptLimit } from "../../utils/firebase.util";
 import useAuthStore from "../../stores/authStore";
 import AboutMe from "./AboutMe";
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import Pricing from "../landing/Pricing";
-
-
-
-
 
 const PortfolioOptimizer = () => {
     // Get user from auth store
@@ -55,100 +47,6 @@ const PortfolioOptimizer = () => {
         setVisualSuggestions("");
         setBeforeAfter("");
         setWeaknessesSummary("");
-
-        try {
-            // Validate input data with Zod
-            const inputData = {
-                clientName,
-                setTone,
-                jobSummary,
-            };
-
-            const inputValidation = validatePortfolioInput(inputData);
-            if (!inputValidation.success) {
-                const errorMessages = Object.values(inputValidation.errors)
-                    .flatMap((err) => err._errors || [])
-                    .join(", ");
-                setError(errorMessages || "Please provide valid profile details");
-                setIsLoading(false);
-                return;
-            }
-
-            // Get current userId from Zustand auth store
-            const user = useAuthStore.getState().user;
-            const userId = user?.uid;
-            if (!userId) {
-                setError("User not authenticated. Please log in again.");
-                setIsLoading(false);
-                return;
-            }
-
-            // Check and update prompt limit before Gemini AI call
-            const promptLimit = parseInt(import.meta.env.VITE_MAX_PROMPT_LIMIT);
-            const limitResult = await checkAndUpdateUserPromptLimit(db, userId, promptLimit);
-            if (!limitResult.allowed) {
-                setError(`You have reached your daily prompt limit (${limitResult.limit}).`);
-                setIsLoading(false);
-                return;
-            }
-
-            // Construct the input content from validated data
-            const inputContent = `
-        Freelancer Name: ${inputValidation.data.clientName}
-        Title: ${inputValidation.data.setTone}
-
-        Profile Description:
-        ${inputValidation.data.jobSummary}
-      `.trim();
-
-            // 🔮 Generate prompt using your custom logic ====================>>>>>>>>>>>>>>>>>>>
-            const prompt = PortfolioPrompt(inputContent);
-
-            // 🧠 Prepare Gemini API call from PortfolioPrompt.js ====================>>>>>>>>>>>>>>>>>>>
-            let chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
-            const payload = { contents: chatHistory };
-            const apiKey = import.meta.env.VITE_GOOGLE_AI_STUDIO; //.emv
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
-
-            const response = await fetch(apiUrl, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload),
-            });
-
-            const result = await response.json();
-
-            if (result.candidates?.length > 0 && result.candidates[0].content?.parts?.length > 0) {
-                const aiText = result.candidates[0].content.parts[0].text;
-
-                // Validate AI response with Zod schema
-                const responseValidation = validatePortfolioResponse(aiText);
-
-                if (responseValidation.success) {
-                    // Use validated structured data
-                    const validatedData = responseValidation.data;
-                    console.log(validatedData);
-                    setgeneratedProposal(aiText);
-                    setWeaknessesSummary(validatedData.weaknessesAndOptimization);
-                    setOptimizedOverview(validatedData.optimizedProfileOverview);
-                    setProjectSuggestions(validatedData.suggestedProjectTitles);
-                    setVisualSuggestions(validatedData.recommendedVisuals);
-                    setBeforeAfter(validatedData.beforeAfterComparison);
-                } else {
-                    console.error("AI response validation failed:", responseValidation.errors);
-                    // Fallback to original parsing if validation fails
-                    setgeneratedProposal(aiText);
-                    parseAndSetResults(aiText);
-                }
-            } else {
-                setError("The AI returned an empty or malformed response.");
-            }
-        } catch (err) {
-            console.error("Error during analysis:", err);
-            setError("Something went wrong. Please try again.");
-        } finally {
-            setIsLoading(false);
-        }
     };
 
     const parseAndSetResults = (fullText) => {
@@ -201,37 +99,37 @@ const PortfolioOptimizer = () => {
                                 />
 
                                 <Menu as="div" className="relative inline-block mt-auto">
-                                <MenuButton className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-4 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50">
-                                    Set Tone
-                                    <ChevronDownIcon aria-hidden="true" className="-mr-1 size-5 text-gray-400" />
-                                </MenuButton>
+                                    <MenuButton className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-4 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50">
+                                        Set Tone
+                                        <ChevronDownIcon aria-hidden="true" className="-mr-1 size-5 text-gray-400" />
+                                    </MenuButton>
 
-                                <MenuItems
-                                    transition
-                                    className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
-                                >
-                                    <div className="py-1">
-                                        <MenuItem>
-                                            <a
-                                                href="#"
-                                                className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
-                                            >
-                                                Conversational
-                                            </a>
-                                        </MenuItem>
-                                        <MenuItem>
-                                            <a
-                                                href="#"
-                                                className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
-                                            >
-                                                Professional
-                                            </a>
-                                        </MenuItem>
-                    
-                                     
-                                    </div>
-                                </MenuItems>
-                            </Menu>
+                                    <MenuItems
+                                        transition
+                                        className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+                                    >
+                                        <div className="py-1">
+                                            <MenuItem>
+                                                <a
+                                                    href="#"
+                                                    className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
+                                                >
+                                                    Conversational
+                                                </a>
+                                            </MenuItem>
+                                            <MenuItem>
+                                                <a
+                                                    href="#"
+                                                    className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
+                                                >
+                                                    Professional
+                                                </a>
+                                            </MenuItem>
+
+
+                                        </div>
+                                    </MenuItems>
+                                </Menu>
                             </div>
 
 

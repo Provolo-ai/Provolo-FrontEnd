@@ -7,35 +7,42 @@ import { useEffect, useState } from "react";
 import UserName from "../pages/auth/UserName";
 import VerifyingAuth from "../Reusables/VerifyingAuth";
 
-const isAuthenticated = () => {
-  const authData = useAuthStore.getState();
-  return authData.isAuthenticated && !authData.loading;
-};
-
 export const Route = createFileRoute("/_sidebarlayout")({
   beforeLoad: async ({ location }) => {
     const authState = useAuthStore.getState();
 
-    // If still loading, wait for auth to complete
-    if (authState.loading) {
+    // If we already have a rehydrated session, proceed immediately
+    if (authState.isAuthenticated && authState.user) {
+      return;
+    }
+
+    // If auth hasn't been initialized yet, wait for it to complete
+    if (!authState.initialized) {
+      await useAuthStore.getState().initializeAuth();
+    }
+
+    // If auth hasn't been checked yet, wait for it to complete
+    if (!authState.authChecked) {
       await new Promise((resolve) => {
         const unsubscribe = useAuthStore.subscribe((state) => {
-          if (!state.loading) {
+          if (state.authChecked || (state.isAuthenticated && state.user)) {
             unsubscribe();
             resolve();
           }
         });
         
-        // Timeout after 5 seconds to prevent infinite waiting
+        // Timeout after 1500ms to prevent long blocking
         setTimeout(() => {
           unsubscribe();
           resolve();
-        }, 5000);
+        }, 1500);
       });
     }
     
-    // Check authentication after loading is complete
-    if (!isAuthenticated()) {
+    // After auth check is complete, verify authentication
+    const finalAuthState = useAuthStore.getState();
+    
+    if (!finalAuthState.isAuthenticated) {
       useAuthStore.getState().clearAuth();
       throw redirect({
         to: "/login",
@@ -54,14 +61,16 @@ function RouteComponent() {
   const user = useAuthStore((state) => state.user);
   const loading = useAuthStore((state) => state.loading);
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const authChecked = useAuthStore((state) => state.authChecked);
+  const rehydrated = useAuthStore((state) => state.rehydrated);
 
   useEffect(() => {
     const os = detectSystem();
     setOperatingSystem(os);
   }, []);
   
-  // Show loading screen while authentication is being verified
-  if (loading || !isAuthenticated) {
+  // Show loading screen only if we don't have a rehydrated session
+  if ((loading || !authChecked || !isAuthenticated) && !rehydrated) {
     return <VerifyingAuth />;
   }
   
