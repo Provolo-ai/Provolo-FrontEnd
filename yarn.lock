@@ -2257,6 +2257,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/query-core@npm:5.85.5":
+  version: 5.85.5
+  resolution: "@tanstack/query-core@npm:5.85.5"
+  checksum: 10c0/344670ac117bc4775a9e812fc91e27befc9ef4f681e341d8f76af3cd075eecdcc5aa058a9544a6b56cccb8e07f22ef5c9e0c852331d428bcce5e1223deef14bd
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query@npm:^5.85.5":
+  version: 5.85.5
+  resolution: "@tanstack/react-query@npm:5.85.5"
+  dependencies:
+    "@tanstack/query-core": "npm:5.85.5"
+  peerDependencies:
+    react: ^18 || ^19
+  checksum: 10c0/7518cd624f9fe7c258b460192a73021a1e7fe0e0ea4173de69ca0a69cf60cc812bdb59b13c7f9acdbf45f4f0e82e8efb1e739528cf26e334e4a80606d7c7050d
+  languageName: node
+  linkType: hard
+
 "@tanstack/react-router-devtools@npm:^1.129.3":
   version: 1.130.13
   resolution: "@tanstack/react-router-devtools@npm:1.130.13"
@@ -6110,6 +6128,7 @@ __metadata:
     "@mui/joy": "npm:^5.0.0-beta.52"
     "@mui/material": "npm:^7.2.0"
     "@polar-sh/sdk": "npm:^0.34.9"
+    "@tanstack/react-query": "npm:^5.85.5"
     "@tanstack/react-router": "npm:^1.129.3"
     "@tanstack/react-router-devtools": "npm:^1.129.3"
     "@tanstack/router-plugin": "npm:^1.129.3"
