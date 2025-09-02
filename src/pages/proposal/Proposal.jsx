@@ -8,32 +8,32 @@ import { ChevronDownIcon } from '@heroicons/react/20/solid'
 import { CornerDownLeft } from "lucide-react";
 
 const PortfolioOptimizer = () => {
-    // Get user from auth store
-    const user = useAuthStore((state) => state.user);
+  // Get user from auth store
+  const user = useAuthStore((state) => state.user);
 
-    // State variables for input data ==========>>>>>>>>>>
-    const [clientName, setclientName] = useState("");
-    const [setTone, setsetTone] = useState("");
-    const [jobSummary, setjobSummary] = useState(""); // Renamed from profileText for clarity
+  // State variables for input data ==========>>>>>>>>>>
+  const [clientName, setclientName] = useState("");
+  const [setTone, setsetTone] = useState("");
+  const [jobSummary, setjobSummary] = useState(""); // Renamed from profileText for clarity
 
-    // State variables for output from the AI ==========>>>>>>>>>>
-    const [generatedProposal, setgeneratedProposal] = useState(null);
-    const [optimizedOverview, setOptimizedOverview] = useState("");
-    const [projectSuggestions, setProjectSuggestions] = useState("");
-    const [visualSuggestions, setVisualSuggestions] = useState("");
-    const [beforeAfter, setBeforeAfter] = useState("");
-    const [weaknessesSummary, setWeaknessesSummary] = useState("");
+  // State variables for output from the AI ==========>>>>>>>>>>
+  const [generatedProposal, setgeneratedProposal] = useState(null);
+  const [optimizedOverview, setOptimizedOverview] = useState("");
+  const [projectSuggestions, setProjectSuggestions] = useState("");
+  const [visualSuggestions, setVisualSuggestions] = useState("");
+  const [beforeAfter, setBeforeAfter] = useState("");
+  const [weaknessesSummary, setWeaknessesSummary] = useState("");
 
-    // State for loading and error handling ==========>>>>>>>>>>
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState("");
+  // State for loading and error handling ==========>>>>>>>>>>
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
-    // Input Field STated for Ui Styling ==========>>>>>>>>>>
-    const [touched, setTouched] = useState({
-        name: false,
-        title: false,
-        description: false,
-    });
+  // Input Field STated for Ui Styling ==========>>>>>>>>>>
+  const [touched, setTouched] = useState({
+    name: false,
+    title: false,
+    description: false,
+  });
 
     // Function to call the AI model GEMINI ====================>>>>>>>>>>>>>>>>>>> START
     const analyzePortfolio = async () => {
@@ -188,10 +188,66 @@ const PortfolioOptimizer = () => {
 
                         {/* Output Section ====================>>>>>>>>>>>>>>>>>>> END*/}
                     </div>
-                </div>
+                  </MenuItems>
+                </Menu>
+              </div>
+
+              {/* Profle Description Input Fields ====================>>>>>>>>>>>>>>>>>>> */}
+              <div className="mb-4">
+                <label htmlFor="jobSummary" className="block text-sm mb-2 bg-g">
+                  Job Summary
+                </label>
+
+                <textarea
+                  required
+                  id="jobSummary"
+                  className={`w-full p-3 border rounded-md transition duration-150 ease-in-out bg-gray-50 placeholder:text-sm ${
+                    error || (touched.description && !jobSummary.trim())
+                      ? "ring-1 ring-red-600/10 ring-inset focus:ring-red-500 bg-red-50 placeholder-red-700"
+                      : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
+                  }`}
+                  rows="8"
+                  placeholder="Paste Job Summary here..."
+                  value={jobSummary}
+                  onChange={(e) => setjobSummary(e.target.value)}
+                  onBlur={() => setTouched((prev) => ({ ...prev, description: true }))}
+                ></textarea>
+
+                {(error || (touched.description && !jobSummary.trim())) && <p className="text-xs text-red-700">Required</p>}
+              </div>
+
+              <CustomButton onClick={analyzePortfolio} isLoading={isLoading} className="btn-primary">
+                {" "}
+                Generate Proposal{" "}
+              </CustomButton>
+
+              {error && <CustomSnackbar open={error} close={() => setError("")} snackbarColor={"danger"} snackbarMessage={error} />}
             </div>
-        </>
-    );
+            {!generatedProposal && <p className="text-center text-xs text-gray-300">Provolo.org</p>}
+
+            {/* Input Section ====================>>>>>>>>>>>>>>>>>>> END*/}
+
+            {/* Output Section ====================>>>>>>>>>>>>>>>>>>> START*/}
+            {generatedProposal && <CustomSnackbar open={generatedProposal} snackbarColor={"success"} snackbarMessage={"Proposal Complete"} />}
+
+            {generatedProposal && (
+              <ResultsAccordion
+                sections={[
+                  { title: "Weaknesses and Optimization Ideas", content: weaknessesSummary },
+                  { title: "Optimized Profile Overview", content: optimizedOverview },
+                  { title: "Suggested Project Titles and Layouts", content: projectSuggestions },
+                  { title: "Recommended Visuals/Layout Hierarchies", content: visualSuggestions },
+                  { title: "Before and After Comparison", content: beforeAfter },
+                ]}
+              />
+            )}
+
+            {/* Output Section ====================>>>>>>>>>>>>>>>>>>> END*/}
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default PortfolioOptimizer;
