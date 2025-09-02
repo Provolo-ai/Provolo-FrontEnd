@@ -82,13 +82,13 @@ export default function Authentication() {
       if (error instanceof z.ZodError) {
         // Safe error message extraction
         let errorMessage = "Invalid input";
-        
+
         if (error.errors && error.errors.length > 0 && error.errors[0].message) {
           errorMessage = error.errors[0].message;
         } else if (error.issues && error.issues.length > 0 && error.issues[0].message) {
           errorMessage = error.issues[0].message;
         }
-        
+
         setValidationErrors((prev) => ({
           ...prev,
           [name]: errorMessage,
@@ -152,28 +152,28 @@ export default function Authentication() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     // Run form validation
     const validationResult = signupSchema.safeParse({ email, password });
-  
+
     if (!validationResult.success) {
       const newErrors = {};
-      
+
       // Handle Zod validation errors
       validationResult.error?.errors?.forEach((error) => {
         const field = error.path[0];
         newErrors[field] = error.message;
       });
-      
+
       setValidationErrors(newErrors);
       setError("Please fix the errors below");
       return;
     }
-  
+
     // Clear any previous errors
     setValidationErrors({});
     setError("");
-  
+
     await signUpWithEmail(email, password);
   };
 
