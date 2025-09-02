@@ -1,10 +1,9 @@
-import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
-import { ChevronDownIcon } from '@heroicons/react/16/solid'
-import useAuthStore from "../../stores/authStore";
+import { UserCircleIcon } from '@heroicons/react/24/solid'
 import TextInputField from '../../Reusables/TextInputField';
 import { Link, Mail, UserRound } from 'lucide-react';
 import { useState } from 'react';
 import CustomButton from '../../Reusables/CustomButton';
+import useSession from '../../hooks/useSession';
 
 
 
@@ -24,7 +23,7 @@ export default function Example() {
     });
     const [error, setError] = useState("");
 
-    const user = useAuthStore((state) => state.user);
+    const {user} = useSession();
     const [profileLink, setProfileLink] = useState("");
     const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState("");
