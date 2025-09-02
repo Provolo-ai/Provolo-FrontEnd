@@ -1,22 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Authentication from "../../pages/auth/Signup";
-import useAuthStore from "../../stores/authStore";
+import useSession from "../../hooks/useSession";
 
 export const Route = createFileRoute("/_auth/_protect/signup")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
-  const loading = useAuthStore((state) => state.loading);
-  const initialized = useAuthStore((state) => state.initialized);
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  
-  // Show loading screen while authentication is being verified
-  if (loading && (!initialized || !isAuthenticated)) {
-    return (
-      <VerifyingAuth />
-    );
+  const { loading } = useSession();
+  if (loading) {
+    return <VerifyingAuth />;
   }
-
   return <Authentication />;
 }

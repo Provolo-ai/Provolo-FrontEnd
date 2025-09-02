@@ -2,15 +2,8 @@
 import React from "react";
 import Logo from "./Logo";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import useAuthStore from "../stores/authStore";
-import {
-  Book,
-  Feather,
-  LibraryBig,
-  LogOut,
-  Recycle,
-  Sparkles,
-} from "lucide-react";
+import { logout } from "../utils/logout.util";
+import { Book, Feather, LibraryBig, LogOut, Recycle, Sparkles } from "lucide-react";
 import Feedback from "./Feedback";
 import UserProfile from "../pages/user/User";
 
@@ -18,17 +11,12 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const location = useRouterState({ select: (s) => s.location });
 
-  const signOut = useAuthStore((state) => state.signOut);
-  const clearAuth = useAuthStore((state) => state.clearAuth);
-
   const handleSignOut = async () => {
     try {
-      clearAuth();
-      await signOut();
+      await logout();
+      navigate({ to: "/login", replace: true });
     } catch (error) {
       console.error("Error signing out:", error);
-      clearAuth();
-    } finally {
       navigate({ to: "/login", replace: true });
     }
   };
@@ -36,10 +24,7 @@ const Sidebar = () => {
   const isActive = (path) => location.pathname === path;
 
   const linkClass = (path) =>
-    `p-3 flex items-center gap-3 rounded-md transition-all duration-300 ${isActive(path)
-      ? "bg-gray-50 text-gray-900"
-      : "text-gray-500 hover:bg-gray-50 hover:text-gray-950"
-    }`;
+    `p-3 flex items-center gap-3 rounded-md transition-all duration-300 ${isActive(path) ? "bg-gray-50 text-gray-900" : "text-gray-500 hover:bg-gray-50 hover:text-gray-950"}`;
 
   // Main navigation links
   const navItems = [
@@ -64,7 +49,6 @@ const Sidebar = () => {
 
   // Upskill section
   const upskillItems = [
-
     {
       to: "/learn",
       icon: <LibraryBig size={20} />,
@@ -84,24 +68,13 @@ const Sidebar = () => {
       green: "bg-green-50 text-green-700 ring-green-600/10",
       blue: "bg-blue-50 text-blue-700 ring-blue-600/10",
     };
-    return (
-      <span
-        className={`ml-auto inline-flex items-center rounded-md px-2 py-1 text-xs ring-1 ring-inset ${colors[badge.color]}`}
-      >
-        {badge.text}
-      </span>
-    );
+    return <span className={`ml-auto inline-flex items-center rounded-md px-2 py-1 text-xs ring-1 ring-inset ${colors[badge.color]}`}>{badge.text}</span>;
   };
 
   const renderLink = ({ to, icon, label, badge, external }) => {
     if (external) {
       return (
-        <Link
-          key={label}
-          target="_blank"
-          to={to}
-          className="p-3 flex items-center gap-3 rounded-md text-gray-500 hover:bg-gray-50 hover:text-gray-950 transition-all duration-300"
-        >
+        <Link key={label} target="_blank" to={to} className="p-3 flex items-center gap-3 rounded-md text-gray-500 hover:bg-gray-50 hover:text-gray-950 transition-all duration-300">
           {icon}
           {label}
         </Link>
@@ -144,10 +117,7 @@ const Sidebar = () => {
         <span className="border border-gray-100" />
 
         {/* Logout */}
-        <button
-          onClick={handleSignOut}
-          className="text-left text-red-400 transition-all duration-300 rounded-md p-3 flex items-center gap-3 hover:bg-red-50"
-        >
+        <button onClick={handleSignOut} className="text-left text-red-400 transition-all duration-300 rounded-md p-3 flex items-center gap-3 hover:bg-red-50">
           <LogOut size={20} />
           Log Out
         </button>

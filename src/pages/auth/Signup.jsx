@@ -9,18 +9,14 @@ import Logo from "../../Reusables/Logo";
 import TextInputField from "../../Reusables/TextInputField";
 import CustomButton from "../../Reusables/CustomButton";
 import { Link, useNavigate } from "@tanstack/react-router";
-import useAuthStore from "../../stores/authStore";
 import CustomSnackbar from "../../Reusables/CustomSnackbar";
 import { isDisposableEmail } from "../../utils/disposableEmails.util";
-import { useEffect } from "react";
 
 // Updated Zod schema for signup form with disposable email check
 const signupSchema = z.object({
-  email: z
-    .email("Enter a valid email address")
-    .refine((email) => !isDisposableEmail(email), {
-      message: "Temporary or disposable email addresses are not allowed. Please use a permanent email address."
-    }),
+  email: z.email("Enter a valid email address").refine((email) => !isDisposableEmail(email), {
+    message: "Temporary or disposable email addresses are not allowed. Please use a permanent email address.",
+  }),
   password: z
     .string()
     .min(8, "Password must be at least 8 characters")
@@ -31,26 +27,12 @@ const signupSchema = z.object({
 
 export default function Authentication() {
   const navigate = useNavigate();
-  const hasNavigated = useRef(false);
-  
-  // Zustand auth store
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  const authLoading = useAuthStore((state) => state.loading);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [touched, setTouched] = useState({});
   const [validationErrors, setValidationErrors] = useState({});
-
-  // Redirect if already authenticated
-  useEffect(() => {
-    if (isAuthenticated && !authLoading && !hasNavigated.current) {
-      hasNavigated.current = true;
-      navigate({ to: "/optimizer", replace: true });
-    }
-  }, [isAuthenticated, authLoading]);
 
   const checkPasswordRequirements = (password) => {
     return {
@@ -101,47 +83,23 @@ export default function Authentication() {
     try {
       setLoading(true);
       setError("");
-
-      // Create user with Firebase
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-
-      // Ensure user exists in Firestore
       await ensureUserExists(db, user);
-
-      // Get Firebase ID token and authenticate with server
       const idToken = await getIdToken(user, true);
-      
-      // Send to server for cookie-based authentication
       const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/auth/login`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        credentials: 'include',
-        body: JSON.stringify({ idToken })
+        credentials: "include",
+        body: JSON.stringify({ idToken }),
       });
-
       if (response.ok) {
-        // Update Zustand store with user data
-        const userData = {
-          uid: user.uid,
-          email: user.email,
-          emailVerified: user.emailVerified,
-          displayName: user.displayName,
-          photoURL: user.photoURL,
-          createdAt: user.metadata.creationTime,
-          lastLoginAt: user.metadata.lastSignInTime,
-        };
-
-        // Update the auth store
-        useAuthStore.getState().setUser(userData);
-        
-        // Navigate to optimizer
         navigate({ to: "/optimizer", replace: true });
       } else {
         const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.message || 'Server authentication failed');
+        throw new Error(errorData.message || "Server authentication failed");
       }
     } catch (error) {
       setError(getCleanErrorMessage(error));
