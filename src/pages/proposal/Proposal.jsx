@@ -3,16 +3,11 @@ import ResultsAccordion from "../../Reusables/ResultsAccordion";
 import TextInputField from "../../Reusables/TextInputField";
 import CustomButton from "../../Reusables/CustomButton";
 import CustomSnackbar from "../../Reusables/CustomSnackbar";
-import useAuthStore from "../../stores/authStore";
 import AboutMe from "./AboutMe";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import Pricing from "../landing/Pricing";
 
 const PortfolioOptimizer = () => {
-  // Get user from auth store
-  const user = useAuthStore((state) => state.user);
-
   // State variables for input data ==========>>>>>>>>>>
   const [clientName, setclientName] = useState("");
   const [setTone, setsetTone] = useState("");

@@ -4,16 +4,16 @@ import TextInputField from "../Reusables/TextInputField";
 import CustomButton from "../Reusables/CustomButton";
 import CustomSnackbar from "../Reusables/CustomSnackbar";
 import { validatePortfolioInput } from "../schemas/portfolioSchema";
-import useAuthStore from "../stores/authStore";
+import useSession from "../hooks/useSession";
 
 const PortfolioOptimizer = () => {
-  // Get user from auth store
-  const user = useAuthStore((state) => state.user);
-  
+  // Get user from backend session
+  const { user, loading } = useSession();
+
   // State variables for input data ==========>>>>>>>>>>>>
   const [freelancerName, setFreelancerName] = useState("");
   const [profileTitle, setProfileTitle] = useState("");
-  const [profileDescription, setProfileDescription] = useState(""); // Renamed from profileText for clarity
+  const [profileDescription, setProfileDescription] = useState("");
 
   // State variables for output from the AI ==========>>>>>>>>>>>>
   const [analysisResults, setAnalysisResults] = useState(null);
@@ -67,16 +67,16 @@ const PortfolioOptimizer = () => {
       const requestPayload = {
         full_name: inputValidation.data.freelancerName,
         professional_title: inputValidation.data.profileTitle,
-        profile: inputValidation.data.profileDescription
+        profile: inputValidation.data.profileDescription,
       };
 
       // Call backend API endpoint
       const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/optimize-profile`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        credentials: 'include', // Include session cookie for authentication
+        credentials: "include", // Include session cookie for authentication
         body: JSON.stringify(requestPayload),
       });
 
@@ -102,7 +102,7 @@ const PortfolioOptimizer = () => {
       setVisualSuggestions(result.data.recommendedVisuals || "N/A");
       setBeforeAfter(result.data.beforeAfterComparison || "N/A");
     } catch (err) {
-      if (err.name === 'TypeError' && err.message.includes('fetch')) {
+      if (err.name === "TypeError" && err.message.includes("fetch")) {
         setError("Network error. Please check your connection and try again.");
       } else {
         setError("Something went wrong. Please try again.");
@@ -116,9 +116,7 @@ const PortfolioOptimizer = () => {
     <div className="flex-1 flex flex-col overflow-y-auto">
       <div className="p-6 sm:p-10 max-w-4xl mx-auto w-full">
         <div>
-          <h1 className="mb-3 text-gray-300">
-            Welcome, {user?.displayName || user?.email?.split('@')[0] || 'User'}
-          </h1>
+          <h1 className="mb-3 text-gray-300">{loading ? "Loading..." : `Welcome, ${user?.displayName || user?.email?.split("@")[0] || "User"}`}</h1>
           {/* Input Section ====================>>>>>>>>>>>>>>>>>>> START*/}
           <div className="mb-8 p-10 bg-white rounded-lg border border-gray-200">
             <h2 className="text-3xl font-medium mb-6">Let's Get to Know Your Portfolio</h2>
@@ -179,9 +177,7 @@ const PortfolioOptimizer = () => {
 
             {error && <CustomSnackbar open={error} close={() => setError("")} snackbarColor={"danger"} snackbarMessage={error} />}
           </div>
-          {!analysisResults &&
-            <p className="text-center text-xs text-gray-300">Provolo.org</p>
-          }
+          {!analysisResults && <p className="text-center text-xs text-gray-300">Provolo.org</p>}
 
           {/* Input Section ====================>>>>>>>>>>>>>>>>>>> END*/}
 

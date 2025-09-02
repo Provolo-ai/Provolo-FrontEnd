@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Login from "../../pages/auth/Login";
-import useAuthStore from "../../stores/authStore";
+import useSession from "../../hooks/useSession";
 import VerifyingAuth from "../../Reusables/VerifyingAuth";
 
 export const Route = createFileRoute("/_auth/_protect/login")({
@@ -8,15 +8,9 @@ export const Route = createFileRoute("/_auth/_protect/login")({
 });
 
 function RouteComponent() {
-  const loading = useAuthStore((state) => state.loading);
-  const initialized = useAuthStore((state) => state.initialized);
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  
-  if (loading && (!initialized || !isAuthenticated)) {
-    return ( 
-      <VerifyingAuth/>
-    );
+  const { loading } = useSession();
+  if (loading) {
+    return <VerifyingAuth />;
   }
-  
   return <Login />;
 }

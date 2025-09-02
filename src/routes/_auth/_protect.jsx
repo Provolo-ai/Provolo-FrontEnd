@@ -1,41 +1,19 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
-import useAuthStore from "../../stores/authStore";
+import React from "react";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
+import useSession from "../../hooks/useSession";
+import VerifyingAuth from "../../Reusables/VerifyingAuth";
 
 export const Route = createFileRoute("/_auth/_protect")({
-  beforeLoad: async () => {
-    const authState = useAuthStore.getState();
-
-    // If auth hasn't been initialized yet, wait for it to complete
-    if (!authState.initialized) {
-      await useAuthStore.getState().initializeAuth();
-    }
-    
-    // Wait for auth to be checked if it hasn't been yet
-    if (!authState.authChecked) {
-      await new Promise((resolve) => {
-        const unsubscribe = useAuthStore.subscribe((state) => {
-          if (state.authChecked) {
-            unsubscribe();
-            resolve();
-          }
-        });
-        
-        // Timeout after 2 seconds
-        setTimeout(() => {
-          unsubscribe();
-          resolve();
-        }, 2000);
-      });
-    }
-    
-    // After auth check, redirect if already authenticated
-    const finalAuthState = useAuthStore.getState();
-    
-    if (finalAuthState.isAuthenticated) {
-      throw redirect({
-        to: "/optimizer",
-        replace: true,
-      });
-    }
-  },
+  component: ProtectComponent,
 });
+
+function ProtectComponent() {
+  const { user, loading } = useSession();
+  React.useEffect(() => {
+    if (!loading && user?.uid) {
+      window.location.replace("/optimizer");
+    }
+  }, [loading, user]);
+  if (loading) return <VerifyingAuth />;
+  return <Outlet />;
+}

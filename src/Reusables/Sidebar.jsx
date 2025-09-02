@@ -2,7 +2,7 @@
 import React from "react";
 import Logo from "./Logo";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
-import useAuthStore from "../stores/authStore";
+import { logout } from "../utils/logout.util";
 import { Book, Feather, LogOut, Sparkles } from "lucide-react";
 import Feedback from "./Feedback";
 
@@ -10,17 +10,12 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const location = useRouterState({ select: (s) => s.location });
 
-  const signOut = useAuthStore((state) => state.signOut);
-  const clearAuth = useAuthStore((state) => state.clearAuth);
-
   const handleSignOut = async () => {
     try {
-      clearAuth();
-      await signOut();
+      await logout();
       navigate({ to: "/login", replace: true });
     } catch (error) {
       console.error("Error signing out:", error);
-      clearAuth();
       navigate({ to: "/login", replace: true });
     }
   };
@@ -28,10 +23,7 @@ const Sidebar = () => {
   const isActive = (path) => location.pathname === path;
 
   const linkClass = (path) =>
-    `p-3 flex align-middle gap-3 rounded-md transition-all duration-300 ${isActive(path)
-      ? "bg-gray-50 text-gray-900"
-      : "text-gray-500 hover:bg-gray-50 hover:text-gray-950"
-    }`;
+    `p-3 flex align-middle gap-3 rounded-md transition-all duration-300 ${isActive(path) ? "bg-gray-50 text-gray-900" : "text-gray-500 hover:bg-gray-50 hover:text-gray-950"}`;
 
   return (
     <div className="w-full sm:w-72 bg-white text-black h-screen flex flex-col p-6 border border-r-gray-200 text-sm">
@@ -49,9 +41,7 @@ const Sidebar = () => {
         <Link to="/proposal" className={linkClass("/proposal")}>
           <Feather size={20} />
           Ai Proposals
-          <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs text-blue-700 ring-1 ring-blue-600/10 ring-inset ml-auto">
-            Soon
-          </span>
+          <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs text-blue-700 ring-1 ring-blue-600/10 ring-inset ml-auto">Soon</span>
         </Link>
 
         <Link
@@ -63,17 +53,13 @@ const Sidebar = () => {
           Docs
         </Link>
 
-
         <span className="border mt-auto border-gray-100" />
 
         <Feedback />
 
         <span className="border border-gray-100" />
 
-        <button
-          onClick={handleSignOut}
-          className="text-left text-red-400 transition-all duration-300 rounded-md p-3 flex align-middle gap-3 hover:bg-red-50"
-        >
+        <button onClick={handleSignOut} className="text-left text-red-400 transition-all duration-300 rounded-md p-3 flex align-middle gap-3 hover:bg-red-50">
           <LogOut size={20} />
           Log Out
         </button>
