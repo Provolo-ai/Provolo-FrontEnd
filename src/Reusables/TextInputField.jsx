@@ -31,7 +31,7 @@ const TextInputField = ({
             </label>
             <div className="relative">
                 {iconStart && (
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-400">
+                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none ">
                         {iconStart}
                     </div>
                 )}
@@ -39,8 +39,7 @@ const TextInputField = ({
                     required={required}
                     type={currentType ?? "text"}
                     id={id}
-                    className={`w-full p-3 border border-gray-200 rounded-md transition duration-150 ease-in-out bg-gray-50 placeholder:text-sm ${
-                        isInvalid
+                    className={`w-full p-3 border border-gray-200 rounded-md transition duration-150 ease-in-out bg-gray-50 placeholder:text-sm ${isInvalid
                             ? 'ring-1 ring-red-600/10 ring-inset bg-red-50 placeholder-red-700 border-red-300'
                             : 'border-gray-300 focus:border-blue-500 focus:ring-blue-500'
                         } ${iconStart ? 'pl-10' : ''} ${isPassword ? 'pr-10' : ''}`}

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import ResultsAccordion from "../../Reusables/ResultsAccordion";
 import TextInputField from "../../Reusables/TextInputField";
-import CustomButton from "../../Reusables/CustomButton";
 import CustomSnackbar from "../../Reusables/CustomSnackbar";
-import AboutMe from "./AboutMe";
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import useAuthStore from "../../stores/authStore";
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import { ChevronDownIcon } from '@heroicons/react/20/solid'
+import { CornerDownLeft } from "lucide-react";
 
 const PortfolioOptimizer = () => {
   // State variables for input data ==========>>>>>>>>>>
@@ -32,88 +32,93 @@ const PortfolioOptimizer = () => {
     description: false,
   });
 
-  // Function to call the AI model GEMINI ====================>>>>>>>>>>>>>>>>>>> START
-  const analyzePortfolio = async () => {
-    setIsLoading(true);
-    setError("");
-    setgeneratedProposal(null);
-    setOptimizedOverview("");
-    setProjectSuggestions("");
-    setVisualSuggestions("");
-    setBeforeAfter("");
-    setWeaknessesSummary("");
-  };
+    // Function to call the AI model GEMINI ====================>>>>>>>>>>>>>>>>>>> START
+    const analyzePortfolio = async () => {
+        setIsLoading(true);
+        setError("");
+        setgeneratedProposal(null);
+        setOptimizedOverview("");
+        setProjectSuggestions("");
+        setVisualSuggestions("");
+        setBeforeAfter("");
+        setWeaknessesSummary("");
+    };
 
-  const parseAndSetResults = (fullText) => {
-    const sectionHeadings = [
-      { label: "1. Weaknesses and Optimization Ideas", setter: setWeaknessesSummary },
-      { label: "2. Optimized Profile Overview", setter: setOptimizedOverview },
-      { label: "3. Suggested Project Titles and Layouts", setter: setProjectSuggestions },
-      { label: "4. Recommended Visuals/Layout Hierarchies", setter: setVisualSuggestions },
-      { label: "5. Before and After Comparison", setter: setBeforeAfter },
-    ];
+    const parseAndSetResults = (fullText) => {
+        const sectionHeadings = [
+            { label: "1. Weaknesses and Optimization Ideas", setter: setWeaknessesSummary },
+            { label: "2. Optimized Profile Overview", setter: setOptimizedOverview },
+            { label: "3. Suggested Project Titles and Layouts", setter: setProjectSuggestions },
+            { label: "4. Recommended Visuals/Layout Hierarchies", setter: setVisualSuggestions },
+            { label: "5. Before and After Comparison", setter: setBeforeAfter },
+        ];
 
-    sectionHeadings.forEach((section) => {
-      const startPattern = new RegExp(`${section.label}[\\s\\S]*?(?=\\n*\\s*\\d\\.|\\Z)`, "i");
-      const match = fullText.match(startPattern);
+        sectionHeadings.forEach((section) => {
+            const startPattern = new RegExp(`${section.label}[\\s\\S]*?(?=\\n*\\s*\\d\\.|\\Z)`, "i");
+            const match = fullText.match(startPattern);
 
-      if (match && match[0]) {
-        const content = match[0].replace(new RegExp(`^${section.label}\\s*`, "i"), "").trim();
-        section.setter(content);
-      } else {
-        section.setter("N/A");
-      }
-    });
-  };
+            if (match && match[0]) {
+                const content = match[0].replace(new RegExp(`^${section.label}\\s*`, "i"), "").trim();
+                section.setter(content);
+            } else {
+                section.setter("N/A");
+            }
+        });
+    };
 
-  return (
-    <>
-      {/* <Pricing /> */}
-      <div className="flex-1 flex flex-col overflow-y-auto relative">
-        <div className="absolute top-10 right-10 rounded-lg">
-          <AboutMe />
-        </div>
-        <div className="p-6 sm:p-10 max-w-4xl mx-auto w-full">
-          <div>
-            {/* Input Section ====================>>>>>>>>>>>>>>>>>>> START*/}
-            <div className="mb-8 p-10 bg-white rounded-lg border border-gray-200">
-              <h2 className="text-3xl font-medium mb-6">Ai Proposals</h2>
+    return (
+        <>
+            <div className="flex-1 flex flex-col overflow-y-auto relative">
 
-              {/* New Input Fields for NAME & PROFILE HEADER ====================>>>>>>>>>>>>>>>>>>> */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                <TextInputField
-                  id="clientName"
-                  label="Client's Name (Personal Touch)"
-                  placeholder="John Doe"
-                  value={clientName}
-                  onChange={(e) => setclientName(e.target.value)}
-                  onBlur={() => setTouched((prev) => ({ ...prev, name: true }))}
-                  touched={touched.name || error}
-                  required
-                />
+                <div className="p-6 sm:p-10 max-w-4xl m-auto w-full">
+                    <div>
 
-                <Menu as="div" className="relative inline-block mt-auto">
-                  <MenuButton className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-4 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50">
-                    Set Tone
-                    <ChevronDownIcon aria-hidden="true" className="-mr-1 size-5 text-gray-400" />
-                  </MenuButton>
+                        {/* Input Section ====================>>>>>>>>>>>>>>>>>>> START*/}
+                        <h2 className="text-3xl font-medium mb-6 text-center">Tell Me About The Job</h2>
+                        <div className="mb-8 p-10 bg-white rounded-lg border border-gray-200">
 
-                  <MenuItems
-                    transition
-                    className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
-                  >
-                    <div className="py-1">
-                      <MenuItem>
-                        <a href="#" className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden">
-                          Conversational
-                        </a>
-                      </MenuItem>
-                      <MenuItem>
-                        <a href="#" className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden">
-                          Professional
-                        </a>
-                      </MenuItem>
-                    </div>
+                            {/* New Input Fields for NAME & PROFILE HEADER ====================>>>>>>>>>>>>>>>>>>> */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <TextInputField
+                                    id="clientName"
+                                    label="Client's Name (Personal Touch)"
+                                    placeholder="John Doe"
+                                    value={clientName}
+                                    onChange={(e) => setclientName(e.target.value)}
+                                    onBlur={() => setTouched((prev) => ({ ...prev, name: true }))}
+                                    touched={touched.name || error}
+                                    required
+                                />
+
+                                <Menu as="div" className="relative inline-block mt-auto">
+                                    <p className="block text-sm mb-2">Proposal Tone</p>
+                                    <MenuButton className="inline-flex w-full gap-x-1.5 rounded-md bg-white px-3 py-4 text-sm text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50">
+                                        Select Option
+                                        <ChevronDownIcon aria-hidden="true" className="-mr-1 size-5 text-gray-400" />
+                                    </MenuButton>
+
+                                    <MenuItems
+                                        transition
+                                        className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+                                    >
+                                        <div className="py-1">
+                                            <MenuItem>
+                                                <a
+                                                    href="#"
+                                                    className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
+                                                >
+                                                    Conversational
+                                                </a>
+                                            </MenuItem>
+                                            <MenuItem>
+                                                <a
+                                                    href="#"
+                                                    className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
+                                                >
+                                                    Professional
+                                                </a>
+                                            </MenuItem>
+
                   </MenuItems>
                 </Menu>
               </div>
