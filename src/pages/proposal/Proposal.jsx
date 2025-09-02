@@ -1,13 +1,11 @@
 import React, { useState } from "react";
 import ResultsAccordion from "../../Reusables/ResultsAccordion";
 import TextInputField from "../../Reusables/TextInputField";
-import CustomButton from "../../Reusables/CustomButton";
 import CustomSnackbar from "../../Reusables/CustomSnackbar";
 import useAuthStore from "../../stores/authStore";
-import AboutMe from "./AboutMe";
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
-import Pricing from "../landing/Pricing";
+import { CornerDownLeft } from "lucide-react";
 
 const PortfolioOptimizer = () => {
     // Get user from auth store
@@ -73,17 +71,14 @@ const PortfolioOptimizer = () => {
 
     return (
         <>
-            <Pricing />
             <div className="flex-1 flex flex-col overflow-y-auto relative">
-                <div className="absolute top-10 right-10 rounded-lg">
-                    <AboutMe />
-                </div>
-                <div className="p-6 sm:p-10 max-w-4xl mx-auto w-full">
+
+                <div className="p-6 sm:p-10 max-w-4xl m-auto w-full">
                     <div>
 
                         {/* Input Section ====================>>>>>>>>>>>>>>>>>>> START*/}
+                        <h2 className="text-3xl font-medium mb-6 text-center">Tell Me About The Job</h2>
                         <div className="mb-8 p-10 bg-white rounded-lg border border-gray-200">
-                            <h2 className="text-3xl font-medium mb-6">Ai Proposals</h2>
 
                             {/* New Input Fields for NAME & PROFILE HEADER ====================>>>>>>>>>>>>>>>>>>> */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -99,8 +94,9 @@ const PortfolioOptimizer = () => {
                                 />
 
                                 <Menu as="div" className="relative inline-block mt-auto">
-                                    <MenuButton className="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-4 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50">
-                                        Set Tone
+                                    <p className="block text-sm mb-2">Proposal Tone</p>
+                                    <MenuButton className="inline-flex w-full gap-x-1.5 rounded-md bg-white px-3 py-4 text-sm text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50">
+                                        Select Option
                                         <ChevronDownIcon aria-hidden="true" className="-mr-1 size-5 text-gray-400" />
                                     </MenuButton>
 
@@ -153,14 +149,19 @@ const PortfolioOptimizer = () => {
                                     onChange={(e) => setjobSummary(e.target.value)}
                                     onBlur={() => setTouched((prev) => ({ ...prev, description: true }))}
                                 ></textarea>
-
                                 {(error || (touched.description && !jobSummary.trim())) && <p className="text-xs text-red-700">Required</p>}
                             </div>
 
-                            <CustomButton onClick={analyzePortfolio} isLoading={isLoading} className="btn-primary">
+                            {/* <CustomButton onClick={analyzePortfolio} isLoading={isLoading} className="btn-primary">
                                 {" "}
                                 Generate Proposal{" "}
-                            </CustomButton>
+                            </CustomButton> */}
+                            <div className="w-full flex  justify-end">
+                                <button className="inline-flex items-center justify-center rounded-full p-2 gap-x-3 hover:bg-gray-50 transition-all duration-300 px-3 py-2 text-xs text-gray-900 shadow-xs">
+                                    <CornerDownLeft aria-hidden="true" className="-mr-1 size-3" />
+                                    Enter
+                                </button>
+                            </div>
 
                             {error && <CustomSnackbar open={error} close={() => setError("")} snackbarColor={"danger"} snackbarMessage={error} />}
                         </div>

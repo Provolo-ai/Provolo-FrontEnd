@@ -1,30 +1,53 @@
 import { CheckIcon } from '@heroicons/react/20/solid'
 
 const tiers = [
+
     {
-        name: 'Hobby',
-        id: 'tier-hobby',
+        name: 'Side Hustler',
+        id: 'tier-sideHustler',
         href: '#',
-        priceMonthly: '$29',
-        description: "The perfect plan if you're just getting started with our product.",
-        features: ['25 products', 'Up to 10,000 subscribers', 'Advanced analytics', '24-hour support response time'],
+        priceMonthly: '$4.99',
+        description: "Land your first few gigs. The perfect launchpad for your freelance career.",
+        features: [
+            'AI Profile Optimization',
+            'AI Proposal Assistant (New!)',
+            'Access to our Freelancer Community',
+        ],
         featured: false,
     },
+
     {
-        name: 'Enterprise',
+        name: 'Pro Freelancer',
         id: 'tier-enterprise',
         href: '#',
-        priceMonthly: '$99',
-        description: 'Dedicated support and infrastructure for your company.',
+        priceMonthly: '$15.99',
+        description: "Land bigger clients and higher-paying jobs. It's the 'just right' plan for serious growth.",
         features: [
-            'Unlimited products',
-            'Unlimited subscribers',
-            'Advanced analytics',
-            'Dedicated support representative',
-            'Marketing automations',
-            'Custom integrations',
+            'Everything in the Side Hustler',
+            'Unlimited AI Profile Optimizations',
+            'AI Proposal Assistant (New!)',
+            'Advanced Profile Analytics',
+            'Weekly Upwork Job Suggestions',
+            'Priority Email Support',
+            'Access to Exclusive Workshops',
         ],
         featured: true,
+    },
+    {
+        name: 'Agency',
+        id: 'tier-agency',
+        href: '#',
+        priceMonthly: '$29.99',
+        description: "Dedicated support and features built for collaboration. Scale your business without limits.",
+        features: [
+            'All features in the Pro Freelancer plan',
+            'Dedicated Account Manager',
+            'Team Collaboration Features',
+            'Custom AI Model Training',
+            '24/7 Priority Support',
+            'Advanced API Access',
+        ],
+        featured: false,
     },
 ]
 
@@ -34,7 +57,7 @@ function classNames(...classes) {
 
 export default function Pricing() {
     return (
-        <div className="relative isolate px-6 py-24 sm:py-32 lg:px-8 bg-white">
+        <div className="flex-1 flex flex-col overflow-y-auto px-6 py-24 sm:py-32 lg:px-8">
             <div aria-hidden="true" className="absolute inset-x-0 -top-3 -z-10 transform-gpu overflow-hidden px-36 blur-3xl">
                 <div
                     style={{
@@ -45,16 +68,18 @@ export default function Pricing() {
                 />
             </div>
             <div className="mx-auto max-w-4xl text-center">
-                <h2 className="text-base/7 font-semibold text-indigo-600">Pricing</h2>
+                {/* <h2 className="text-base/7 font-semibold text-indigo-600">Pricing</h2> */}
                 <p className="mt-2 text-5xl tracking-tight text-balance text-gray-900 sm:text-6xl">
-                    Choose the right plan for you
+            {/* <p className="text-3xl tracking-tight text-balance text-white sm:text-5xl"> */}
+                    Choose Your Growth Path
                 </p>
             </div>
             <p className="mx-auto mt-6 max-w-2xl text-center text-lg font-medium text-pretty text-gray-600 sm:text-xl/8">
-                Choose an affordable plan that’s packed with the best features for engaging your audience, creating customer
-                loyalty, and driving sales.
+                Stop guessing, start winning. Pick a plan that’s built for your freelance journey, no matter where you are.
             </p>
-            <div className="mx-auto mt-16 grid max-w-lg grid-cols-1 items-center gap-y-6 sm:mt-20 sm:gap-y-0 lg:max-w-4xl lg:grid-cols-2">
+
+
+            <div className="mx-auto mt-16 grid max-w-lg grid-cols-1 items-center gap-y-6 sm:mt-20 sm:gap-y-0 lg:max-w-7xl lg:grid-cols-3">
                 {tiers.map((tier, tierIdx) => (
                     <div
                         key={tier.id}
@@ -85,9 +110,11 @@ export default function Pricing() {
                             </span>
                             <span className={classNames(tier.featured ? 'text-gray-400' : 'text-gray-500', 'text-base')}>/month</span>
                         </p>
+
                         <p className={classNames(tier.featured ? 'text-gray-300' : 'text-gray-600', 'mt-6 text-base/7')}>
                             {tier.description}
                         </p>
+
                         <ul
                             role="list"
                             className={classNames(
@@ -105,6 +132,7 @@ export default function Pricing() {
                                 </li>
                             ))}
                         </ul>
+
                         <a
                             href={tier.href}
                             aria-describedby={tier.id}
