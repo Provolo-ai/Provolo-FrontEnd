@@ -24,7 +24,7 @@ const ErrorPage = ({ error, info, reset }) => {
         <div className="p-6 rounded-lg text-center">
           <div className='w-full text-center flex justify-center'>
             {/* Error Icon */}
-            <svg width="150" height="auto" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg width="150" height="150" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
               <circle cx="100" cy="100" r="80" fill="#FEE2E2" stroke="#EF4444" strokeWidth="2"/>
               <path d="M70 70L130 130M130 70L70 130" stroke="#EF4444" strokeWidth="4" strokeLinecap="round"/>
             </svg>
