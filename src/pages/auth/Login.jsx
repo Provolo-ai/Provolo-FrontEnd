@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { getIdToken, signInWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../../lib/firebase";
 import Logo from "../../Reusables/Logo";
@@ -7,73 +7,36 @@ import CustomButton from "../../Reusables/CustomButton";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { getCleanErrorMessage } from "../../utils/firebaseError.util";
 import { ensureUserExists } from "../../utils/firebase.util";
-import useAuthStore from "../../stores/authStore";
 import { Key, Mail } from "lucide-react";
 import CustomSnackbar from "../../Reusables/CustomSnackbar";
-import { useEffect } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
-  const hasNavigated = useRef(false);
-  
-  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
-  const authLoading = useAuthStore((state) => state.loading);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [touched, setTouched] = useState({});
 
-  useEffect(() => {
-    if (isAuthenticated && !authLoading && !hasNavigated.current) {
-      hasNavigated.current = true;
-      navigate({ to: "/optimizer", replace: true });
-    }
-  }, [isAuthenticated, authLoading]);
-
   const signInWithEmail = async (email, password) => {
     try {
       setLoading(true);
       setError("");
-      
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-
-      // Ensure user exists in Firestore
-      await ensureUserExists(db, user);
-      
-      // Get Firebase ID token and authenticate with server
       const idToken = await getIdToken(user, true);
-      
-      // Send to server for cookie-based authentication
+      await ensureUserExists(db, user);
       const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/auth/login`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({ idToken })
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ idToken }),
       });
-
       if (response.ok) {
-        // Update Zustand store with user data
-        const userData = {
-          uid: user.uid,
-          email: user.email,
-          emailVerified: user.emailVerified,
-          displayName: user.displayName,
-          photoURL: user.photoURL,
-          createdAt: user.metadata.creationTime,
-          lastLoginAt: user.metadata.lastSignInTime,
-        };
-
-        // Update the auth store
-        useAuthStore.getState().setUser(userData);
+        navigate({ to: "/optimizer", replace: true });
       } else {
-        throw new Error('Server authentication failed');
+        throw new Error("Server authentication failed");
       }
-      
     } catch (error) {
       setError(getCleanErrorMessage(error));
     } finally {
@@ -89,7 +52,7 @@ const Login = () => {
     }
     await signInWithEmail(email, password);
   };
-  
+
   return (
     <div className="flex min-h-screen flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-gray-50">
       <Logo />
@@ -143,7 +106,6 @@ const Login = () => {
 
           <div>
             <CustomButton type="submit" disabled={loading} className="btn-primary">
-              {" "}
               {loading ? "Logging in..." : "Login"}
             </CustomButton>
           </div>
@@ -156,11 +118,7 @@ const Login = () => {
           </Link>
         </p>
       </div>
-      {error && (
-        <>
-          <CustomSnackbar open={error} snackbarColor={"danger"} snackbarMessage={error} />
-        </>
-      )}
+      {error && <CustomSnackbar open={error} snackbarColor={"danger"} snackbarMessage={error} />}
     </div>
   );
 };

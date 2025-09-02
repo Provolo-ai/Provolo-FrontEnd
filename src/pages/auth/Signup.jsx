@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { useState, useRef } from "react";
+import { createUserWithEmailAndPassword, getIdToken } from "firebase/auth";
 import { z } from "zod";
 import { Check, Key, Mail, X } from "lucide-react";
 import { auth, db } from "../../lib/firebase";
@@ -9,17 +9,14 @@ import Logo from "../../Reusables/Logo";
 import TextInputField from "../../Reusables/TextInputField";
 import CustomButton from "../../Reusables/CustomButton";
 import { Link, useNavigate } from "@tanstack/react-router";
-import useAuthStore from "../../stores/authStore";
 import CustomSnackbar from "../../Reusables/CustomSnackbar";
 import { isDisposableEmail } from "../../utils/disposableEmails.util";
 
 // Updated Zod schema for signup form with disposable email check
 const signupSchema = z.object({
-  email: z
-    .email("Enter a valid email address")
-    .refine((email) => !isDisposableEmail(email), {
-      message: "Temporary or disposable email addresses are not allowed. Please use a permanent email address."
-    }),
+  email: z.email("Enter a valid email address").refine((email) => !isDisposableEmail(email), {
+    message: "Temporary or disposable email addresses are not allowed. Please use a permanent email address.",
+  }),
   password: z
     .string()
     .min(8, "Password must be at least 8 characters")
@@ -30,9 +27,6 @@ const signupSchema = z.object({
 
 export default function Authentication() {
   const navigate = useNavigate();
-  // Zustand auth store
-  const setUser = useAuthStore((state) => state.setUser);
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -70,13 +64,13 @@ export default function Authentication() {
       if (error instanceof z.ZodError) {
         // Safe error message extraction
         let errorMessage = "Invalid input";
-        
+
         if (error.errors && error.errors.length > 0 && error.errors[0].message) {
           errorMessage = error.errors[0].message;
         } else if (error.issues && error.issues.length > 0 && error.issues[0].message) {
           errorMessage = error.issues[0].message;
         }
-        
+
         setValidationErrors((prev) => ({
           ...prev,
           [name]: errorMessage,
@@ -89,24 +83,24 @@ export default function Authentication() {
     try {
       setLoading(true);
       setError("");
-
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-
-      // Ensure user exists in Firestore
       await ensureUserExists(db, user);
-
-      const userData = {
-        uid: user.uid,
-        email: user.email,
-        emailVerified: user.emailVerified,
-        displayName: user.displayName,
-        photoURL: user.photoURL,
-        createdAt: user.metadata.creationTime,
-        lastLoginAt: user.metadata.lastSignInTime,
-      };
-      setUser(userData);
-      navigate({ to: "/optimizer", replace: true });
+      const idToken = await getIdToken(user, true);
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ idToken }),
+      });
+      if (response.ok) {
+        navigate({ to: "/optimizer", replace: true });
+      } else {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || "Server authentication failed");
+      }
     } catch (error) {
       setError(getCleanErrorMessage(error));
     } finally {
@@ -116,28 +110,28 @@ export default function Authentication() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     // Run form validation
     const validationResult = signupSchema.safeParse({ email, password });
-  
+
     if (!validationResult.success) {
       const newErrors = {};
-      
+
       // Handle Zod validation errors
       validationResult.error?.errors?.forEach((error) => {
         const field = error.path[0];
         newErrors[field] = error.message;
       });
-      
+
       setValidationErrors(newErrors);
       setError("Please fix the errors below");
       return;
     }
-  
+
     // Clear any previous errors
     setValidationErrors({});
     setError("");
-  
+
     await signUpWithEmail(email, password);
   };
 
