@@ -1,11 +1,11 @@
 import { CheckIcon } from "@heroicons/react/20/solid";
 import { useQuery } from "@tanstack/react-query";
-import { listSubscription, proSubscription } from "../../server/checkout";
+import { proSubscription } from "../../server/checkout";
 import { fetchTiers } from "../../server/tiers";
-
-// listSubscription().then((res) => {
-//   console.log(res);
-// });
+import useSession from "../../hooks/useSession";
+import { useState } from "react";
+import { Loader2 } from "lucide-react";
+import { useMemo } from "react";
 
 // Transform backend tier to UI format
 const transformTierForUI = (tier) => ({
@@ -20,13 +20,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const checkout = async (polarRefId) => {
-  const paymentUrl = await proSubscription(polarRefId);
-  window.location.href = paymentUrl;
-};
-
 export default function Pricing() {
-  // Use TanStack Query to fetch tiers with caching
   const {
     data: tiers,
     isLoading,
@@ -42,10 +36,19 @@ export default function Pricing() {
     retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
   });
 
-  // Transform tiers for UI
-  const displayTiers = tiers ? tiers.map(transformTierForUI) : [];
-  console.log("tiers --- ", tiers)
-  console.log("loading", isLoading)
+  const displayTiers = useMemo(() => (tiers ? tiers.map(transformTierForUI) : []), [tiers]);
+  const { user } = useSession();
+  const [checkoutLoading, setCheckoutLoading] = useState(false);
+
+  const checkout = async (polarRefId) => {
+    setCheckoutLoading(true);
+    try {
+      const paymentUrl = await proSubscription(polarRefId, user);
+      window.location.href = paymentUrl;
+    } finally {
+      setCheckoutLoading(false);
+    }
+  };
 
   // Show loading state
   if (isLoading) {
@@ -155,8 +158,12 @@ export default function Pricing() {
                   : "text-indigo-600 ring-1 ring-indigo-200 ring-inset hover:ring-indigo-300 focus-visible:outline-indigo-600",
                 "mt-8 block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 sm:mt-10"
               )}
+              disabled={checkoutLoading}
             >
-              Get started today
+              <span className="flex items-center justify-center gap-2">
+                {checkoutLoading ? <Loader2 className="animate-spin" /> : null}
+                Get started today
+              </span>
             </button>
           </div>
         ))}
