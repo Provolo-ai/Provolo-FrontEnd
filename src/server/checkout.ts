@@ -13,10 +13,13 @@ export const listSubscription = async () => {
   return result;
 };
 
-export const proSubscription = async (polarRefId) => {
-  const checkout = await polar.checkouts.create({
+export const proSubscription = async (polarRefId: string, user) => {
+  const checkoutData: any = {
     products: [polarRefId],
-  });
-
+  };
+  if (user && user.email) {
+    checkoutData.customerEmail = user.email;
+  }
+  const checkout = await polar.checkouts.create(checkoutData);
   return checkout.url;
 };
