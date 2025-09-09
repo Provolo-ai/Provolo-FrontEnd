@@ -1,30 +1,37 @@
 // components/Sidebar.js
-import React from "react";
+import React, { useState } from "react";
 import Logo from "./Logo";
 import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import { logout } from "../utils/logout.util";
-import { Book, Feather, LibraryBig, LogOut, Recycle, Sparkles } from "lucide-react";
+import {
+  Book,
+  Feather,
+  LibraryBig,
+  Recycle,
+  Sparkles,
+  PanelLeftClose,
+  PanelRightClose,
+  Command,
+  MessageSquareMore,
+} from "lucide-react";
 import Feedback from "./Feedback";
 import UserProfile from "../pages/user/User";
 
 const Sidebar = () => {
   const navigate = useNavigate();
   const location = useRouterState({ select: (s) => s.location });
+  const [isOpen, setIsOpen] = useState(true);
 
-  const handleSignOut = async () => {
-    try {
-      await logout();
-      navigate({ to: "/login", replace: true });
-    } catch (error) {
-      console.error("Error signing out:", error);
-      navigate({ to: "/login", replace: true });
-    }
-  };
+
 
   const isActive = (path) => location.pathname === path;
 
   const linkClass = (path) =>
-    `p-3 flex items-center gap-3 rounded-md transition-all duration-300 ${isActive(path) ? "bg-gray-50 text-gray-900" : "text-gray-500 hover:bg-gray-50 hover:text-gray-950"}`;
+    `relative group flex items-center rounded-md transition-all duration-300 ${isActive(path)
+      ? "bg-gray-50 text-[#0c54f2]"
+      : "text-gray-500 hover:bg-gray-50 hover:text-gray-950"
+    } ${isOpen ? "p-3 gap-3" : "p-3 justify-center"}`;
+
 
   // Main navigation links
   const navItems = [
@@ -43,7 +50,6 @@ const Sidebar = () => {
       to: "/resume",
       icon: <Recycle size={20} />,
       label: "Resume Generator",
-      // badge: { text: "Soon", color: "blue" },
     },
   ];
 
@@ -62,65 +68,122 @@ const Sidebar = () => {
     },
   ];
 
+  // Feedback
+  const feedbackItems = [
+    {
+      to:"https://forms.gle/vWUuG7tu1HU2ksuT8",
+      icon: <MessageSquareMore size={20} />,
+      label: "FeedBack",
+      external: true,
+    },
+  ];
+
+
   const renderBadge = (badge) => {
-    if (!badge) return null;
+    if (!badge || !isOpen) return null; // hide badge if sidebar is collapsed
     const colors = {
       green: "bg-green-50 text-green-700 ring-green-600/10",
       blue: "bg-blue-50 text-blue-700 ring-blue-600/10",
     };
-    return <span className={`ml-auto inline-flex items-center rounded-md px-2 py-1 text-xs ring-1 ring-inset ${colors[badge.color]}`}>{badge.text}</span>;
+    return (
+      <span
+        className={`ml-auto inline-flex items-center rounded-md px-2 py-1 text-xs ring-1 ring-inset ${colors[badge.color]}`}
+      >
+        {badge.text}
+      </span>
+    );
   };
 
+
+
   const renderLink = ({ to, icon, label, badge, external }) => {
+    const content = (
+      <>
+        {icon}
+        <span
+          className={`transition-all duration-300 overflow-hidden whitespace-nowrap ${isOpen ? "opacity-100 w-auto ml-2" : "opacity-0 w-0"
+            }`}
+        >
+          {label}
+        </span>
+        {renderBadge(badge)}
+        {/* Tooltip when collapsed */}
+        {!isOpen && (
+          <span className="absolute left-full ml-2 px-2 py-1 text-xs rounded bg-gray-900 text-white opacity-0 group-hover:opacity-100 transition whitespace-nowrap z-50">
+            {label}
+          </span>
+        )}
+      </>
+    );
+
     if (external) {
       return (
-        <Link key={label} target="_blank" to={to} className="p-3 flex items-center gap-3 rounded-md text-gray-500 hover:bg-gray-50 hover:text-gray-950 transition-all duration-300">
-          {icon}
-          {label}
+        <Link
+          key={label}
+          target="_blank"
+          to={to}
+          className={`${linkClass(to)} ${isOpen ? "gap-3" : "justify-center"}`}
+        >
+          {content}
         </Link>
       );
     }
+
     return (
-      <Link key={label} to={to} className={linkClass(to)}>
-        {icon}
-        {label}
-        {renderBadge(badge)}
+      <Link
+        key={label}
+        to={to}
+        className={`${linkClass(to)} ${isOpen ? "gap-3" : "justify-center"}`}
+      >
+        {content}
       </Link>
     );
   };
 
   return (
-    <div className="w-full sm:w-72 bg-white h-screen flex flex-col p-6 border-r border-gray-200 text-sm">
+    <div
+      className={`relative h-screen flex flex-col border-r border-gray-200 text-sm bg-white transition-all duration-300 ${isOpen ? "w-72 p-6" : "w-20 p-3 py-6"
+        }`}
+    >
+
+      {/* Toggle button */}
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="absolute z-20 -right-10 top-8 bg-gray-50 rounded-md p-1 hover:bg-gray-100 transition-all duration-300 text-gray-400"
+      >
+        {isOpen ? <PanelLeftClose size={20} /> : <PanelRightClose size={20} />}
+      </button>
+
       {/* Logo */}
       <div className="flex items-center gap-3 mb-10 px-3 w-fit">
         <Logo />
-        Provolo
+        {/* {isOpen && <span className="font-semibold">Provolo</span>} */}
       </div>
 
-      {/* <div className=""> */}
-      <UserProfile />
-      {/* </div> */}
 
       {/* Navigation */}
       <div className="flex flex-col gap-2 h-full">
         {navItems.map(renderLink)}
 
         {/* Upskill Section */}
-        <p className="text-xs mt-10 pl-4 text-gray-500">Provolo Upskill</p>
+        {isOpen && (
+          <>
+            <p className="text-xs mt-10 pl-4 text-gray-500">Provolo Upskill</p>
+          </>
+        )}
         <span className="border border-gray-100" />
         {upskillItems.map(renderLink)}
 
         <span className="border mt-auto border-gray-100" />
 
-        <Feedback />
+        {feedbackItems.map(renderLink)}
+        {/* {isOpen && <Feedback />} */}
 
-        <span className="border border-gray-100" />
 
-        {/* Logout */}
-        <button onClick={handleSignOut} className="text-left text-red-400 transition-all duration-300 rounded-md p-3 flex items-center gap-3 hover:bg-red-50">
-          <LogOut size={20} />
-          Log Out
-        </button>
+        {/* <span className="border border-gray-100" /> */}
+        <UserProfile  open={isOpen}/>
+
+
       </div>
     </div>
   );

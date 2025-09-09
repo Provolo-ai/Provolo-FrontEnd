@@ -6,8 +6,8 @@ import visibility from '../../assets/img/graph.png'
 
 const Features = () => {
     return (
-        <div className="py-10" id='features'>
-            <div className="mx-auto max-w-2xl px-6 md:px-6 lg:max-w-7xl lg:p-8">
+        <div className="py-20" id='features'>
+            <div className="mx-auto max-w-2xl lg:max-w-7xl">
 
                 <div className="grid gap-4 lg:grid-cols-3 lg:grid-rows-2">
 
