@@ -4,7 +4,7 @@ import TextInputField from "../../Reusables/TextInputField";
 import CustomSnackbar from "../../Reusables/CustomSnackbar";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import { CornerDownLeft } from "lucide-react";
+import { CornerDownLeft, Sparkle, Sparkles, SparklesIcon } from "lucide-react";
 import useSession from "../../hooks/useSession";
 
 const PortfolioOptimizer = () => {
@@ -74,7 +74,9 @@ const PortfolioOptimizer = () => {
         <div className="p-6 sm:p-10 max-w-4xl m-auto w-full">
           <div>
             {/* Input Section ====================>>>>>>>>>>>>>>>>>>> START*/}
-            <h2 className="text-3xl font-medium mb-6 text-center">Tell Me About The Job</h2>
+            <h2 className="text-3xl font-medium mb-3 text-center flex items-center gap-3 justify-center"><SparklesIcon/> Proposals</h2>
+            <p className=" mb-6 text-center w-1/2 mx-auto text-gray-400">Create winning proposals in minutes with AI-powered personalization and professional templates</p>
+
             <div className="mb-8 p-10 bg-white rounded-lg border border-gray-200">
               {/* New Input Fields for NAME & PROFILE HEADER ====================>>>>>>>>>>>>>>>>>>> */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -125,11 +127,10 @@ const PortfolioOptimizer = () => {
                 <textarea
                   required
                   id="jobSummary"
-                  className={`w-full p-3 border rounded-md transition duration-150 ease-in-out bg-gray-50 placeholder:text-sm ${
-                    error || (touched.description && !jobSummary.trim())
+                  className={`w-full p-3 border rounded-md transition duration-150 ease-in-out bg-gray-50 placeholder:text-sm ${error || (touched.description && !jobSummary.trim())
                       ? "ring-1 ring-red-600/10 ring-inset focus:ring-red-500 bg-red-50 placeholder-red-700"
                       : "border-gray-300 focus:border-blue-500 focus:ring-blue-500"
-                  }`}
+                    }`}
                   rows="8"
                   placeholder="Paste Job Summary here..."
                   value={jobSummary}

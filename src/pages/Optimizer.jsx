@@ -9,6 +9,39 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 
 import { ChevronDownIcon, CornerDownLeft, Link, SendHorizonal, Settings2 } from "lucide-react";
 
+// const dummyResult = {
+//   data: {
+//     fullAnalysis: "Overall, the profile is strong but could benefit from clearer positioning and more impactful visuals.",
+//     weaknessesAndOptimization: `
+//       - Title is too generic (e.g., "Freelancer" instead of a niche-specific role).
+//       - Profile description is wordy and lacks a clear structure.
+//       - Not enough proof of work (few or no showcased projects).
+//       - Weak call-to-action at the end of the profile.
+//     `,
+//     optimizedProfileOverview: `
+//       Your profile has been optimized to highlight your expertise in WordPress and Framer.
+//       The new overview emphasizes credibility, client-focused results, and your ability to deliver fast, high-quality websites.
+//     `,
+//     suggestedProjectTitles: `
+//       - "Modern Startup Landing Page (Framer)"
+//       - "E-commerce Storefront with WooCommerce"
+//       - "Creative Portfolio Website for Designers"
+//       - "Corporate Website Revamp"
+//     `,
+//     recommendedVisuals: `
+//       - Use a clean hero section with bold typography.
+//       - Showcase projects in a 3-column grid with hover animations.
+//       - Highlight testimonials in a carousel format.
+//       - Add a before/after slider to demonstrate improvements.
+//     `,
+//     beforeAfterComparison: `
+//       **Before:** Generic, text-heavy, and lacking visual hierarchy.  
+//       **After:** Clear niche positioning, concise storytelling, and engaging visuals.
+//     `,
+//   }
+// };
+
+
 const PortfolioOptimizer = () => {
   // Get user from backend session
   const { user, loading } = useSession();
@@ -19,7 +52,7 @@ const PortfolioOptimizer = () => {
   const [profileDescription, setProfileDescription] = useState("");
 
   // State variables for output from the AI ==========>>>>>>>>>>>>
-  const [analysisResults, setAnalysisResults] = useState(null);
+  const [analysisResults, setAnalysisResults] = useState("");
   const [optimizedOverview, setOptimizedOverview] = useState("");
   const [projectSuggestions, setProjectSuggestions] = useState("");
   const [visualSuggestions, setVisualSuggestions] = useState("");
@@ -120,10 +153,10 @@ const PortfolioOptimizer = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col overflow-y-auto">
+    <div className="flex-1 flex flex-col overflow-y-auto py-20">
       <div className="p-6 sm:p-10 max-w-4xl m-auto w-full">
         <div>
-          <h1 className="mb-3 text-gray-300">{loading ? "Loading..." : `Welcome, ${user?.displayName || user?.email?.split("@")[0] || "User"}`}</h1>
+          {/* <h1 className="mb-3 text-gray-300">{loading ? "Loading..." : `Welcome, ${user?.displayName || user?.email?.split("@")[0] || "User"}`}</h1> */}
 
           <h2 className="text-3xl font-medium mb-6 text-center">
             Let's Get to Know Your Profile,

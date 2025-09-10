@@ -4,11 +4,13 @@ import { Link, Mail, UserRound } from 'lucide-react';
 import { useState } from 'react';
 import CustomButton from '../../Reusables/CustomButton';
 import useSession from '../../hooks/useSession';
+import { GenerateAvatar } from '../../Reusables/GenerateAvatar';
 
 
 
 
 export default function Example() {
+    const { user, loading: loadingUserData } = useSession()
     const img = {
         name: 'Tom Cook',
         email: 'tom@example.com',
@@ -23,36 +25,30 @@ export default function Example() {
     });
     const [error, setError] = useState("");
 
-    const {user} = useSession();
     const [profileLink, setProfileLink] = useState("");
     const [fullName, setFullName] = useState("");
-    const [email, setEmail] = useState("");
 
 
     return (
-        <form className='flex-1 flex flex-col overflow-y-auto relative h-screen bg-white py-36 px-20'>
+        <form className='flex-1 flex flex-col overflow-y-auto relative h-screen py-36 px-20'>
             <div className="space-y-10  m-auto max-w-3xl ">
                 <div className="border-b border-gray-900/10 pb-5">
 
-                    {/* <h2 className="text-base/7 font-semibold text-gray-900">Profile</h2>
-                    <p className="mt-1 text-sm/6 text-gray-600">
-                        This information will be displayed publicly so be careful what you share.
-                    </p> */}
+                    <div className="grid grid-cols-1 gap-x-6  sm:grid-cols-6 ">
 
-                    <div className="grid grid-cols-1 gap-x-6  sm:grid-cols-6 text-gray-400">
-
-                        <div className="sm:col-span-">
+                        <div className="grid grid-cols-2 align-middle gap-5 items-center">
                             {/* <label htmlFor="username" className="block text-sm/6 font-medium">
                                 Hello,
                             </label> */}
 
-                            <p className="text-3xl font-medium mb-6">
-                                {user?.displayName || user?.email?.split('@')[0] || 'User'}...
+                            {loadingUserData ? <div className='size-12 rounded-full bg-gray-300 animate-pulse'></div> : <GenerateAvatar name={user?.displayName} size={48} />}
+
+                            <p className="text-3xl font-medium">
+                                {user?.displayName || user?.email?.split('@')[0] || 'User'}
                             </p>
                         </div>
                         <div className="col-span-full">
-                            <div className="flex items-center gap-x-3">
-
+                            {/* <div className="flex items-center gap-x-3">
                                 {img?.imageUrl ? (
                                     <img
                                         alt=""
@@ -71,7 +67,7 @@ export default function Example() {
                                 >
                                     Set Profile Picture
                                 </button>
-                            </div>
+                            </div> */}
                         </div>
 
                     </div>
@@ -82,17 +78,17 @@ export default function Example() {
                     <p className="mt-1 text-sm/6 text-gray-600">Use a permanent address where you can receive mail.</p>
 
                     <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                    <div className="sm:col-span-3">
+                        <div className="sm:col-span-3">
                             <TextInputField
                                 id="fullname"
                                 label="Full Name"
-                                placeholder="Esuola Daniel"
+                                placeholder="John Doe"
                                 iconStart={<UserRound size={20} />}
-                                value={fullName}
+                                value={user?.displayName}
                                 onChange={(e) => setFullName(e.target.value)}
                                 onBlur={() => setTouched((prev) => ({ ...prev, fullName: true }))}
                                 touched={touched.fullName || error}
-                                required
+                                disabled
                             />
                         </div>
 
@@ -103,11 +99,8 @@ export default function Example() {
                                 label="Email Address"
                                 placeholder="example@mail.com"
                                 iconStart={<Mail size={20} />}
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                onBlur={() => setTouched((prev) => ({ ...prev, email: true }))}
-                                touched={touched.email || error}
-                                required
+                                value={user?.email}
+                                disabled
                             />
                         </div>
 
@@ -121,7 +114,7 @@ export default function Example() {
                                 onChange={(e) => setProfileLink(e.target.value)}
                                 onBlur={() => setTouched((prev) => ({ ...prev, profileLink: true }))}
                                 touched={touched.profileLink || error}
-                                required
+                                disabled
                             />
                         </div>
                     </div>
@@ -309,12 +302,12 @@ export default function Example() {
                     </div>
                 </div>
 
-                <div className="mt-6 flex items-center gap-x-6">
+                {/* <div className="mt-6 flex items-center gap-x-6">
                     <CustomButton className="btn-primary">
                         {" "}
                         Update{" "}
                     </CustomButton>
-                </div>
+                </div> */}
             </div>
 
         </form>
