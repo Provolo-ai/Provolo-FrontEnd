@@ -14,12 +14,15 @@ export const listSubscription = async () => {
 };
 
 export const proSubscription = async (polarRefId: string, user) => {
+  if (!polarRefId) throw new Error("No subscription ref ID provided, if error persists, contact support.");
+  if (!user || !user.uid || !user.email) throw new Error("You must be logged in to subscribe, if error persists, contact support.");
   const checkoutData: any = {
     products: [polarRefId],
+    metadata: {
+      user_id: user.uid,
+    },
+    customerEmail: user.email,
   };
-  if (user && user.email) {
-    checkoutData.customerEmail = user.email;
-  }
   const checkout = await polar.checkouts.create(checkoutData);
   return checkout.url;
 };

@@ -85,9 +85,9 @@ export default function Authentication() {
       setError("");
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
-      await ensureUserExists(db, user);
+      // await ensureUserExists(db, user);
       const idToken = await getIdToken(user, true);
-      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/auth/login`, {
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
