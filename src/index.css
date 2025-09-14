@@ -1,27 +1,38 @@
-@import url('https://fonts.cdnfonts.com/css/inter');
+@import url(https://db.onlinewebfonts.com/c/0f4f9171d0c3ca4cd424d9027d227913?family=Inter+Display);
+
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap');
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
     scroll-behavior: smooth;
+    @apply font-primary;
+
 
     /* outline: 1px dashed red; */
 }
 
-body,
-.h1 {
-    font-family: 'Inter', sans-serif;
+@layer base {
+  body, p {
+    @apply font-primary text-base;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading text-gray-900;
+  }
+
+  /* a {
+    @apply text-primary hover:text-secondary transition-colors;
+  } */
 }
 
-h1 {
-    font-family: 'I´nter', sans-serif;
-    letter-spacing: -1.92px;
-    font-weight: 300;
-}
 
 .btn-primary {
     background-image: linear-gradient(to right, #000000, #333333);
@@ -71,3 +82,16 @@ h1 {
         transform: rotate(360deg);
     }
 }
+
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;     /* Firefox */
+  }
+  

@@ -8,7 +8,7 @@ import { logout } from '../../utils/logout.util'
 
 const userNavigation = [
     { name: 'My profile', href: '/userprofile' },
-    { name: 'Settings', href: '#' },
+    // { name: 'Settings', href: '#' },
 ]
 
 export default function User({ open }) {
@@ -41,7 +41,7 @@ export default function User({ open }) {
                 {
                     open &&
                     <span className='ml-3'>
-                        <p >{user.name}</p>
+                        <p className='text-sm'>{user.name}</p>
                         <p className=" text-xs text-gray-400 text-start">Free</p>
                     </span>
                 }
@@ -59,7 +59,7 @@ export default function User({ open }) {
 
             <MenuItems
                 transition
-                className="absolute z-10 -mt-44 w-60 origin-bottom-right rounded-md bg-white py-1 shadow-lg outline-1 outline-black/5 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+                className="absolute z-10 -mt-36 w-60 origin-bottom-right rounded-md bg-white py-1 shadow-lg outline-1 outline-black/5 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
             >
                 {userNavigation.map((item) => (
                     <MenuItem key={item.name}>
