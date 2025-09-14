@@ -33,13 +33,16 @@ export default function UserName() {
         await updateUserDisplayName(currentUser, username, db);
         // Refresh backend session with new display name
         const idToken = await currentUser.getIdToken(true);
-        await fetch(`${import.meta.env.VITE_SERVER_URL}/auth/login`, {
+        const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/auth/login`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
           body: JSON.stringify({ idToken }),
         });
         setValidationErrors({});
+        if (response.ok) {
+          window.location.href = "/optimizer";
+        }
       } else {
         setError("No authenticated user found. Please sign in again.");
       }

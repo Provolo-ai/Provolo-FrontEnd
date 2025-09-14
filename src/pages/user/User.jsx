@@ -1,10 +1,9 @@
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
-import { Link } from '@tanstack/react-router'
-import useSession from '../../hooks/useSession'
-import { GenerateAvatar } from '../../Reusables/GenerateAvatar'
-import { LogOut } from 'lucide-react'
-import { logout } from '../../utils/logout.util'
-
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import { Link, useNavigate } from "@tanstack/react-router";
+import useSession from "../../hooks/useSession";
+import { GenerateAvatar } from "../../Reusables/GenerateAvatar";
+import { LogOut } from "lucide-react";
+import { logout } from "../../utils/logout.util";
 
 const userNavigation = [
     { name: 'My profile', href: '/userprofile' },
@@ -12,20 +11,17 @@ const userNavigation = [
 ]
 
 export default function User({ open }) {
-    const { user: userData, loading: loadingUserData } = useSession()
+  const { user: userData, loading: loadingUserData } = useSession();
+  const navigate = useNavigate();
 
-    console.log(open);
-
-
-    const handleSignOut = async () => {
-        try {
-            await logout();
-            navigate({ to: "/login", replace: true });
-        } catch (error) {
-            console.error("Error signing out:", error);
-            navigate({ to: "/login", replace: true });
-        }
-    };
+  const handleSignOut = async () => {
+    try {
+      await logout();
+      navigate({ to: "/login", replace: true });
+    } catch (error) {
+      navigate({ to: "/login", replace: true });
+    }
+  };
 
     const user = {
         name: userData?.displayName ?? "User",
@@ -50,12 +46,12 @@ export default function User({ open }) {
                     src={user.imageUrl}
                     className="size-8 rounded-full outline -outline-offset-1 outline-white/10"
                 /> */}
-                {/* {loadingUserData ?
+        {/* {loadingUserData ?
                     <div className='w-12 h-6 bg-black' />
                     :
                     <p>{user.name}</p>
                 } */}
-            </MenuButton>
+      </MenuButton>
 
             <MenuItems
                 transition
@@ -72,17 +68,12 @@ export default function User({ open }) {
                     </MenuItem>
                 ))}
 
-                {/* Logout */}
-                <button
-                    onClick={handleSignOut}
-                    className={`text-left text-red-400 bg-red-50/70 transition-all duration-300 rounded-md p-3 flex items-center gap-3 hover:bg-red-50 w-full`}
-                >
-                    <LogOut size={20} />
-                    Log Out
-
-
-                </button>
-            </MenuItems>
-        </Menu>
-    )
+        {/* Logout */}
+        <button onClick={handleSignOut} className={`text-left text-red-400 bg-red-50/70 transition-all duration-300 rounded-md p-3 flex items-center gap-3 hover:bg-red-50 w-full`}>
+          <LogOut size={20} />
+          Log Out
+        </button>
+      </MenuItems>
+    </Menu>
+  );
 }

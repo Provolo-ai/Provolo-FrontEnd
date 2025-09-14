@@ -9,7 +9,6 @@ export const MobilePageModal = ({ operatingSystem }) => {
       await logout();
       navigate({ to: "/login", replace: true });
     } catch (error) {
-      console.error("Error signing out:", error);
       navigate({ to: "/login", replace: true });
     }
   };
