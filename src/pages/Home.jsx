@@ -6,6 +6,7 @@ import Analytics from './landing/Analytics'
 import Banner from './landing/Banner'
 import Pricing from './landing/Pricing'
 import Description from './landing/Description'
+import Howitworks from './landing/Howitworks'
 
 export default function Example() {
 
@@ -13,10 +14,11 @@ export default function Example() {
     <>
       <Hero />
       <Features />
-      {/* <Description /> */}
+      <Description />
+      <Howitworks />
       {/* <Analytics /> */}
-      <Pricing />
-      <Testimonials />
+      {/* <Pricing /> */}
+      {/* <Testimonials /> */}
       <Footer />
     </>
   )
