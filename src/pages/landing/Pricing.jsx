@@ -39,21 +39,25 @@ export default function Pricing() {
   const displayTiers = useMemo(() => (tiers ? tiers.map(transformTierForUI) : []), [tiers]);
   const { user } = useSession();
   const [checkoutLoading, setCheckoutLoading] = useState(false);
+  const [subscriptionError, setSubscriptionError] = useState("");
 
   const checkout = async (polarRefId) => {
     setCheckoutLoading(true);
+    setSubscriptionError("");
     try {
       const paymentUrl = await proSubscription(polarRefId, user);
-      window.location.href = paymentUrl;
+      if (paymentUrl) window.location.href = paymentUrl;
+    } catch (error) {
+      setSubscriptionError("An error occurred during subscription. Please try again, if persists, contact support.");
     } finally {
       setCheckoutLoading(false);
     }
   };
 
-  // Show loading state
-  if (isLoading) {
+  // Show loading state - wait for both tiers data and user data
+  if (isLoading || !user) {
     return (
-      <div className=" flex-1  overflow-y-auto px-6 py-24 sm:py-32 lg:px-8 bg-white w-full">
+      <div className=" flex-1 overflow-y-auto px-6 py-24 sm:py-32 lg:px-8 bg-white w-full">
         <div className="mx-auto max-w-4xl text-center">
           <div className="animate-pulse">
             <div className="h-8 bg-gray-200 rounded w-32 mx-auto mb-4"></div>
@@ -102,17 +106,20 @@ export default function Pricing() {
     );
   }
 
+  console.log(user);
   return (
     <div className="flex-1 flex flex-col overflow-y-auto px-6 py-20 lg:px-8 bg-white w-full">
       <div className="mx-auto max-w-4xl text-center">
-
         <h2 className="text-4xl tracking-tight text-pretty text-gray-900 sm:text-5xl">Choose the right plan for you</h2>
-
+        <p className="mx-auto mt-6 max-w-2xl text-center text-gray-600 text-lg/8 text-pretty">
+          Choose an affordable plan that’s packed with the best features for engaging your audience, creating customer loyalty, and driving sales.
+        </p>
+        {subscriptionError && (
+          <div className="mt-4 text-center min-h-[32px]">
+            <span className="text-red-600 font-bold text-lg">{subscriptionError}</span>
+          </div>
+        )}
       </div>
-
-      <p className="mx-auto mt-6 max-w-2xl text-center text-gray-600 text-lg/8 text-pretty">
-        Choose an affordable plan that’s packed with the best features for engaging your audience, creating customer loyalty, and driving sales.
-      </p>
 
       <div className="mx-auto mt-16 grid max-w-lg grid-cols-1 items-center gap-y-6 sm:mt-20 sm:gap-y-0 lg:max-w-full lg:grid-cols-2">
         {displayTiers.map((tier, tierIdx) => (
