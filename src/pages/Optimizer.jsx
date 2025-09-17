@@ -5,6 +5,9 @@ import CustomButton from "../Reusables/CustomButton";
 import CustomSnackbar from "../Reusables/CustomSnackbar";
 import { validatePortfolioInput } from "../schemas/portfolioSchema";
 import useSession from "../hooks/useSession";
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+
+import { ChevronDownIcon, CornerDownLeft, Link, SendHorizonal, Settings2 } from "lucide-react";
 
 const PortfolioOptimizer = () => {
   // Get user from backend session
