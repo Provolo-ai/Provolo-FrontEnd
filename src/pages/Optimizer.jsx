@@ -5,38 +5,9 @@ import CustomButton from "../Reusables/CustomButton";
 import CustomSnackbar from "../Reusables/CustomSnackbar";
 import { validatePortfolioInput } from "../schemas/portfolioSchema";
 import useSession from "../hooks/useSession";
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 
-// const dummyResult = {
-//   data: {
-//     fullAnalysis: "Overall, the profile is strong but could benefit from clearer positioning and more impactful visuals.",
-//     weaknessesAndOptimization: `
-//       - Title is too generic (e.g., "Freelancer" instead of a niche-specific role).
-//       - Profile description is wordy and lacks a clear structure.
-//       - Not enough proof of work (few or no showcased projects).
-//       - Weak call-to-action at the end of the profile.
-//     `,
-//     optimizedProfileOverview: `
-//       Your profile has been optimized to highlight your expertise in WordPress and Framer.
-//       The new overview emphasizes credibility, client-focused results, and your ability to deliver fast, high-quality websites.
-//     `,
-//     suggestedProjectTitles: `
-//       - "Modern Startup Landing Page (Framer)"
-//       - "E-commerce Storefront with WooCommerce"
-//       - "Creative Portfolio Website for Designers"
-//       - "Corporate Website Revamp"
-//     `,
-//     recommendedVisuals: `
-//       - Use a clean hero section with bold typography.
-//       - Showcase projects in a 3-column grid with hover animations.
-//       - Highlight testimonials in a carousel format.
-//       - Add a before/after slider to demonstrate improvements.
-//     `,
-//     beforeAfterComparison: `
-//       **Before:** Generic, text-heavy, and lacking visual hierarchy.
-//       **After:** Clear niche positioning, concise storytelling, and engaging visuals.
-//     `,
-//   }
-// };
+import { ChevronDownIcon, CornerDownLeft, Link, SendHorizonal, Settings2 } from "lucide-react";
 
 const PortfolioOptimizer = () => {
   // Get user from backend session
@@ -156,8 +127,8 @@ const PortfolioOptimizer = () => {
 
           <h2 className="text-3xl font-medium mb-6 text-center">Let's Get to Know Your Profile, {user?.displayName || user?.email?.split("@")[0] || "User"}</h2>
           {/* Input Section ====================>>>>>>>>>>>>>>>>>>> START*/}
-          {/* New Input Fields for NAME & PROFILE HEADER ====================>>>>>>>>>>>>>>>>>>> */}
-          {/* <div className="mb-8 p-5 bg-white rounded-lg border border-gray-200">
+          <div className="mb-8 p-5 bg-white rounded-lg border border-gray-200">
+            {/* New Input Fields for NAME & PROFILE HEADER ====================>>>>>>>>>>>>>>>>>>> */}
             <div className="gap-4 mb-4">
               <TextInputField
                 id="freelancerName"
@@ -205,9 +176,9 @@ const PortfolioOptimizer = () => {
             </div>
 
             {error && <CustomSnackbar open={error} close={() => setError("")} snackbarColor={"danger"} snackbarMessage={error} />}
-          </div> */}
+          </div>
 
-          <div className="mb-8 p-10 bg-white rounded-lg border border-gray-200">
+          {/* <div className="mb-8 p-10 bg-white rounded-lg border border-gray-200">
             <h2 className="text-3xl font-medium mb-6">Let's Get to Know Your Portfolio</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -263,7 +234,7 @@ const PortfolioOptimizer = () => {
             </CustomButton>
 
             {error && <CustomSnackbar open={error} close={() => setError("")} snackbarColor={"danger"} snackbarMessage={error} />}
-          </div>
+          </div> */}
 
           {!analysisResults && <p className="text-center text-xs text-gray-300">Provolo.org</p>}
 

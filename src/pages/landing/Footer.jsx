@@ -72,34 +72,41 @@ function FooterSection() {
         Provolo '25
       </p>
 
-      <div className="flex items-center gap-3 justify-center">
-        <Link
-          target="_blank"
-          to="https://buildsbyesuoladaniel.hashnode.space/provolo/terms-and-conditions"
-          className={linkBase}
-        >
-          Terms & Conditions
-        </Link>
-        <Link
-          target="_blank"
-          to="https://buildsbyesuoladaniel.hashnode.space/provolo/privacy-policy"
-          className={linkBase}
-        >
-          Privacy Policy
-        </Link>
-        <Link
-          target="_blank"
-          to="https://buildsbyesuoladaniel.hashnode.space/provolo/provoloai-project-documentation"
-          className={linkBase}
-        >
-          Documentation
-        </Link>
+      <div className="flex flex-col lg:flex-row items-center gap-10 justify-center">
 
-        <SocialLink to="https://x.com/provoloai" icon={Twitter} />
-        <SocialLink to="https://www.linkedin.com/company/provoloai" icon={Linkedin} />
-        <SocialLink to="https://www.instagram.com/provoloai" icon={Instagram} />
-        <SocialLink to="https://substack.com/@provoloai" icon={LibraryBig} />
+        <span className="flex lg:flex-row flex-col justify-center items-center">
+          <Link
+            target="_blank"
+            to="https://buildsbyesuoladaniel.hashnode.space/provolo/terms-and-conditions"
+            className={linkBase}
+          >
+            Terms & Conditions
+          </Link>
+          <Link
+            target="_blank"
+            to="https://buildsbyesuoladaniel.hashnode.space/provolo/privacy-policy"
+            className={linkBase}
+          >
+            Privacy Policy
+          </Link>
+          <Link
+            target="_blank"
+            to="https://buildsbyesuoladaniel.hashnode.space/provolo/provoloai-project-documentation"
+            className={linkBase}
+          >
+            Documentation
+          </Link>
+        </span>
+
+        <span className="flex items-center justify-center">
+          <SocialLink to="https://x.com/provoloai" icon={Twitter} />
+          <SocialLink to="https://www.linkedin.com/company/provoloai" icon={Linkedin} />
+          <SocialLink to="https://www.instagram.com/provoloai" icon={Instagram} />
+          <SocialLink to="https://substack.com/@provoloai" icon={LibraryBig} />
+        </span>
+
       </div>
+
     </div>
   );
 }

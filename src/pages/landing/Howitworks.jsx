@@ -22,7 +22,7 @@ const STEPS = [
 
 const HowItWorks = () => {
     return (
-        <section className="py-32 px-10" id="features">
+        <section className="lg:py-32 py-10 px-5" id="features">
             <div className="mx-auto max-w-3xl lg:max-w-[93.75rem] flex flex-col gap-10">
 
                 {/* Section header */}
@@ -30,7 +30,7 @@ const HowItWorks = () => {
                     <p className="font-headingmd text-[28px]">
                         From Profile to Paycheck in 3 Steps.
                     </p>
-                    <p className="font-headingmd text-[#6B7280]">
+                    <p className="font-headingmd text-[#6B7280] ">
                         No learning curve. No guesswork. Just connect, optimize, and start
                         landing clients.
                     </p>
