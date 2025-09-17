@@ -6,7 +6,6 @@ import TextInputField from "../../Reusables/TextInputField";
 import { auth, db } from "../../lib/firebase";
 import { updateUserDisplayName } from "../../utils/firebase.util";
 import { getCleanErrorMessage } from "../../utils/firebaseError.util";
-import { logout } from "../../utils/logout.util";
 
 export default function UserName() {
   const [open] = useState(true);
