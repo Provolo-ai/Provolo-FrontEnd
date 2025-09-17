@@ -111,10 +111,12 @@ const Sidebar = () => {
       </button>
 
       {/* Logo */}
-      <div className="flex items-center gap-3 mb-10 px-3 w-fit">
+      <div className={`flex gap-3 mb-10 ${isOpen ? "px-3" : "px-0 mx-auto"} w-fit`}>
         <Logo />
         {/* {isOpen && <span className="font-semibold">Provolo</span>} */}
       </div>
+
+
 
       {/* Navigation */}
       <div className="flex flex-col gap-2 h-full">
@@ -136,6 +138,8 @@ const Sidebar = () => {
 
         {/* <span className="border border-gray-100" /> */}
         <UserProfile open={isOpen} />
+
+
       </div>
     </div>
   );

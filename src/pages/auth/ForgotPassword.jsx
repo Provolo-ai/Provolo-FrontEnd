@@ -8,6 +8,8 @@ import CustomButton from "../../Reusables/CustomButton";
 import { useNavigate } from "@tanstack/react-router";
 import { getCleanErrorMessage } from "../../utils/firebaseError.util";
 import { Mail } from "lucide-react";
+import Vector from "../../assets/img/Vector.png";
+import Vector2 from "../../assets/img/Vector2.png";
 
 // Zod schema for email validation
 const forgotPasswordSchema = z.object({
@@ -141,7 +143,7 @@ const ForgotPassword = () => {
             </div>
 
             <div>
-              <CustomButton type="submit" disabled={loading || emailSent} className="bg-red-600 hover:bg-red-500 transition-all duration-300">
+              <CustomButton type="submit" disabled={loading || emailSent} className="bg-red-600 hover:bg-red-500 transition-all duration-300 text-sm">
                 {loading ? "Sending..." : emailSent ? "Email Sent" : "Send Reset Email"}
               </CustomButton>
             </div>
@@ -162,6 +164,10 @@ const ForgotPassword = () => {
           </button>
         </p>
       </div>
+
+
+      <img alt="Provolo" src={Vector} className='absolute top-0 left-0 lg:w-1/5 w-1/2 opacity-40' />
+      <img alt="Provolo" src={Vector2} className='absolute bottom-0 right-0 w-1/3 opacity-40' />
     </div>
   );
 };

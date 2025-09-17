@@ -11,7 +11,7 @@ export default function Description() {
 
 
   return (
-    <section className="py-10 px-10" id="features">
+    <section className="py-10 px-5" id="features">
       <div className="mx-auto max-w-3xl lg:max-w-[93.75rem] bg-[#F3F4F5] rounded-3xl lg:h-[600px] p-10 grid">
 
         <div className='grid grid-cols-2'>
