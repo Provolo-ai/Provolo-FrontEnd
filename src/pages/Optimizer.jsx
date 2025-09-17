@@ -5,9 +5,6 @@ import CustomButton from "../Reusables/CustomButton";
 import CustomSnackbar from "../Reusables/CustomSnackbar";
 import { validatePortfolioInput } from "../schemas/portfolioSchema";
 import useSession from "../hooks/useSession";
-import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-
-import { ChevronDownIcon, CornerDownLeft, Link, SendHorizonal, Settings2 } from "lucide-react";
 
 // const dummyResult = {
 //   data: {
@@ -157,10 +154,7 @@ const PortfolioOptimizer = () => {
         <div>
           {/* <h1 className="mb-3 text-gray-300">{loading ? "Loading..." : `Welcome, ${user?.displayName || user?.email?.split("@")[0] || "User"}`}</h1> */}
 
-          <h2 className="text-3xl font-medium mb-6 text-center">
-            Let's Get to Know Your Profile,
-            {user?.displayName || user?.email?.split("@")[0] || "User"}
-          </h2>
+          <h2 className="text-3xl font-medium mb-6 text-center">Let's Get to Know Your Profile, {user?.displayName || user?.email?.split("@")[0] || "User"}</h2>
           {/* Input Section ====================>>>>>>>>>>>>>>>>>>> START*/}
           {/* New Input Fields for NAME & PROFILE HEADER ====================>>>>>>>>>>>>>>>>>>> */}
           {/* <div className="mb-8 p-5 bg-white rounded-lg border border-gray-200">

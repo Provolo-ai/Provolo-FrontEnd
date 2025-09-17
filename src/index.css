@@ -1,3 +1,8 @@
+@layer utilities {
+  .animate-spin-slow {
+    animation: spin 2.5s linear infinite;
+  }
+}
 @import "./assets/fonts/fonts.css";
 @tailwind base;
 @tailwind components;
