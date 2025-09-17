@@ -151,21 +151,48 @@ export default function Pricing() {
                 </li>
               ))}
             </ul>
-            <button
-              onClick={() => checkout(tier.polarRefId)}
-              className={classNames(
-                tier.featured
-                  ? "bg-indigo-500 text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-indigo-500"
-                  : "text-indigo-600 ring-1 ring-indigo-200 ring-inset hover:ring-indigo-300 focus-visible:outline-indigo-600",
-                "mt-8 block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 sm:mt-10"
-              )}
-              disabled={checkoutLoading}
-            >
-              <span className="flex items-center justify-center gap-2">
-                {checkoutLoading ? <Loader2 className="animate-spin" /> : null}
-                Get started today
-              </span>
-            </button>
+            {/* CTA: Hide button entirely for the free 'starter' plan */}
+            {tier.id === "starter" ? (
+              user?.tierId === tier.id ? (
+                <div className="mt-8 sm:mt-10">
+                  <span
+                    className={classNames(
+                      tier.featured ? "bg-indigo-600/20 text-indigo-200 ring-1 ring-inset ring-indigo-500/30" : "text-indigo-700 ring-1 ring-indigo-200 ring-inset",
+                      "block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold cursor-default"
+                    )}
+                  >
+                    Current plan
+                  </span>
+                </div>
+              ) : null
+            ) : user?.tierId === tier.id ? (
+              <div className="mt-8 sm:mt-10">
+                <span
+                  className={classNames(
+                    tier.featured ? "bg-indigo-600/20 text-indigo-200 ring-1 ring-inset ring-indigo-500/30" : "text-indigo-700 ring-1 ring-indigo-200 ring-inset",
+                    "block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold cursor-default"
+                  )}
+                >
+                  Current plan
+                </span>
+              </div>
+            ) : (
+              <button
+                onClick={() => checkout(tier.polarRefId)}
+                className={classNames(
+                  tier.featured
+                    ? "bg-indigo-500 text-white shadow-xs hover:bg-indigo-400 focus-visible:outline-indigo-500"
+                    : "text-indigo-600 ring-1 ring-indigo-200 ring-inset hover:ring-indigo-300 focus-visible:outline-indigo-600",
+                  "mt-8 block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold focus-visible:outline-2 focus-visible:outline-offset-2 sm:mt-10 w-full"
+                )}
+                disabled={checkoutLoading}
+              >
+                <span className="flex items-center justify-center gap-2">
+                  {checkoutLoading ? <Loader2 className="animate-spin" /> : null}
+                  Get started today
+                </span>
+              </button>
+            )}
           </div>
         ))}
       </div>

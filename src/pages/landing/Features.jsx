@@ -32,10 +32,10 @@ const STEPS = [
 
 const Features = () => {
   return (
-    <section className="py-32 px-10" id="features">
-      <div className="mx-auto max-w-3xl lg:max-w-[93.75rem] flex flex-col gap-[102px]">
+    <section className="lg:py-32 py-10 lg:px-10 px-5" id="features">
+      <div className="mx-auto max-w-3xl lg:max-w-[93.75rem] flex flex-col lg:gap-[102px] gap-[25px]">
         {/* Intro text */}
-        <p className="lg:w-[69%] font-headingmd text-3xl">
+        <p className="lg:w-[69%] font-headingmd lg:text-3xl ">
           Provolo is an AI-powered copywriting platform built for freelancers on
           Upwork.{" "}
           <span className="text-[#A6AAB3] font-headingmd">
@@ -67,7 +67,7 @@ const Features = () => {
       </div>
 
       {/* Steps (scrollable cards with scroll snapping) */}
-      <div className="lg:flex grid md:grid-cols-2 grid-cols-1 gap-7 lg:overflow-x-auto no-scrollbar py-5 px-2 lg:ml-48 snap-x snap-mandatory">
+      <div className="lg:flex grid md:grid-cols-2 grid-cols-1 gap-7 lg:overflow-x-auto no-scrollbar py-5 lg:px-2 lg:ml-48 snap-x snap-mandatory">
         {STEPS.map((step, index) => (
           <div
             key={index}
