@@ -14,6 +14,7 @@
 }
 
 @layer base {
+
   body,
   p {
     @apply font-primary text-base;
@@ -25,7 +26,7 @@
   h4,
   h5,
   h6 {
-    @apply font-heading text-gray-900;
+    @apply font-headingmd text-gray-900;
   }
 
   /* a {
@@ -48,6 +49,7 @@
   transform: translateY(-2px);
   box-shadow: 0 4px 15px #dcd6fc;
 }
+
 /* 
 .card {
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
@@ -93,6 +95,8 @@
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .no-scrollbar {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }

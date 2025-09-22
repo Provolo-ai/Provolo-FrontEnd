@@ -12,20 +12,21 @@ export default function Description() {
 
   return (
     <section className="py-10 px-5" id="features">
-      <div className="mx-auto max-w-3xl lg:max-w-[93.75rem] bg-[#F3F4F5] rounded-3xl lg:h-[600px] p-10 grid">
+      <div className="mx-auto max-w-3xl lg:max-w-[93.75rem] bg-[#F3F4F5] rounded-3xl lg:h-[600px] lg:p-10 p-5 lg:grid ">
 
-        <div className='grid grid-cols-2'>
-          <div className='flex flex-col gap-20 text-start'>
-            <header className='flex flex-col gap-5'>
-              <p className="font-headingmd text-[28px]">
+        <div className='grid lg:grid-cols-2'>
+
+          <div className='flex flex-col lg:gap-20 gap-10 text-start'>
+            <header className='flex flex-col'>
+              <p className="font-headingmd lg:text-[28px] text-[18px] mb-3">
                 Every Word Works Harder.
               </p>
-              <p className='text-[#6B7280] font-heading text-[22px]'>
+              <p className='text-[#6B7280] font-heading lg:text-[22px] text-[14px]'>
                 Provolo isn’t just about writing faster, it’s about writing smarter.
               </p>
             </header>
             
-            <ol className="list-none text-base text-[#6B7280] flex flex-col gap-6">
+            <ol className="list-none lg:text-base text-[14px] text-[#6B7280] flex flex-col gap-6">
               {FEATURES.map((feature, index) => (
                 <li key={index} className="flex items-center font-headingmd text-x">
                   <span className="px-2 py-1 bg-[#6B7280]/10 rounded-lg mr-2 text-sm font-headingmd">

@@ -121,11 +121,11 @@ const PortfolioOptimizer = () => {
 
   return (
     <div className="flex-1 flex flex-col overflow-y-auto py-20">
-      <div className="p-6 sm:p-10 max-w-4xl m-auto w-full">
+      <div className="p-6 sm:p-10 max-w-3xl m-auto w-full">
         <div>
           {/* <h1 className="mb-3 text-gray-300">{loading ? "Loading..." : `Welcome, ${user?.displayName || user?.email?.split("@")[0] || "User"}`}</h1> */}
 
-          <h2 className="text-3xl font-medium mb-6 text-center">Let's Get to Know Your Profile, {user?.displayName || user?.email?.split("@")[0] || "User"}</h2>
+          <h2 className="text-2xl mb-3 text-center">Let's Get to Know Your Profile, {user?.displayName || user?.email?.split("@")[0] || "User"}</h2>
           {/* Input Section ====================>>>>>>>>>>>>>>>>>>> START*/}
           <div className="mb-8 p-5 bg-white rounded-lg border border-gray-200">
             {/* New Input Fields for NAME & PROFILE HEADER ====================>>>>>>>>>>>>>>>>>>> */}
