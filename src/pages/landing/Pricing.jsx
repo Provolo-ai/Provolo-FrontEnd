@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { motion, AnimatePresence } from "framer-motion";
+// eslint-disable-next-line no-unused-vars
+import { motion, AnimatePresence } from "motion/react";
 import { proSubscription } from "../../server/checkout";
 import { fetchTiers } from "../../server/tiers";
 import useSession from "../../hooks/useSession";
@@ -22,27 +23,26 @@ import {
   BarChart3,
   Lightbulb,
   Crown,
-  Infinity,
   Sparkles,
-  Globe
+  Globe,
 } from "lucide-react";
 
 // Icon mapping for different feature types
 const getFeatureIcon = (featureName) => {
   const name = featureName.toLowerCase();
 
-  if (name.includes('profile') || name.includes('optimization')) return Target;
-  if (name.includes('proposal') || name.includes('application')) return FileText;
-  if (name.includes('search') || name.includes('seo')) return Search;
-  if (name.includes('support') || name.includes('help')) return MessageSquare;
-  if (name.includes('analytics') || name.includes('insight')) return BarChart3;
-  if (name.includes('premium') || name.includes('advanced')) return Crown;
-  if (name.includes('unlimited') || name.includes('infinite')) return Infinity;
-  if (name.includes('priority') || name.includes('fast')) return Zap;
-  if (name.includes('ai') || name.includes('smart')) return Sparkles;
-  if (name.includes('templates') || name.includes('examples')) return Lightbulb;
-  if (name.includes('branding') || name.includes('custom')) return Award;
-  if (name.includes('global') || name.includes('international')) return Globe;
+  if (name.includes("profile") || name.includes("optimization")) return Target;
+  if (name.includes("proposal") || name.includes("application")) return FileText;
+  if (name.includes("search") || name.includes("seo")) return Search;
+  if (name.includes("support") || name.includes("help")) return MessageSquare;
+  if (name.includes("analytics") || name.includes("insight")) return BarChart3;
+  if (name.includes("premium") || name.includes("advanced")) return Crown;
+  if (name.includes("unlimited") || name.includes("infinite")) return Infinity;
+  if (name.includes("priority") || name.includes("fast")) return Zap;
+  if (name.includes("ai") || name.includes("smart")) return Sparkles;
+  if (name.includes("templates") || name.includes("examples")) return Lightbulb;
+  if (name.includes("branding") || name.includes("custom")) return Award;
+  if (name.includes("global") || name.includes("international")) return Globe;
 
   // Default icons for common features
   return Star;
@@ -56,7 +56,7 @@ const SkeletonBox = ({ className = "", delay = 0 }) => (
     animate={{
       opacity: 1,
       scale: 1,
-      backgroundPosition: ['200% 0', '-200% 0']
+      backgroundPosition: ["200% 0", "-200% 0"],
     }}
     transition={{
       opacity: { duration: 0.4, delay },
@@ -65,8 +65,8 @@ const SkeletonBox = ({ className = "", delay = 0 }) => (
         duration: 2,
         repeat: Infinity,
         ease: "linear",
-        delay
-      }
+        delay,
+      },
     }}
   />
 );
@@ -78,9 +78,9 @@ const PricingSkeleton = () => {
       opacity: 1,
       transition: {
         duration: 0.5,
-        staggerChildren: 0.1
-      }
-    }
+        staggerChildren: 0.1,
+      },
+    },
   };
 
   const cardVariants = {
@@ -91,9 +91,9 @@ const PricingSkeleton = () => {
       scale: 1,
       transition: {
         duration: 0.4,
-        ease: [0.25, 0.46, 0.45, 0.94]
-      }
-    }
+        ease: [0.25, 0.46, 0.45, 0.94],
+      },
+    },
   };
 
   return (
@@ -118,34 +118,35 @@ const PricingSkeleton = () => {
           {[0, 1].map((index) => (
             <motion.div
               key={index}
-              className={`${index === 1
-                ? 'bg-slate-900 shadow-2xl ring-1 ring-slate-800'
-                : 'bg-white/80 shadow-lg ring-1 ring-slate-200'
-                } rounded-3xl p-8 sm:p-10`}
+              className={`${
+                index === 1
+                  ? "bg-slate-900 shadow-2xl ring-1 ring-slate-800"
+                  : "bg-white/80 shadow-lg ring-1 ring-slate-200"
+              } rounded-3xl p-8 sm:p-10`}
               variants={cardVariants}
             >
               <div className="space-y-6">
                 {/* Plan Name */}
                 <SkeletonBox
-                  className={`h-7 w-32 ${index === 1 ? 'bg-gradient-to-r from-slate-600 via-slate-500 to-slate-600' : ''}`}
+                  className={`h-7 w-32 ${index === 1 ? "bg-gradient-to-r from-slate-600 via-slate-500 to-slate-600" : ""}`}
                   delay={0.2 + index * 0.1}
                 />
 
                 {/* Price */}
                 <div className="flex items-center gap-x-2">
                   <SkeletonBox
-                    className={`h-16 w-28 ${index === 1 ? 'bg-gradient-to-r from-slate-600 via-slate-500 to-slate-600' : ''}`}
+                    className={`h-16 w-28 ${index === 1 ? "bg-gradient-to-r from-slate-600 via-slate-500 to-slate-600" : ""}`}
                     delay={0.3 + index * 0.1}
                   />
                   <SkeletonBox
-                    className={`h-8 w-16 ${index === 1 ? 'bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700' : ''}`}
+                    className={`h-8 w-16 ${index === 1 ? "bg-gradient-to-r from-slate-700 via-slate-600 to-slate-700" : ""}`}
                     delay={0.35 + index * 0.1}
                   />
                 </div>
 
                 {/* Description */}
                 <SkeletonBox
-                  className={`h-5 w-full ${index === 1 ? 'bg-gradient-to-r from-slate-600 via-slate-500 to-slate-600' : ''}`}
+                  className={`h-5 w-full ${index === 1 ? "bg-gradient-to-r from-slate-600 via-slate-500 to-slate-600" : ""}`}
                   delay={0.4 + index * 0.1}
                 />
 
@@ -154,13 +155,13 @@ const PricingSkeleton = () => {
                   {[0, 1, 2, 3, 4].map((featureIndex) => (
                     <div key={featureIndex} className="flex items-center gap-3">
                       <SkeletonBox
-                        className={`h-5 w-5 rounded-full ${index === 1 ? 'bg-gradient-to-r from-blue-400 via-indigo-300 to-indigo-400' : 'bg-gradient-to-r from-blue-500 via-blue-400 to-blue-500'}`}
+                        className={`h-5 w-5 rounded-full ${index === 1 ? "bg-gradient-to-r from-blue-400 via-indigo-300 to-indigo-400" : "bg-gradient-to-r from-blue-500 via-blue-400 to-blue-500"}`}
                         delay={0.5 + index * 0.1 + featureIndex * 0.05}
                       />
                       <SkeletonBox
-                        className={`h-4 ${featureIndex % 3 === 0 ? 'w-40' :
-                          featureIndex % 3 === 1 ? 'w-32' : 'w-36'
-                          } ${index === 1 ? 'bg-gradient-to-r from-slate-600 via-slate-500 to-slate-600' : ''}`}
+                        className={`h-4 ${
+                          featureIndex % 3 === 0 ? "w-40" : featureIndex % 3 === 1 ? "w-32" : "w-36"
+                        } ${index === 1 ? "bg-gradient-to-r from-slate-600 via-slate-500 to-slate-600" : ""}`}
                         delay={0.52 + index * 0.1 + featureIndex * 0.05}
                       />
                     </div>
@@ -169,7 +170,7 @@ const PricingSkeleton = () => {
 
                 {/* CTA Button */}
                 <SkeletonBox
-                  className={`h-12 w-full mt-8 ${index === 1 ? 'bg-gradient-to-r from-blue-500 via-blue-400 to-blue-500' : 'bg-gradient-to-r from-slate-300 via-slate-200 to-slate-300'}`}
+                  className={`h-12 w-full mt-8 ${index === 1 ? "bg-gradient-to-r from-blue-500 via-blue-400 to-blue-500" : "bg-gradient-to-r from-slate-300 via-slate-200 to-slate-300"}`}
                   delay={0.7 + index * 0.1}
                 />
               </div>
@@ -186,7 +187,7 @@ const transformTierForUI = (tier) => ({
   ...tier,
   id: tier.slug,
   priceMonthly: `$${(tier.price / 100).toFixed(2)}`,
-  featured: tier.price > 990,
+  featured: tier.price > 0,
   href: "#",
 });
 
@@ -222,7 +223,9 @@ export default function Pricing() {
       const paymentUrl = await proSubscription(polarRefId, user);
       if (paymentUrl) window.location.href = paymentUrl;
     } catch (error) {
-      setSubscriptionError("An error occurred during subscription. Please try again, if persists, contact support.");
+      setSubscriptionError(
+        "An error occurred during subscription. Please try again, if persists, contact support."
+      );
     } finally {
       setCheckoutLoading(false);
     }
@@ -353,18 +356,20 @@ export default function Pricing() {
               transition={{
                 duration: 0.4,
                 delay: 0.3 + tierIdx * 0.1,
-                ease: [0.25, 0.46, 0.45, 0.94]
+                ease: [0.25, 0.46, 0.45, 0.94],
               }}
               whileHover={{
                 y: -4,
-                transition: { duration: 0.2, ease: "easeOut" }
+                transition: { duration: 0.2, ease: "easeOut" },
               }}
             >
               <div className="flex items-center gap-3 mb-4">
-                <div className={classNames(
-                  tier.featured ? "bg-white/10" : "bg-primary/10",
-                  "p-2 rounded-lg"
-                )}>
+                <div
+                  className={classNames(
+                    tier.featured ? "bg-white/10" : "bg-primary/10",
+                    "p-2 rounded-lg"
+                  )}
+                >
                   <IconComponent
                     className={classNames(
                       tier.featured ? "text-indigo-200" : "text-primary",
@@ -372,25 +377,51 @@ export default function Pricing() {
                     )}
                   />
                 </div>
-                <h3 className={classNames(tier.featured ? "text-white" : "text-black", "text-lg/8 font-semibold")}>
+                <h3
+                  className={classNames(
+                    tier.featured ? "text-white" : "text-black",
+                    "text-lg/8 font-semibold"
+                  )}
+                >
                   {tier.name}
                 </h3>
               </div>
 
               <p className="mt-4 flex items-center gap-x-2">
-                <span className={classNames(tier.featured ? "text-white" : "text-gray-900", "text-5xl font-semibold tracking-tight")}>
+                <span
+                  className={classNames(
+                    tier.featured ? "text-white" : "text-gray-900",
+                    "text-5xl font-semibold tracking-tight"
+                  )}
+                >
                   {tier.priceMonthly}
                 </span>
-                <span className={classNames(tier.featured ? "text-gray-400" : "text-gray-500", "text-xs leading-none")}>
+                <span
+                  className={classNames(
+                    tier.featured ? "text-gray-400" : "text-gray-500",
+                    "text-xs leading-none"
+                  )}
+                >
                   USD /<br /> month
                 </span>
               </p>
 
-              <p className={classNames(tier.featured ? "text-gray-300" : "text-gray-600", "mt-6 text-lg")}>
+              <p
+                className={classNames(
+                  tier.featured ? "text-gray-300" : "text-gray-600",
+                  "mt-6 text-lg"
+                )}
+              >
                 {tier.description}
               </p>
 
-              <ul role="list" className={classNames(tier.featured ? "text-gray-300" : "text-gray-600", "mt-8 space-y-3 text-lg sm:mt-10")}>
+              <ul
+                role="list"
+                className={classNames(
+                  tier.featured ? "text-gray-300" : "text-gray-600",
+                  "mt-8 space-y-3 text-lg sm:mt-10"
+                )}
+              >
                 {tier.features.map((feature, index) => {
                   const FeatureIcon = getFeatureIcon(feature.name);
                   return (
@@ -402,13 +433,15 @@ export default function Pricing() {
                       transition={{
                         duration: 0.3,
                         delay: 0.5 + tierIdx * 0.1 + index * 0.05,
-                        ease: "easeOut"
+                        ease: "easeOut",
                       }}
                     >
-                      <div className={classNames(
-                        tier.featured ? "bg-gray-100/20" : "bg-gray-100",
-                        "p-1 rounded-md"
-                      )}>
+                      <div
+                        className={classNames(
+                          tier.featured ? "bg-gray-100/20" : "bg-gray-100",
+                          "p-1 rounded-md"
+                        )}
+                      >
                         <FeatureIcon
                           className={classNames(
                             tier.featured ? "text-gray-100" : "text-primary",
@@ -418,7 +451,6 @@ export default function Pricing() {
                       </div>
 
                       <span>{feature.name}</span>
-
                     </motion.li>
                   );
                 })}
@@ -430,7 +462,9 @@ export default function Pricing() {
                   user?.tierId === tier.id ? (
                     <motion.span
                       className={classNames(
-                        tier.featured ? "bg-indigo-600/20 text-indigo-200 ring-1 ring-inset ring-indigo-500/30" : "text-indigo-700 ring-1 ring-indigo-200 ring-inset",
+                        tier.featured
+                          ? "bg-indigo-600/20 text-indigo-200 ring-1 ring-inset ring-indigo-500/30"
+                          : "text-indigo-700 ring-1 ring-indigo-200 ring-inset",
                         "block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold cursor-default"
                       )}
                       initial={{ opacity: 0, scale: 0.95 }}
@@ -443,7 +477,9 @@ export default function Pricing() {
                 ) : user?.tierId === tier.id ? (
                   <motion.span
                     className={classNames(
-                      tier.featured ? "bg-indigo-600/20 text-indigo-200 ring-1 ring-inset ring-indigo-500/30" : "text-indigo-700 ring-1 ring-indigo-200 ring-inset",
+                      tier.featured
+                        ? "bg-indigo-600/20 text-indigo-200 ring-1 ring-inset ring-indigo-500/30"
+                        : "text-indigo-700 ring-1 ring-indigo-200 ring-inset",
                       "block rounded-md px-3.5 py-2.5 text-center text-sm font-semibold cursor-default"
                     )}
                     initial={{ opacity: 0, scale: 0.95 }}

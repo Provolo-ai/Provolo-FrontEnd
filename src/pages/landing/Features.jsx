@@ -1,5 +1,5 @@
-import React from "react";
-import { motion } from "framer-motion";
+// eslint-disable-next-line no-unused-vars
+import { motion } from "motion/react";
 
 const FEATURES = [
   "Rank higher in Upwork search",
@@ -21,13 +21,11 @@ const STEPS = [
   },
   {
     title: "Optimized for the Algorithm",
-    description:
-      "Headlines and overviews crafted to boost your visibility in Upwork's search.",
+    description: "Headlines and overviews crafted to boost your visibility in Upwork's search.",
   },
   {
     title: "Works for Any Freelancer",
-    description:
-      "Designer, developer, writer, or marketer, Provolo adapts to your niche.",
+    description: "Designer, developer, writer, or marketer, Provolo adapts to your niche.",
   },
 ];
 
@@ -40,41 +38,41 @@ const Features = () => {
       transition: {
         duration: 0.6,
         staggerChildren: 0.08,
-        delayChildren: 0.1
-      }
-    }
+        delayChildren: 0.1,
+      },
+    },
   };
 
   // Subtle fade up for text elements
   const fadeUpVariants = {
     hidden: {
       opacity: 0,
-      y: 15
+      y: 15,
     },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
         duration: 0.5,
-        ease: [0.25, 0.46, 0.45, 0.94]
-      }
-    }
+        ease: [0.25, 0.46, 0.45, 0.94],
+      },
+    },
   };
 
   // Gentle animation for feature items
   const featureVariants = {
     hidden: {
       opacity: 0,
-      x: -10
+      x: -10,
     },
     visible: {
       opacity: 1,
       x: 0,
       transition: {
         duration: 0.4,
-        ease: "easeOut"
-      }
-    }
+        ease: "easeOut",
+      },
+    },
   };
 
   // Minimal card animation with scroll trigger
@@ -82,7 +80,7 @@ const Features = () => {
     hidden: {
       opacity: 0,
       y: 20,
-      scale: 0.98
+      scale: 0.98,
     },
     visible: {
       opacity: 1,
@@ -90,9 +88,9 @@ const Features = () => {
       scale: 1,
       transition: {
         duration: 0.5,
-        ease: [0.25, 0.46, 0.45, 0.94]
-      }
-    }
+        ease: [0.25, 0.46, 0.45, 0.94],
+      },
+    },
   };
 
   return (
@@ -109,12 +107,11 @@ const Features = () => {
           className="lg:w-[69%] font-headingmd lg:text-3xl text-base"
           variants={fadeUpVariants}
         >
-          Provolo is an AI-powered copywriting platform built for freelancers on
-          Upwork.{" "}
+          Provolo is an AI-powered copywriting platform built for freelancers on Upwork.{" "}
           <span className="text-[#A6AAB3] font-headingmd">
-            It doesn't just write faster, it writes smarter, applying proven
-            strategies to optimize your profile and proposals. The result? More
-            visibility, more interviews, and more jobs, without the guesswork.
+            It doesn't just write faster, it writes smarter, applying proven strategies to optimize
+            your profile and proposals. The result? More visibility, more interviews, and more jobs,
+            without the guesswork.
           </span>
         </motion.p>
 
@@ -137,7 +134,7 @@ const Features = () => {
                 variants={featureVariants}
                 whileHover={{
                   x: 2,
-                  transition: { duration: 0.2, ease: "easeOut" }
+                  transition: { duration: 0.2, ease: "easeOut" },
                 }}
               >
                 <motion.span
@@ -145,7 +142,7 @@ const Features = () => {
                   whileHover={{
                     backgroundColor: "rgba(107, 114, 128, 0.15)",
                     scale: 1.05,
-                    transition: { duration: 0.2 }
+                    transition: { duration: 0.2 },
                   }}
                 >
                   {index + 1}
@@ -174,9 +171,9 @@ const Features = () => {
             opacity: 1,
             transition: {
               staggerChildren: 0.1,
-              delayChildren: 0.2
-            }
-          }
+              delayChildren: 0.2,
+            },
+          },
         }}
       >
         {STEPS.map((step, index) => (
@@ -188,15 +185,15 @@ const Features = () => {
               y: -2,
               transition: {
                 duration: 0.3,
-                ease: "easeOut"
-              }
+                ease: "easeOut",
+              },
             }}
           >
             <motion.div
               className="bg-[#F0F1F2] mb-8 lg:h-[500px] h-[420px] rounded-3xl p-20"
               whileHover={{
                 backgroundColor: "#EAEBEC",
-                transition: { duration: 0.3 }
+                transition: { duration: 0.3 },
               }}
             ></motion.div>
             <div className="px-5">
@@ -207,8 +204,8 @@ const Features = () => {
                   opacity: 1,
                   transition: {
                     duration: 0.4,
-                    delay: 0.1
-                  }
+                    delay: 0.1,
+                  },
                 }}
                 viewport={{ once: true }}
               >
@@ -221,8 +218,8 @@ const Features = () => {
                   opacity: 1,
                   transition: {
                     duration: 0.4,
-                    delay: 0.2
-                  }
+                    delay: 0.2,
+                  },
                 }}
                 viewport={{ once: true }}
               >

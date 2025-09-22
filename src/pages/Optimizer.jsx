@@ -11,7 +11,7 @@ import { ChevronDownIcon, CornerDownLeft, Link, SendHorizonal, Settings2 } from 
 
 const PortfolioOptimizer = () => {
   // Get user from backend session
-  const { user, loading } = useSession();
+  const { user } = useSession();
 
   // State variables for input data ==========>>>>>>>>>>>>
   const [freelancerName, setFreelancerName] = useState("");
@@ -125,10 +125,13 @@ const PortfolioOptimizer = () => {
         <div>
           {/* <h1 className="mb-3 text-gray-300">{loading ? "Loading..." : `Welcome, ${user?.displayName || user?.email?.split("@")[0] || "User"}`}</h1> */}
 
-          <h2 className="text-2xl mb-3 text-center">Let's Get to Know Your Profile, {user?.displayName || user?.email?.split("@")[0] || "User"}</h2>
+          <h2 className="text-2xl mb-3 text-center">
+            Let's Get to Know Your Profile,{" "}
+            {user?.displayName || user?.email?.split("@")[0] || "User"}
+          </h2>
           {/* Input Section ====================>>>>>>>>>>>>>>>>>>> START*/}
-          <div className="mb-8 p-5 bg-white rounded-lg border border-gray-200">
-            {/* New Input Fields for NAME & PROFILE HEADER ====================>>>>>>>>>>>>>>>>>>> */}
+          {/* New Input Fields for NAME & PROFILE HEADER ====================>>>>>>>>>>>>>>>>>>> */}
+          {/* <div className="mb-8 p-5 bg-white rounded-lg border border-gray-200">
             <div className="gap-4 mb-4">
               <TextInputField
                 id="freelancerName"
@@ -176,9 +179,9 @@ const PortfolioOptimizer = () => {
             </div>
 
             {error && <CustomSnackbar open={error} close={() => setError("")} snackbarColor={"danger"} snackbarMessage={error} />}
-          </div>
+          </div> */}
 
-          {/* <div className="mb-8 p-10 bg-white rounded-lg border border-gray-200">
+          <div className="mb-8 p-10 bg-white rounded-lg border border-gray-200">
             <h2 className="text-3xl font-medium mb-6">Let's Get to Know Your Portfolio</h2>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
@@ -225,7 +228,9 @@ const PortfolioOptimizer = () => {
                 onBlur={() => setTouched((prev) => ({ ...prev, description: true }))}
               ></textarea>
 
-              {(error || (touched.description && !profileDescription.trim())) && <p className="text-xs text-red-700">Required</p>}
+              {(error || (touched.description && !profileDescription.trim())) && (
+                <p className="text-xs text-red-700">Required</p>
+              )}
             </div>
 
             <CustomButton onClick={analyzePortfolio} isLoading={isLoading} className="btn-primary">
@@ -233,15 +238,28 @@ const PortfolioOptimizer = () => {
               Run Optimization{" "}
             </CustomButton>
 
-            {error && <CustomSnackbar open={error} close={() => setError("")} snackbarColor={"danger"} snackbarMessage={error} />}
-          </div> */}
+            {error && (
+              <CustomSnackbar
+                open={error}
+                close={() => setError("")}
+                snackbarColor={"danger"}
+                snackbarMessage={error}
+              />
+            )}
+          </div>
 
           {!analysisResults && <p className="text-center text-xs text-gray-300">Provolo.org</p>}
 
           {/* Input Section ====================>>>>>>>>>>>>>>>>>>> END*/}
 
           {/* Output Section ====================>>>>>>>>>>>>>>>>>>> START*/}
-          {analysisResults && <CustomSnackbar open={analysisResults} snackbarColor={"success"} snackbarMessage={"Analysis Complete"} />}
+          {analysisResults && (
+            <CustomSnackbar
+              open={analysisResults}
+              snackbarColor={"success"}
+              snackbarMessage={"Analysis Complete"}
+            />
+          )}
 
           {analysisResults && (
             <ResultsAccordion
