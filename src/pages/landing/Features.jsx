@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 
 const FEATURES = [
   "Rank higher in Upwork search",
@@ -21,7 +22,7 @@ const STEPS = [
   {
     title: "Optimized for the Algorithm",
     description:
-      "Headlines and overviews crafted to boost your visibility in Upwork’s search.",
+      "Headlines and overviews crafted to boost your visibility in Upwork's search.",
   },
   {
     title: "Works for Any Freelancer",
@@ -31,56 +32,206 @@ const STEPS = [
 ];
 
 const Features = () => {
+  // Minimal container animation - very subtle
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.6,
+        staggerChildren: 0.08,
+        delayChildren: 0.1
+      }
+    }
+  };
+
+  // Subtle fade up for text elements
+  const fadeUpVariants = {
+    hidden: {
+      opacity: 0,
+      y: 15
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    }
+  };
+
+  // Gentle animation for feature items
+  const featureVariants = {
+    hidden: {
+      opacity: 0,
+      x: -10
+    },
+    visible: {
+      opacity: 1,
+      x: 0,
+      transition: {
+        duration: 0.4,
+        ease: "easeOut"
+      }
+    }
+  };
+
+  // Minimal card animation with scroll trigger
+  const cardVariants = {
+    hidden: {
+      opacity: 0,
+      y: 20,
+      scale: 0.98
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      transition: {
+        duration: 0.5,
+        ease: [0.25, 0.46, 0.45, 0.94]
+      }
+    }
+  };
+
   return (
-    <section className="lg:py-32 py-10 lg:px-10 px-5" id="features">
-      <div className="mx-auto max-w-3xl lg:max-w-[93.75rem] flex flex-col lg:gap-[102px] gap-[25px]">
+    <section className="lg:py-32 pt-20 lg:px-10 px-5" id="features">
+      <motion.div
+        className="mx-auto max-w-3xl lg:max-w-[93.75rem] flex flex-col lg:gap-[102px] gap-[70px]"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-50px" }}
+      >
         {/* Intro text */}
-        <p className="lg:w-[69%] font-headingmd lg:text-3xl ">
+        <motion.p
+          className="lg:w-[69%] font-headingmd lg:text-3xl text-base"
+          variants={fadeUpVariants}
+        >
           Provolo is an AI-powered copywriting platform built for freelancers on
           Upwork.{" "}
           <span className="text-[#A6AAB3] font-headingmd">
-            It doesn’t just write faster, it writes smarter, applying proven
+            It doesn't just write faster, it writes smarter, applying proven
             strategies to optimize your profile and proposals. The result? More
             visibility, more interviews, and more jobs, without the guesswork.
           </span>
-        </p>
+        </motion.p>
 
         {/* Features list */}
-        <div>
-          <p className="font-headingmd mb-5">Why Provolo Works</p>
-          <ol className="list-none flex justify-between text-base text-[#6B7280] flex-wrap gap-6">
+        <motion.div variants={fadeUpVariants}>
+          <motion.p
+            className="font-headingmd mb-5 lg:text-base text-[18px]"
+            variants={fadeUpVariants}
+          >
+            Why Provolo Works
+          </motion.p>
+          <motion.ol
+            className="list-none flex justify-between lg:text-base text-[14px] text-[#6B7280] flex-wrap gap-6"
+            variants={containerVariants}
+          >
             {FEATURES.map((feature, index) => (
-              <li key={index} className="flex items-center font-headingmd text-[#6B7280]">
-                <span className="px-2 py-1 bg-[#6B7280]/10 rounded-lg mr-2 text-sm font-headingmd">
+              <motion.li
+                key={index}
+                className="flex items-center font-headingmd text-[#6B7280]"
+                variants={featureVariants}
+                whileHover={{
+                  x: 2,
+                  transition: { duration: 0.2, ease: "easeOut" }
+                }}
+              >
+                <motion.span
+                  className="px-2 py-1 bg-[#6B7280]/10 rounded-lg mr-2 text-sm font-headingmd"
+                  whileHover={{
+                    backgroundColor: "rgba(107, 114, 128, 0.15)",
+                    scale: 1.05,
+                    transition: { duration: 0.2 }
+                  }}
+                >
                   {index + 1}
-                </span>
+                </motion.span>
                 {feature}
-              </li>
+              </motion.li>
             ))}
-          </ol>
-        </div>
+          </motion.ol>
+        </motion.div>
 
         {/* Steps header */}
-        <div>
-          <p className="font-headingmd">How Provolo Gets You Hired</p>
-        </div>
-      </div>
+        <motion.div variants={fadeUpVariants}>
+          <p className="font-headingmd lg:text-base text-[18px]">How Provolo Gets You Hired</p>
+        </motion.div>
+      </motion.div>
 
       {/* Steps (scrollable cards with scroll snapping) */}
-      <div className="lg:flex grid md:grid-cols-2 grid-cols-1 gap-7 lg:overflow-x-auto no-scrollbar py-5 lg:px-2 lg:ml-48 snap-x snap-mandatory">
+      <motion.div
+        className="lg:flex grid md:grid-cols-2 grid-cols-1 gap-7 lg:overflow-x-auto no-scrollbar py-5 lg:px-2 lg:ml-48 snap-x snap-mandatory"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, margin: "-100px" }}
+        variants={{
+          hidden: { opacity: 0 },
+          visible: {
+            opacity: 1,
+            transition: {
+              staggerChildren: 0.1,
+              delayChildren: 0.2
+            }
+          }
+        }}
+      >
         {STEPS.map((step, index) => (
-          <div
+          <motion.div
             key={index}
             className="flex-shrink-0 w-full sm:w-full lg:w-[630px] snap-start"
+            variants={cardVariants}
+            whileHover={{
+              y: -2,
+              transition: {
+                duration: 0.3,
+                ease: "easeOut"
+              }
+            }}
           >
-            <div className="bg-[#F0F1F2] mb-8 h-[500px] rounded-3xl p-20"></div>
+            <motion.div
+              className="bg-[#F0F1F2] mb-8 lg:h-[500px] h-[420px] rounded-3xl p-20"
+              whileHover={{
+                backgroundColor: "#EAEBEC",
+                transition: { duration: 0.3 }
+              }}
+            ></motion.div>
             <div className="px-5">
-              <p className="font-headingmd text-[18px]">{step.title}</p>
-              <p className="text-[18px] text-[#6B7280]">{step.description}</p>
+              <motion.p
+                className="font-headingmd lg:text-[18px] text-[16px] mb-3"
+                initial={{ opacity: 0 }}
+                whileInView={{
+                  opacity: 1,
+                  transition: {
+                    duration: 0.4,
+                    delay: 0.1
+                  }
+                }}
+                viewport={{ once: true }}
+              >
+                {step.title}
+              </motion.p>
+              <motion.p
+                className="lg:text-[18px] text-[14px] text-[#6B7280]"
+                initial={{ opacity: 0 }}
+                whileInView={{
+                  opacity: 1,
+                  transition: {
+                    duration: 0.4,
+                    delay: 0.2
+                  }
+                }}
+                viewport={{ once: true }}
+              >
+                {step.description}
+              </motion.p>
             </div>
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 };

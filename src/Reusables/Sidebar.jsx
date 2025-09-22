@@ -15,8 +15,7 @@ const Sidebar = () => {
   const isActive = (path) => location.pathname === path;
 
   const linkClass = (path) =>
-    `relative group flex items-center rounded-md transition-all duration-300 ${
-      isActive(path) ? "bg-gray-50 text-[#0c54f2]" : "text-gray-500 hover:bg-gray-50 hover:text-gray-950"
+    `relative group flex items-center rounded-md transition-all duration-300 ${isActive(path) ? "bg-gray-50 text-[#0c54f2]" : "text-gray-500 hover:bg-gray-50 hover:text-gray-950"
     } ${isOpen ? "p-3 gap-3" : "p-3 justify-center"}`;
 
   // Main navigation links
@@ -113,7 +112,6 @@ const Sidebar = () => {
       {/* Logo */}
       <div className={`flex gap-3 mb-10 ${isOpen ? "px-3" : "px-0 mx-auto"} w-fit`}>
         <Logo />
-        {/* {isOpen && <span className="font-semibold">Provolo</span>} */}
       </div>
 
 

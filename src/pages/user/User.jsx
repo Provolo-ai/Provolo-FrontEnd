@@ -12,17 +12,17 @@ const userNavigation = [
 ];
 
 export default function User({ open }) {
-    const { user: userData, loading: loadingUserData } = useSession();
-    const navigate = useNavigate();
+  const { user: userData, loading: loadingUserData } = useSession();
+  const navigate = useNavigate();
 
-    const handleSignOut = async () => {
-        try {
-            await logout();
-            navigate({ to: "/login", replace: true });
-        } catch (error) {
-            navigate({ to: "/login", replace: true });
-        }
-    };
+  const handleSignOut = async () => {
+    try {
+      await logout();
+      navigate({ to: "/login", replace: true });
+    } catch (error) {
+      navigate({ to: "/login", replace: true });
+    }
+  };
 
   const user = {
     name: userData?.displayName ?? "User",
@@ -48,18 +48,19 @@ export default function User({ open }) {
       >
         {userNavigation.map((item) => (
           <MenuItem key={item.name}>
-            <Link to={item.href} className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden">
+            <Link to={item.href} className="flex items-center gap-3 px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden">
+              <UserRound size={15} />
               {item.name}
             </Link>
           </MenuItem>
         ))}
 
-                {/* Logout */}
-                <button onClick={handleSignOut} className={`text-left text-red-400 bg-red-50/70 transition-all duration-300 rounded-md p-3 flex items-center gap-3 hover:bg-red-50 w-full`}>
-                    <LogOut size={20} />
-                    Log Out
-                </button>
-            </MenuItems>
-        </Menu>
-    );
+        {/* Logout */}
+        <button onClick={handleSignOut} className={`text-left text-red-400 bg-red-50/70 transition-all duration-300 rounded-md p-3 flex items-center gap-3 hover:bg-red-50 w-full`}>
+          <LogOut size={20} />
+          Log Out
+        </button>
+      </MenuItems>
+    </Menu>
+  );
 }

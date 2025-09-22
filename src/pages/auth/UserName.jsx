@@ -106,7 +106,7 @@ export default function UserName() {
                       />
                     </div>
 
-                    <CustomButton onClick={handleContinue} type="submit" className="btn-primary" disabled={loading}>
+                    <CustomButton onClick={handleContinue} type="submit" className="btn-primary text-sm" disabled={loading}>
                       {loading ? "Updating..." : "Continue"}
                     </CustomButton>
                   </div>
