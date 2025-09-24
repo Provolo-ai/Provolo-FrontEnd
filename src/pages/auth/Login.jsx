@@ -1,12 +1,11 @@
 import { useState } from "react";
 import { getIdToken, signInWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from "../../lib/firebase";
+import { auth } from "../../lib/firebase";
 import Logo from "../../Reusables/Logo";
 import TextInputField from "../../Reusables/TextInputField";
 import CustomButton from "../../Reusables/CustomButton";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { getCleanErrorMessage } from "../../utils/firebaseError.util";
-import { ensureUserExists } from "../../utils/firebase.util";
 import { Key, Mail } from "lucide-react";
 import CustomSnackbar from "../../Reusables/CustomSnackbar";
 import Vector from "../../assets/img/Vector.png";
@@ -27,7 +26,6 @@ const Login = () => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
       const idToken = await getIdToken(user, true);
-      await ensureUserExists(db, user);
       const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -60,7 +58,9 @@ const Login = () => {
       <Logo />
       <div className="sm:mx-auto sm:w-full sm:max-w-lg bg-white p-10 mt-10 rounded-md border ">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="text-center text-2xl/9 font-medium tracking-tight text-gray-900">Welcome to Provolo</h2>
+          <h2 className="text-center text-2xl/9 font-medium tracking-tight text-gray-900">
+            Welcome to Provolo
+          </h2>
         </div>
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
@@ -101,7 +101,10 @@ const Login = () => {
             </div>
           </div>
           <div className="flex justify-end">
-            <Link to="/forgot-password" className="underline text-gray-600 hover:text-gray-500 text-xs text-right">
+            <Link
+              to="/forgot-password"
+              className="underline text-gray-600 hover:text-gray-500 text-xs text-right"
+            >
               Forgot Password?
             </Link>
           </div>
@@ -122,12 +125,8 @@ const Login = () => {
       </div>
       {error && <CustomSnackbar open={error} snackbarColor={"danger"} snackbarMessage={error} />}
 
-
-
-
-
-      <img alt="Provolo" src={Vector} className='absolute top-0 left-0 lg:w-1/5 w-1/2 opacity-40' />
-      <img alt="Provolo" src={Vector2} className='absolute bottom-0 right-0 w-1/3 opacity-40' />
+      <img alt="Provolo" src={Vector} className="absolute top-0 left-0 lg:w-1/5 w-1/2 opacity-40" />
+      <img alt="Provolo" src={Vector2} className="absolute bottom-0 right-0 w-1/3 opacity-40" />
     </div>
   );
 };
