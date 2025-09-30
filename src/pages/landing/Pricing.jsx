@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "motion/react";
-import { proSubscription } from "../../server/checkout";
+import { listCustomer, proSubscription } from "../../server/checkout";
 import { fetchTiers } from "../../server/tiers";
 import useSession from "../../hooks/useSession";
 import { useState, useMemo } from "react";
@@ -26,6 +26,7 @@ import {
   Sparkles,
   Globe,
 } from "lucide-react";
+import { useEffect } from "react";
 
 // Icon mapping for different feature types
 const getFeatureIcon = (featureName) => {
@@ -95,6 +96,10 @@ const PricingSkeleton = () => {
       },
     },
   };
+
+  useEffect(() => {
+    listCustomer();
+  }, []);
 
   return (
     <div className="flex-1 overflow-y-auto px-6 py-24 sm:py-32 lg:px-8 bg-gray-50 w-full">
@@ -223,6 +228,7 @@ export default function Pricing() {
       const paymentUrl = await proSubscription(polarRefId, user);
       if (paymentUrl) window.location.href = paymentUrl;
     } catch (error) {
+      console.error("Subscription error:", error);
       setSubscriptionError(
         "An error occurred during subscription. Please try again, if persists, contact support."
       );

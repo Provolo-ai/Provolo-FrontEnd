@@ -74,7 +74,7 @@ const PortfolioOptimizer = () => {
       };
 
       // Call backend API endpoint
-      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/optimize-profile`, {
+      const response = await fetch(`${import.meta.env.VITE_SERVER_URL}/ai/optimize-upwork`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -159,12 +159,18 @@ const PortfolioOptimizer = () => {
                 >
                   <div className="py-1">
                     <MenuItem>
-                      <a href="#" className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 hover:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden">
+                      <a
+                        href="#"
+                        className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 hover:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
+                      >
                         Upwork
                       </a>
                     </MenuItem>
                     <MenuItem>
-                      <a href="#" className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 hover:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden">
+                      <a
+                        href="#"
+                        className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 hover:bg-gray-100 data-focus:text-gray-900 data-focus:outline-hidden"
+                      >
                         Linkedln
                       </a>
                     </MenuItem>
@@ -178,12 +184,17 @@ const PortfolioOptimizer = () => {
               </button>
             </div>
 
-            {error && <CustomSnackbar open={error} close={() => setError("")} snackbarColor={"danger"} snackbarMessage={error} />}
+            {error && (
+              <CustomSnackbar
+                open={error}
+                close={() => setError("")}
+                snackbarColor={"danger"}
+                snackbarMessage={error}
+              />
+            )}
           </div> */}
 
           <div className="mb-8 p-10 bg-white rounded-lg border border-gray-200">
-            <h2 className="text-3xl font-medium mb-6">Let's Get to Know Your Portfolio</h2>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
               <TextInputField
                 id="freelancerName"
