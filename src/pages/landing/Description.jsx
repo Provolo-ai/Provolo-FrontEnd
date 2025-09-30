@@ -1,5 +1,7 @@
 import { PaperClipIcon } from '@heroicons/react/20/solid'
 import LandingpageButton from './LandingpageButton';
+import vidSeven from "../../assets/vids/vidSeven.MOV";
+
 
 export default function Description() {
 
@@ -12,7 +14,7 @@ export default function Description() {
 
   return (
     <section className="py-10 px-5" id="features">
-      <div className="mx-auto max-w-3xl lg:max-w-[93.75rem] bg-[#F3F4F5] rounded-3xl lg:h-[600px] lg:p-10 p-5 lg:grid ">
+      <div className="mx-auto md:max-w-full lg:max-w-[93.75rem] bg-[#F3F4F5] rounded-3xl lg:h-[600px] lg:p-10 p-5 lg:grid">
 
         <div className='grid lg:grid-cols-2'>
 
@@ -25,7 +27,7 @@ export default function Description() {
                 Provolo isn’t just about writing faster, it’s about writing smarter.
               </p>
             </header>
-            
+
             <ol className="list-none lg:text-base text-[14px] text-[#6B7280] flex flex-col gap-6">
               {FEATURES.map((feature, index) => (
                 <li key={index} className="flex items-center font-headingmd text-x">
@@ -39,7 +41,9 @@ export default function Description() {
 
             <LandingpageButton to={"/signup"} btnText={"Get Started"} />
           </div>
-          <div></div>
+          <div className='flex mt-10 lg:mt-0'>
+            <video src={vidSeven} autoPlay loop muted className='m-auto'></video>
+          </div>
         </div>
       </div>
     </section>

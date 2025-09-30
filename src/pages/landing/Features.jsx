@@ -1,5 +1,10 @@
 // eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react";
+import vidOne from "../../assets/vids/vidOne.MOV";
+import vidTwo from "../../assets/vids/vidTwo.MOV";
+import vidThree from "../../assets/vids/vidThree.MOV";
+import vidFour from "../../assets/vids/vidFour.MOV";
+
 
 const FEATURES = [
   "Rank higher in Upwork search",
@@ -11,21 +16,25 @@ const FEATURES = [
 const STEPS = [
   {
     title: "Smarter Copy, Instantly",
+    vidSrc: vidFour,
     description:
       "Stop guessing what works. Provolo improves your profile and proposals automatically.",
   },
   {
-    title: "More Invitations & Interviews",
-    description:
-      "Rank higher, get noticed, and turn views into conversations with persuasive, client-focused copy.",
-  },
-  {
     title: "Optimized for the Algorithm",
+    vidSrc: vidTwo,
     description: "Headlines and overviews crafted to boost your visibility in Upwork's search.",
   },
   {
     title: "Works for Any Freelancer",
+    vidSrc: vidOne,
     description: "Designer, developer, writer, or marketer, Provolo adapts to your niche.",
+  },
+  {
+    title: "More Invitations & Interviews",
+    vidSrc: vidThree,
+    description:
+      "Rank higher, get noticed, and turn views into conversations with persuasive, client-focused copy.",
   },
 ];
 
@@ -96,7 +105,7 @@ const Features = () => {
   return (
     <section className="lg:py-32 pt-20 lg:px-10 px-5" id="features">
       <motion.div
-        className="mx-auto max-w-3xl lg:max-w-[93.75rem] flex flex-col lg:gap-[102px] gap-[70px]"
+        className="mx-auto max-w-full lg:max-w-[93.75rem] flex flex-col lg:gap-[102px] gap-[70px]"
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
@@ -104,7 +113,7 @@ const Features = () => {
       >
         {/* Intro text */}
         <motion.p
-          className="lg:w-[69%] font-headingmd lg:text-3xl text-base"
+          className="lg:w-[69%] w-full font-headingmd lg:text-3xl text-base"
           variants={fadeUpVariants}
         >
           Provolo is an AI-powered copywriting platform built for freelancers on Upwork.{" "}
@@ -190,12 +199,16 @@ const Features = () => {
             }}
           >
             <motion.div
-              className="bg-[#F0F1F2] mb-8 lg:h-[500px] h-[420px] rounded-3xl p-20"
+              className="bg-[#F0F1F2] mb-8 lg:h-[500px] h-[420px] rounded-3xl lg:px-20  flex"
               whileHover={{
-                backgroundColor: "#EAEBEC",
+                // backgroundColor: "#EAEBEC",
                 transition: { duration: 0.3 },
               }}
-            ></motion.div>
+            >
+
+              <video src={step.vidSrc} autoPlay loop muted></video>
+
+            </motion.div>
             <div className="px-5">
               <motion.p
                 className="font-headingmd lg:text-[18px] text-[16px] mb-3"

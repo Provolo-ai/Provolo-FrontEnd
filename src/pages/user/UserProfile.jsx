@@ -8,11 +8,6 @@ import { GenerateAvatar } from '../../Reusables/GenerateAvatar';
 import provoolosvg from "../../assets/img/Provoloaisvg.png";
 
 
-
-
-
-
-
 export default function Example() {
     const { user, loading: loadingUserData } = useSession()
     const img = {
@@ -124,7 +119,7 @@ export default function Example() {
                             <img
                                 alt="Provolo"
                                 src={provoolosvg}
-                                className='lg:w-1/2 opacity-80 hover:opacity-100 duration-300 transition-all'
+                                className='lg:w-1/2 opacity-80 hover:opacity-100 duration-300 transition-all rounded-2xl'
                             />
                             <p className='text-sm text-gray-400'>Scan QR</p>
                         </a>
