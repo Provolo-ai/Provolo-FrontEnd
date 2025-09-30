@@ -43,6 +43,7 @@
 .btn-primary {
   background-image: linear-gradient(to right, #000000, #333333);
   transition: all 0.3s ease;
+  @apply text-sm
 }
 
 .btn-primary:hover {

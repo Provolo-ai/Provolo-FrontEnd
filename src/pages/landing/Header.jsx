@@ -25,45 +25,45 @@ import {
 import { ChevronDownIcon, PhoneIcon, PlayCircleIcon } from "@heroicons/react/20/solid";
 import Logo from "../../Reusables/Logo";
 import { Link } from "@tanstack/react-router";
-import { MoveRight } from "lucide-react";
+import { MailIcon, MoveRight, Send } from "lucide-react";
 import Vector from "../../assets/img/Vector.png";
 import Vector2 from "../../assets/img/Vector2.png";
 
 const products = [
   {
-    name: "Analytics",
-    description: "Get a better understanding of your traffic",
-    href: "#",
+    name: "Provolo Learn",
+    description: "A space to level up your online presence, land more gigs, and grow your career.",
+    href: "https://x.com/i/communities/1971577100684431600",
     icon: ChartPieIcon,
   },
   {
-    name: "Engagement",
-    description: "Speak directly to your customers",
-    href: "#",
+    name: "Facebook",
+    description: "Get latest updates on our product",
+    href: "https://web.facebook.com/profile.php?id=61581683004716",
     icon: CursorArrowRaysIcon,
   },
-  {
-    name: "Security",
-    description: "Your customers data will be safe and secure",
-    href: "#",
-    icon: FingerPrintIcon,
-  },
-  {
-    name: "Integrations",
-    description: "Connect with third-party tools",
-    href: "#",
-    icon: SquaresPlusIcon,
-  },
-  {
-    name: "Automations",
-    description: "Build strategic funnels that will convert",
-    href: "#",
-    icon: ArrowPathIcon,
-  },
+  // {
+  //   name: "Security",
+  //   description: "Your customers data will be safe and secure",
+  //   href: "#",
+  //   icon: FingerPrintIcon,
+  // },
+  // {
+  //   name: "Integrations",
+  //   description: "Connect with third-party tools",
+  //   href: "#",
+  //   icon: SquaresPlusIcon,
+  // },
+  // {
+  //   name: "Automations",
+  //   description: "Build strategic funnels that will convert",
+  //   href: "#",
+  //   icon: ArrowPathIcon,
+  // },
 ];
 const callsToAction = [
-  { name: "Watch demo", href: "https://www.youtube.com/@Provoloai", icon: PlayCircleIcon },
-  { name: "Contact sales", href: "#", icon: PhoneIcon },
+  { name: "Watch Demo", href: "https://www.youtube.com/@Provoloai", icon: PlayCircleIcon },
+  { name: "Contact Support", href: "mailto:heyprovolo@gmail.com", icon: Send },
 ];
 
 export default function Example() {
@@ -161,13 +161,13 @@ export default function Example() {
       <motion.nav
         aria-label="Global"
         className="mx-auto flex max-w-[906.67px] items-center justify-between lg:p-[15px] py-2 px-4 bg-white rounded-full"
-        // style={{
-        //     boxShadow: "0 4px 20px rgba(0, 0, 0, 0.06)"
-        // }}
-        // whileHover={{
-        //     boxShadow: "0 8px 30px rgba(0, 0, 0, 0.12)",
-        //     transition: { duration: 0.3, ease: "easeOut" }
-        // }}
+      // style={{
+      //     boxShadow: "0 4px 20px rgba(0, 0, 0, 0.06)"
+      // }}
+      // whileHover={{
+      //     boxShadow: "0 8px 30px rgba(0, 0, 0, 0.12)",
+      //     transition: { duration: 0.3, ease: "easeOut" }
+      // }}
       >
         <motion.div className="flex mr-10" variants={navItemVariants}>
           <motion.a href="/" className="" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
@@ -271,7 +271,7 @@ export default function Example() {
                         />
                       </motion.div>
                       <div className="flex-auto">
-                        <a href={item.href} className="block font-semibold text-gray-900">
+                        <a href={item.href} className="block font-bold text-gray-900">
                           {item.name}
                           <span className="absolute inset-0" />
                         </a>
@@ -284,6 +284,7 @@ export default function Example() {
                   {callsToAction.map((item, index) => (
                     <motion.a
                       key={item.name}
+                      target="_blank"
                       href={item.href}
                       className="flex items-center justify-center gap-x-2.5 p-3 text-sm/6 font-semibold text-gray-900 hover:bg-gray-100"
                       whileHover={{ scale: 1.02 }}
